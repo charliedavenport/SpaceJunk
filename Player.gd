@@ -8,6 +8,7 @@ var vel: Vector2
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
+onready var projectile = preload("res://Projectile.tscn")
 
 func _ready():
 	vel = Vector2.ZERO
@@ -32,7 +33,19 @@ func _physics_process(delta):
 		$ThrusterPolygon.visible = false
 	var collision = move_and_collide(vel)
 	if collision:
-		pass # do something
+		kill()
 	# wrap player to other side of screen
 	position.x = wrapf(position.x, 0, screen_width)
 	position.y = wrapf(position.y, 0, screen_height)
+
+func _input(event):
+	if event.is_action_pressed("shoot"):
+		shoot()
+
+func shoot() -> void:
+	var projectile_inst = projectile.instance()
+	get_tree().root.add_child(projectile_inst)
+	projectile_inst.start(self.global_transform)
+
+func kill() -> void:
+	pass
