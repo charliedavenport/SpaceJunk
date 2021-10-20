@@ -1,0 +1,10 @@
+[gd_scene format=2]
+
+[node name="Asteroid_Small" type="KinematicBody2D"]
+collision_layer = 4
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -17.5096, -15.5929, 21.7342, -8.45767, 16.9774, 12.9481, -5.61755, 27.2185 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -5.74487, 27.0166, 16.9081, 12.8585, 21.6275, -8.37868, -17.7793, -15.4577 )
