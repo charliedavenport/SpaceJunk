@@ -6,3 +6,5 @@
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 500, 300 )
+thrust = 2.0
+turnspeed = 3.5
