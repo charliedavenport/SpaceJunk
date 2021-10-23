@@ -1,9 +1,9 @@
 class_name GameManager
 extends Node2D
 
-const asteroid_big = preload("res://Asteroid_Big.tscn")
-const Asteroid = preload("res://Asteroid.gd")
-const Projectile = preload("res://Projectile.gd")
+const asteroid_big = preload("res://Asteroid/Asteroid_Big.tscn")
+const Asteroid = preload("res://Asteroid/Asteroid.gd")
+const Projectile = preload("res://Projectile/Projectile.gd")
 
 onready var player = get_node("Player")
 onready var rng = RandomNumberGenerator.new()
@@ -67,5 +67,4 @@ func on_node_added(node) -> void:
 
 func on_projectile_hit(node) -> void:
 	if node is Asteroid:
-		print('hit asteroid')
 		node.destroy()

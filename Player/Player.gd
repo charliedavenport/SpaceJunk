@@ -11,7 +11,7 @@ var lives: int
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
-onready var projectile = preload("res://Projectile.tscn")
+onready var projectile = preload("res://Projectile/Projectile.tscn")
 
 func _ready():
 	alive = true

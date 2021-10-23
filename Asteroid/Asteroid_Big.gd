@@ -1,7 +1,7 @@
 class_name Asteroid_Big
 extends Asteroid
 
-const asteroid_small = preload("res://Asteroid_Small.tscn")
+const asteroid_small = preload("res://Asteroid/Asteroid_Small.tscn")
 
 func destroy() -> void:
 	# spawn two small asteroids and then destroy self

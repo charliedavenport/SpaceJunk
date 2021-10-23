@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Asteroid_Big.gd" type="Script" id=1]
+[ext_resource path="res://Asteroid/Asteroid_Big.gd" type="Script" id=1]
 
 [node name="Asteroid_Big" type="KinematicBody2D"]
 collision_layer = 4
