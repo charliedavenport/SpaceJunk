@@ -1,8 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Asteroid_Big.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Asteroid_Small.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GameManager.gd" type="Script" id=4]
 
 [node name="Main" type="Node2D"]
@@ -14,8 +12,5 @@ thrust = 2.0
 stopping_thrust = 3.0
 turnspeed = 3.5
 
-[node name="Asteroid_Big" parent="." instance=ExtResource( 2 )]
-position = Vector2( 74.92, 137.948 )
-
-[node name="Asteroid_Small" parent="." instance=ExtResource( 3 )]
-position = Vector2( 196.219, 86.8121 )
+[node name="AsteroidSpawnTimer" type="Timer" parent="."]
+wait_time = 5.0

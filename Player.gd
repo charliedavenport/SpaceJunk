@@ -3,18 +3,26 @@ extends KinematicBody2D
 export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
 export var turnspeed: float = 1.0
+export var max_lives: int = 5
 
 var vel: Vector2
+var alive: bool
+var lives: int
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 onready var projectile = preload("res://Projectile.tscn")
 
 func _ready():
+	alive = true
+	lives = max_lives
 	vel = Vector2.ZERO
-	$ThrusterPolygon.visible = true
+	$ThrusterPolygon.visible = false
+	$AnimationPlayer.play("Idle")
 
 func _physics_process(delta):
+	if not alive:
+		return
 	# handle rotation
 	if Input.is_action_pressed("turn_left"):
 		rotate(-1.0 * turnspeed * delta)
@@ -48,4 +56,20 @@ func shoot() -> void:
 	projectile_inst.start(self.global_transform)
 
 func kill() -> void:
-	pass
+	alive = false
+	lives -= 1
+	$CollisionShape2D.disabled = true
+	$AnimationPlayer.play("Destroyed")
+	$ThrusterPolygon.visible = false
+
+func on_destroyed_end() -> void:
+	$AnimationPlayer.play("Idle")
+	reset()
+
+func reset() -> void:
+	alive = true
+	rotation = 0.0
+	position = Vector2(screen_width/2, screen_height/2)
+	vel = Vector2.ZERO
+	$CollisionShape2D.disabled = false
+
