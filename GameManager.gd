@@ -5,7 +5,7 @@ const asteroid_big = preload("res://Asteroid/Asteroid_Big.tscn")
 const Asteroid = preload("res://Asteroid/Asteroid.gd")
 const Projectile = preload("res://Projectile/Projectile.gd")
 
-onready var player = get_node("Player")
+onready var player = get_parent().get_node("Player")
 onready var rng = RandomNumberGenerator.new()
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
