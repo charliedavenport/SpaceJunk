@@ -62,7 +62,7 @@ margin_bottom = 64.0
 texture = ExtResource( 1 )
 stretch_mode = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -171.0
