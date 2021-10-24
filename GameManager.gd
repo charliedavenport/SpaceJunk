@@ -6,6 +6,7 @@ const Asteroid = preload("res://Asteroid/Asteroid.gd")
 const Projectile = preload("res://Projectile/Projectile.gd")
 
 onready var player = get_parent().get_node("Player")
+onready var gui = get_parent().get_node("GUI")
 onready var rng = RandomNumberGenerator.new()
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -15,9 +16,20 @@ export var initial_asteroids: int = 5
 
 var asteroid_timer: float
 
+##################
+# PLAYER VARS
+##################
+export var max_lives: int = 5
+var player_lives: int
+var game_over: bool
+
 func _ready():
+	game_over = false
+	player_lives = max_lives
 	rng.randomize()
 	get_tree().connect("node_added", self, "on_node_added")
+	player.connect("player_hit", self, "on_player_hit")
+	gui.start(5,0)
 	asteroid_timer = asteroid_timer_start
 	init_asteroid_spawn()
 	continuous_asteroid_spawn()
@@ -68,3 +80,13 @@ func on_node_added(node) -> void:
 func on_projectile_hit(node) -> void:
 	if node is Asteroid:
 		node.destroy()
+
+func on_player_hit() -> void:
+	player_lives -= 1
+	game_over = (player_lives == 0)
+	print(game_over)
+	player.kill(game_over)
+	gui.decrement_lives()
+
+func on_game_over() -> void:
+	pass

@@ -3,19 +3,20 @@ extends KinematicBody2D
 export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
 export var turnspeed: float = 1.0
-export var max_lives: int = 5
 
 var vel: Vector2
 var alive: bool
-var lives: int
+var game_over: bool
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 onready var projectile = preload("res://Projectile/Projectile.tscn")
 
+signal player_hit
+
 func _ready():
 	alive = true
-	lives = max_lives
+	game_over = false
 	vel = Vector2.ZERO
 	$ThrusterPolygon.visible = false
 	$AnimationPlayer.play("Idle")
@@ -41,7 +42,7 @@ func _physics_process(delta):
 		$ThrusterPolygon.visible = false
 	var collision = move_and_collide(vel)
 	if collision:
-		kill()
+		emit_signal("player_hit")
 	# wrap player to other side of screen
 	position.x = wrapf(position.x, 0, screen_width)
 	position.y = wrapf(position.y, 0, screen_height)
@@ -55,14 +56,16 @@ func shoot() -> void:
 	get_tree().root.add_child(projectile_inst)
 	projectile_inst.start(self.global_transform)
 
-func kill() -> void:
+func kill(a_game_over: bool) -> void:
 	alive = false
-	lives -= 1
+	game_over = a_game_over 
 	$CollisionShape2D.disabled = true
 	$AnimationPlayer.play("Destroyed")
 	$ThrusterPolygon.visible = false
 
 func on_destroyed_end() -> void:
+	if game_over:
+		queue_free()
 	$AnimationPlayer.play("Idle")
 	reset()
 
