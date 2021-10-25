@@ -39,8 +39,9 @@ func set_score(a_score: int) -> void:
 	score_label.text = '%s' % score
 
 func decrement_lives() -> void:
-	lives_container.get_child(lives_container.get_child_count() - lives).visible = false
-	lives -= 1
+	if lives > 0:
+		lives_container.get_child(lives_container.get_child_count() - lives).visible = false
+		lives -= 1
 
 func reset_lives() -> void:
 	for i in range(lives_container.get_child_count()):
