@@ -24,16 +24,40 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Asteroid/Asteroid_Small.gd"
 }, {
+"base": "Node2D",
+"class": "Asteroid_Spawner",
+"language": "GDScript",
+"path": "res://AsteroidSpawner.gd"
+}, {
+"base": "Control",
+"class": "GUI",
+"language": "GDScript",
+"path": "res://GUI/GUI.gd"
+}, {
 "base": "Node",
 "class": "GameManager",
 "language": "GDScript",
 "path": "res://GameManager.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player/Player.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://Projectile/Projectile.gd"
 } ]
 _global_script_class_icons={
 "Asteroid": "",
 "Asteroid_Big": "",
 "Asteroid_Small": "",
-"GameManager": ""
+"Asteroid_Spawner": "",
+"GUI": "",
+"GameManager": "",
+"Player": "",
+"Projectile": ""
 }
 
 [application]

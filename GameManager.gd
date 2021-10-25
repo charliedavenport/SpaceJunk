@@ -1,10 +1,7 @@
-class_name GameManager
 extends Node
+class_name GameManager
 
-const asteroid_big = preload("res://Asteroid/Asteroid_Big.tscn")
-const Asteroid = preload("res://Asteroid/Asteroid.gd")
-const Projectile = preload("res://Projectile/Projectile.gd")
-const Player = preload("res://Player/Player.tscn")
+const player_scene = preload("res://Player/Player.tscn")
 
 onready var player = get_node("Player")
 onready var gui = get_node("GUI")
@@ -41,7 +38,7 @@ func reset_game() -> void:
 	asteroids_per_wave = beg_asteroids_per_wave
 	rng.randomize()
 	if not player:
-		player = Player.instance()
+		player = player_scene.instance()
 		get_tree().root.add_child(player)
 	player.connect("player_hit", self, "on_player_hit")
 	gui.call_deferred("start", max_lives, score, wave)

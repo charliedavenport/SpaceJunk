@@ -1,4 +1,5 @@
 extends Node2D
+class_name Asteroid_Spawner
 
 const asteroid_big = preload("res://Asteroid/Asteroid_Big.tscn")
 

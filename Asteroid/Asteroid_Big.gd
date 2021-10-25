@@ -1,5 +1,5 @@
-class_name Asteroid_Big
 extends Asteroid
+class_name Asteroid_Big
 
 const asteroid_small = preload("res://Asteroid/Asteroid_Small.tscn")
 

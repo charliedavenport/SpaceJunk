@@ -1,5 +1,5 @@
-class_name Asteroid
 extends KinematicBody2D
+class_name Asteroid
 
 var speed: float = 50
 var rot_speed: float = 1.0

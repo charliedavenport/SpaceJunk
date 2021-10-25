@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Projectile
 
 const speed: float = 750.0
 

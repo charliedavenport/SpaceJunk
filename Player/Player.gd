@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
@@ -11,7 +12,7 @@ var game_over: bool
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
-onready var projectile = preload("res://Projectile/Projectile.tscn")
+const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
 

@@ -1,4 +1,5 @@
 extends Control
+class_name GUI
 
 onready var score_label = get_node("ScoreLabel")
 onready var lives_container = get_node("LivesContainer")
