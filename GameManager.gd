@@ -24,10 +24,13 @@ export var big_saucer_pts: int = 200
 export var small_saucer_pts: int = 1000
 var score: int
 
+export var beg_asteroids_per_wave: int = 4
 var wave: int
+var asteroids_per_wave: int
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
+	asteroid_spawner.connect("no_asteroids_left", self, "on_no_asteroids_left")
 	reset_game()
 
 func reset_game() -> void:
@@ -35,6 +38,7 @@ func reset_game() -> void:
 	player_lives = max_lives
 	score = 0
 	wave = 0
+	asteroids_per_wave = beg_asteroids_per_wave
 	rng.randomize()
 	if not player:
 		player = Player.instance()
@@ -42,7 +46,7 @@ func reset_game() -> void:
 	player.connect("player_hit", self, "on_player_hit")
 	gui.call_deferred("start", max_lives, score, wave)
 	#gui.start(max_lives, score)
-	asteroid_spawner.spawn_asteroid_wave(4)
+	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 
 func on_node_added(node) -> void:
 	if node is Projectile:
@@ -64,5 +68,9 @@ func on_player_hit() -> void:
 	player.kill(game_over)
 	gui.decrement_lives()
 
-func on_game_over() -> void:
-	pass
+func on_no_asteroids_left() -> void:
+	wave += 1
+	gui.set_wave(wave)
+	asteroids_per_wave += 1
+	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
+	
