@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
 export var turnspeed: float = 1.0
+export var slowdown: float = 0.005
 
 var vel: Vector2
 var alive: bool
@@ -40,6 +41,8 @@ func _physics_process(delta):
 		vel += delta_vec
 	else:
 		$ThrusterPolygon.visible = false
+		# gently slow down
+		vel *= (1.0 - slowdown)
 	var collision = move_and_collide(vel)
 	if collision:
 		emit_signal("player_hit")
