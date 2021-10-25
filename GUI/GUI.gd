@@ -5,16 +5,18 @@ onready var score_label = get_node("ScoreLabel")
 onready var lives_container = get_node("LivesContainer")
 onready var wave_label = get_node("WaveLabel")
 onready var start_label = get_node("StartLabel")
+onready var game_over_label = get_node("GameOverLabel")
 
 var lives: int
 var score: int
 var wave: int
 
-func reset_game(a_lives: int, a_score: int, a_wave: int) -> void:
+func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	lives_container.visible = true
 	score_label.visible = true
 	wave_label.visible = true
 	start_label.visible = false
+	game_over_label.visible = false
 	set_score(a_score)
 	lives = a_lives
 	reset_lives()
@@ -25,6 +27,12 @@ func start_screen() -> void:
 	score_label.visible = false
 	wave_label.visible = false
 	start_label.visible = true
+
+func game_over_screen() -> void:
+	lives_container.visible = false
+	score_label.visible = false
+	wave_label.visible = false
+	game_over_label.visible = true
 
 func set_score(a_score: int) -> void:
 	score = a_score

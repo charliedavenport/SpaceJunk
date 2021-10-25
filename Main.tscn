@@ -10,4 +10,7 @@ script = ExtResource( 4 )
 [node name="AsteroidSpawner" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="GUI" parent="." instance=ExtResource( 2 )]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource( 2 )]

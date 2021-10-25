@@ -3,8 +3,8 @@ class_name GameManager
 
 const player_scene = preload("res://Player/Player.tscn")
 
-onready var player = get_node("Player")
-onready var gui = get_node("GUI")
+var player: Player
+onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
 onready var rng = RandomNumberGenerator.new()
 
@@ -26,6 +26,7 @@ var wave: int
 var asteroids_per_wave: int
 
 var is_start_screen: bool
+var is_game_over_screen: bool
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
@@ -36,9 +37,14 @@ func start_screen() -> void:
 	is_start_screen = true
 	gui.start_screen()
 
+func game_over_screen() -> void:
+	is_game_over_screen = true
+	gui.game_over_screen()
+
 func _input(event):
-	if is_start_screen and event is InputEventKey and event.pressed:
+	if (is_start_screen or is_game_over_screen) and event is InputEventKey and event.pressed:
 		is_start_screen = false
+		is_game_over_screen = false
 		reset_game()
 
 func reset_game() -> void:
@@ -48,11 +54,10 @@ func reset_game() -> void:
 	wave = 0
 	asteroids_per_wave = beg_asteroids_per_wave
 	rng.randomize()
-	if not player:
-		player = player_scene.instance()
-		get_tree().root.add_child(player)
+	player = player_scene.instance()
+	get_tree().root.add_child(player)
 	player.connect("player_hit", self, "on_player_hit")
-	gui.call_deferred("reset_game", max_lives, score, wave)
+	gui.call_deferred("start_game", max_lives, score, wave)
 	#gui.start(max_lives, score)
 	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 
@@ -75,6 +80,8 @@ func on_player_hit() -> void:
 	game_over = (player_lives == 0)
 	player.kill(game_over)
 	gui.decrement_lives()
+	if game_over:
+		game_over_screen()
 
 func on_no_asteroids_left() -> void:
 	wave += 1
