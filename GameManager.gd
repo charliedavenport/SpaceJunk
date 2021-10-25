@@ -27,6 +27,8 @@ export var big_saucer_pts: int = 200
 export var small_saucer_pts: int = 1000
 var score: int
 
+var wave: int
+
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
 	reset_game()
@@ -35,19 +37,20 @@ func reset_game() -> void:
 	game_over = false
 	player_lives = max_lives
 	score = 0
+	wave = 0
 	rng.randomize()
 	if not player:
 		player = Player.instance()
 		get_tree().root.add_child(player)
 	player.connect("player_hit", self, "on_player_hit")
-	gui.call_deferred("start", max_lives, score)
+	gui.call_deferred("start", max_lives, score, wave)
 	#gui.start(max_lives, score)
-	init_asteroid_spawn()
+	spawn_asteroid_wave(4)
 
 func _process(delta):
 	pass
 
-func init_asteroid_spawn() -> void:
+func spawn_asteroid_wave(a_asteroids: int) -> void:
 	for i in range(initial_asteroids):
 		asteroid_spawn()
 
