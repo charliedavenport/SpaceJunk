@@ -25,10 +25,21 @@ export var beg_asteroids_per_wave: int = 4
 var wave: int
 var asteroids_per_wave: int
 
+var is_start_screen: bool
+
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
 	asteroid_spawner.connect("no_asteroids_left", self, "on_no_asteroids_left")
-	reset_game()
+	start_screen()
+
+func start_screen() -> void:
+	is_start_screen = true
+	gui.start_screen()
+
+func _input(event):
+	if is_start_screen and event is InputEventKey and event.pressed:
+		is_start_screen = false
+		reset_game()
 
 func reset_game() -> void:
 	game_over = false
@@ -41,7 +52,7 @@ func reset_game() -> void:
 		player = player_scene.instance()
 		get_tree().root.add_child(player)
 	player.connect("player_hit", self, "on_player_hit")
-	gui.call_deferred("start", max_lives, score, wave)
+	gui.call_deferred("reset_game", max_lives, score, wave)
 	#gui.start(max_lives, score)
 	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 

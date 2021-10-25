@@ -17,6 +17,7 @@ const projectile = preload("res://Projectile/Projectile.tscn")
 signal player_hit
 
 func _ready():
+	position = Vector2(screen_width/2, screen_height/2)
 	alive = true
 	game_over = false
 	vel = Vector2.ZERO

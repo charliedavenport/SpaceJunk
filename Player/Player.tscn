@@ -398,6 +398,9 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+thrust = 2.0
+stopping_thrust = 3.0
+turnspeed = 3.0
 
 [node name="ShipSprite" type="Sprite" parent="."]
 scale = Vector2( 0.6, 0.6 )
