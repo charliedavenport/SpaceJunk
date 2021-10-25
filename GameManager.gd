@@ -96,7 +96,6 @@ func on_projectile_hit(node) -> void:
 func on_player_hit() -> void:
 	player_lives -= 1
 	game_over = (player_lives == 0)
-	print(game_over)
 	player.kill(game_over)
 	gui.decrement_lives()
 

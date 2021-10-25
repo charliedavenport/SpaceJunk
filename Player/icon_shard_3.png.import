@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_shard_1.png-96256eed8f319bffbbd8a19be3a67890.stex"
+path="res://.import/icon_shard_3.png-a06c1931312cb1502f7fcdc1aef62a23.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon_shard_1.png"
-dest_files=[ "res://.import/icon_shard_1.png-96256eed8f319bffbbd8a19be3a67890.stex" ]
+source_file="res://Player/icon_shard_3.png"
+dest_files=[ "res://.import/icon_shard_3.png-a06c1931312cb1502f7fcdc1aef62a23.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true
