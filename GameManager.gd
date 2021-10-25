@@ -6,7 +6,6 @@ const player_scene = preload("res://Player/Player.tscn")
 var player: Player
 onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
-onready var rng = RandomNumberGenerator.new()
 
 # PLAYER VARS
 export var max_lives: int = 5
@@ -46,7 +45,6 @@ func _input(event):
 	if (is_start_screen or is_game_over_screen) and event is InputEventKey and event.pressed:
 		is_start_screen = false
 		is_game_over_screen = false
-		asteroid_spawner.clear_asteroids()
 		reset_game()
 
 func reset_game() -> void:
@@ -55,12 +53,12 @@ func reset_game() -> void:
 	score = 0
 	wave = 0
 	asteroids_per_wave = beg_asteroids_per_wave
-	rng.randomize()
-	player = player_scene.instance()
-	get_tree().root.add_child(player)
-	player.connect("player_hit", self, "on_player_hit")
+	asteroid_spawner.clear_asteroids()
 	gui.call_deferred("start_game", max_lives, score, wave)
-	#gui.start(max_lives, score)
+	player = player_scene.instance()
+	#get_tree().root.add_child(player)
+	get_tree().root.call_deferred("add_child", player)
+	player.connect("player_hit", self, "on_player_hit")
 	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 
 func on_node_added(node) -> void:
