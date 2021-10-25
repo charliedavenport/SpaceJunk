@@ -35,9 +35,10 @@ func _ready():
 
 func start_screen() -> void:
 	is_start_screen = true
+	asteroid_spawner.spawn_asteroid_wave(3)
 	gui.start_screen()
 
-func game_over_screen() -> void:
+func game_over() -> void:
 	is_game_over_screen = true
 	gui.game_over_screen()
 
@@ -45,6 +46,7 @@ func _input(event):
 	if (is_start_screen or is_game_over_screen) and event is InputEventKey and event.pressed:
 		is_start_screen = false
 		is_game_over_screen = false
+		asteroid_spawner.clear_asteroids()
 		reset_game()
 
 func reset_game() -> void:
@@ -81,7 +83,7 @@ func on_player_hit() -> void:
 	player.kill(game_over)
 	gui.decrement_lives()
 	if game_over:
-		game_over_screen()
+		game_over()
 
 func on_no_asteroids_left() -> void:
 	wave += 1

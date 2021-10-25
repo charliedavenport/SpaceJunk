@@ -45,11 +45,17 @@ func asteroid_spawn() -> void:
 		rand_point = Vector2(rand_num - line_offset, screen_height)
 	var rand_rot = rng.randf_range(0, TAU)
 	var asteroid_inst = asteroid_big.instance()
-	#get_tree().root.add_child(asteroid_inst)
 	get_tree().root.call_deferred("add_child", asteroid_inst)
 	asteroid_inst.start(rand_point, rand_rot)
 	asteroid_inst.connect("asteroid_destroyed", self, "on_asteroid_destroyed")
 	asteroid_count += 1
+
+func clear_asteroids() -> void:
+	for i in range(get_tree().root.get_child_count()):
+		var node = get_tree().root.get_child(i)
+		if node is Asteroid:
+			node.queue_free()
+	asteroid_count = 0
 
 func on_asteroid_destroyed(node) -> void:
 	asteroid_count -= 1
