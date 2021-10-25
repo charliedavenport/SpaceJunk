@@ -10,6 +10,8 @@ onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 onready var rng = RandomNumberGenerator.new()
 
+signal asteroid_destroyed(node)
+
 func _ready():
 	rng.randomize()
 
