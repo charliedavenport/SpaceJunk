@@ -24,6 +24,7 @@ export var beg_asteroids_per_wave: int = 4
 var wave: int
 var asteroids_per_wave: int
 
+export var game_over_timer: float = 1.5
 var is_start_screen: bool
 var is_game_over_screen: bool
 var is_game_over_timer: bool
@@ -45,7 +46,7 @@ func game_over() -> void:
 	gui.game_over_screen()
 	#game_over_timer.start()
 	is_game_over_timer = true
-	yield(get_tree().create_timer(2.0), "timeout")
+	yield(get_tree().create_timer(game_over_timer), "timeout")
 	is_game_over_timer = false
 	gui.show_press_any_btn()
 

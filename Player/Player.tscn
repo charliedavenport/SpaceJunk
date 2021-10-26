@@ -23,7 +23,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=6]
 shader = SubResource( 5 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
-shader_param/flash_amount = 1.0
+shader_param/flash_amount = 0.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 20.4771
