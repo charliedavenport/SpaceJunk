@@ -5,10 +5,12 @@ export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
 export var turnspeed: float = 1.0
 export var slowdown: float = 0.005
+export var invincible_time: float = 2.0
 
 var vel: Vector2
 var alive: bool
 var game_over: bool
+var is_invincible: bool
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -71,13 +73,22 @@ func kill(a_game_over: bool) -> void:
 func on_destroyed_end() -> void:
 	if game_over:
 		queue_free()
-	$AnimationPlayer.play("Idle")
-	reset()
+	call_deferred("reset")
 
 func reset() -> void:
 	alive = true
 	rotation = 0.0
 	position = Vector2(screen_width/2, screen_height/2)
 	vel = Vector2.ZERO
+	$CollisionShape2D.disabled = false
+	do_invincibility()
+
+func do_invincibility() -> void:
+	is_invincible = true
+	$AnimationPlayer.play("Flashing")
+	$CollisionShape2D.disabled = true
+	yield(get_tree().create_timer(invincible_time), "timeout")
+	is_invincible = false
+	$AnimationPlayer.play("Idle")
 	$CollisionShape2D.disabled = false
 
