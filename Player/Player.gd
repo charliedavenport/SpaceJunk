@@ -11,23 +11,30 @@ var vel: Vector2
 var alive: bool
 var game_over: bool
 var is_invincible: bool
+var is_hyperspace: bool
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
+onready var rng = RandomNumberGenerator.new()
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
 
 func _ready():
+	rng.randomize()
 	position = Vector2(screen_width/2, screen_height/2)
 	alive = true
 	game_over = false
+	is_hyperspace = false
 	vel = Vector2.ZERO
 	$ThrusterPolygon.visible = false
 	$AnimationPlayer.play("Idle")
 
 func _physics_process(delta):
-	if not alive:
+	if not alive or is_hyperspace:
+		return
+	if Input.is_action_just_pressed("hyperspace"):
+		do_hyperspace()
 		return
 	# handle rotation
 	if Input.is_action_pressed("turn_left"):
@@ -92,3 +99,13 @@ func do_invincibility() -> void:
 	$AnimationPlayer.play("Idle")
 	$CollisionShape2D.disabled = false
 
+func do_hyperspace() -> void:
+	is_invincible = false
+	is_hyperspace = true
+	$AnimationPlayer.play("HyperSpace")
+	yield($AnimationPlayer, "animation_finished")
+	$AnimationPlayer.play("Idle")
+	var random_point = Vector2(rng.randi_range(0, screen_width), rng.randi_range(0, screen_height))
+	position = random_point
+	is_hyperspace = false
+	

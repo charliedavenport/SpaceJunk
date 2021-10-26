@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/icon_shard_1.png" type="Texture" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://Player/icon_shard_3.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 render_mode blend_mix;
@@ -20,16 +20,15 @@ void fragment() {
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
-shader = SubResource( 5 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
-shader_param/flash_amount = 0.0
+shader_param/flash_amount = 1.0
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=3]
 radius = 20.4771
 
-[sub_resource type="Animation" id=2]
-resource_name = "Destroyed"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
 tracks/0/interp = 1
@@ -165,7 +164,7 @@ tracks/10/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=5]
 resource_name = "Flashing"
 length = 0.6
 loop = true
@@ -229,9 +228,36 @@ tracks/4/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("ShipSprite:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
 
-[sub_resource type="Animation" id=3]
-resource_name = "Idle"
+[sub_resource type="Animation" id=8]
+resource_name = "HyperSpace"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShipSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ), Vector2( 1e-05, 1e-05 ) ]
+}
+
+[sub_resource type="Animation" id=6]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -365,8 +391,20 @@ tracks/10/keys = {
 "update": 0,
 "values": [ 0.0 ]
 }
+tracks/11/type = "value"
+tracks/11/path = NodePath("ShipSprite:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.6, 0.6 ) ]
+}
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=7]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -501,13 +539,13 @@ turnspeed = 3.0
 
 [node name="ShipSprite" type="Sprite" parent="."]
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
-material = SubResource( 6 )
+material = SubResource( 2 )
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="ThrusterPolygon" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
@@ -528,10 +566,11 @@ scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Destroyed = SubResource( 2 )
-anims/Flashing = SubResource( 7 )
-anims/Idle = SubResource( 3 )
-anims/RESET = SubResource( 4 )
+anims/Destroyed = SubResource( 4 )
+anims/Flashing = SubResource( 5 )
+anims/HyperSpace = SubResource( 8 )
+anims/Idle = SubResource( 6 )
+anims/RESET = SubResource( 7 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 2.0
