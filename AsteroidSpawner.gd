@@ -19,7 +19,6 @@ func _ready() -> void:
 func spawn_asteroid_wave(a_asteroids: int) -> void:
 	for i in range(a_asteroids):
 		asteroid_spawn()
-	#print(asteroid_count)
 
 func asteroid_spawn() -> void:
 	# pick a random location on the edge of the screen
@@ -51,8 +50,9 @@ func asteroid_spawn() -> void:
 	asteroid_count += 1
 
 func clear_asteroids() -> void:
-	for i in range(get_tree().root.get_child_count()):
-		var node = get_tree().root.get_child(i)
+	var root = get_tree().root
+	for i in range(root.get_child_count()):
+		var node = root.get_child(i)
 		if node is Asteroid:
 			node.queue_free()
 	asteroid_count = 0

@@ -25,4 +25,3 @@ func _physics_process(delta):
 	var collision = move_and_collide(vel * delta)
 	position.x = wrapf(position.x, 0 - screen_padding, screen_width + screen_padding)
 	position.y = wrapf(position.y, 0 - screen_padding, screen_height + screen_padding)
-	
