@@ -241,7 +241,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "HyperSpace"
 length = 0.5
 tracks/0/type = "value"
@@ -257,7 +257,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.6, 0.6 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -404,7 +404,7 @@ tracks/11/keys = {
 "values": [ Vector2( 0.6, 0.6 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -535,7 +535,8 @@ __meta__ = {
 }
 thrust = 2.0
 stopping_thrust = 3.0
-turnspeed = 3.0
+turnspeed = 3.5
+slowdown = 0.01
 
 [node name="ShipSprite" type="Sprite" parent="."]
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
@@ -568,9 +569,9 @@ texture = ExtResource( 4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Destroyed = SubResource( 4 )
 anims/Flashing = SubResource( 5 )
-anims/HyperSpace = SubResource( 8 )
-anims/Idle = SubResource( 6 )
-anims/RESET = SubResource( 7 )
+anims/HyperSpace = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+anims/RESET = SubResource( 8 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 2.0
