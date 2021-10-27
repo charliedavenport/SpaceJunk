@@ -5,6 +5,7 @@
 [node name="Asteroid_Medium" type="KinematicBody2D"]
 collision_layer = 4
 script = ExtResource( 1 )
+speed = 100.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2( 8.0397, 19.1384 )

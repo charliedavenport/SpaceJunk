@@ -6,6 +6,7 @@
 z_index = -1
 collision_layer = 4
 script = ExtResource( 1 )
+speed = 150.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PoolVector2Array( -17.5096, -15.5929, 21.7342, -8.45767, 16.9774, 12.9481, -1.52063, 8.00972 )

@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name Asteroid
 
-var speed: float = 50
+export var speed: float
 var rot_speed: float = 1.0
 var vel: Vector2
 var screen_padding: float = 30.0
@@ -18,6 +18,7 @@ func _ready():
 func start(point: Vector2, rot: float) -> void:
 	self.position = point
 	self.rotate(rot)
+	print(speed)
 	vel = transform.y * speed * -1
 
 func _physics_process(delta):
