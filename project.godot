@@ -72,6 +72,10 @@ config/name="AsteroidsClone"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/height=768
+
 [input]
 
 forward={
