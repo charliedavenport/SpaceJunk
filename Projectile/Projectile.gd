@@ -6,10 +6,14 @@ const speed: float = 750.0
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 
+enum source_type {PLAYER, UFO}
+var source: int 
+
 signal projectile_hit(collision)
 
-func start(transf: Transform2D):
-	self.global_transform = transf
+func start(a_transf: Transform2D, a_src: int):
+	self.global_transform = a_transf
+	source = a_src
 	$KillTimer.connect("timeout", self, "on_timeout")
 	$KillTimer.start()
 
