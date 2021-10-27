@@ -6,6 +6,7 @@ const player_scene = preload("res://Player/Player.tscn")
 var player: Player
 onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
+onready var game_over_timer = get_node("GameOverTimer")
 
 # PLAYER VARS
 export var max_lives: int = 5
@@ -24,7 +25,6 @@ export var beg_asteroids_per_wave: int = 4
 var wave: int
 var asteroids_per_wave: int
 
-export var game_over_timer: float = 1.5
 var is_start_screen: bool
 var is_game_over_screen: bool
 var is_game_over_timer: bool
@@ -46,7 +46,8 @@ func game_over() -> void:
 	gui.game_over_screen()
 	#game_over_timer.start()
 	is_game_over_timer = true
-	yield(get_tree().create_timer(game_over_timer), "timeout")
+	game_over_timer.start()
+	yield(game_over_timer, "timeout")
 	is_game_over_timer = false
 	gui.show_press_any_btn()
 

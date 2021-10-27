@@ -23,7 +23,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
-shader_param/flash_amount = 1.0
+shader_param/flash_amount = 0.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 20.4771
@@ -574,4 +574,4 @@ anims/Idle = SubResource( 7 )
 anims/RESET = SubResource( 8 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 1.5

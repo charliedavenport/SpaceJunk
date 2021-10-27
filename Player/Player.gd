@@ -5,7 +5,6 @@ export var thrust: float = 1.0
 export var stopping_thrust: float = 2.0
 export var turnspeed: float = 1.0
 export var slowdown: float = 0.005
-export var invincible_time: float = 2.0
 
 var vel: Vector2
 var alive: bool
@@ -16,6 +15,7 @@ var is_hyperspace: bool
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 onready var rng = RandomNumberGenerator.new()
+onready var invincible_timer = get_node("InvincibleTimer")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -94,7 +94,8 @@ func do_invincibility() -> void:
 	is_invincible = true
 	$AnimationPlayer.play("Flashing")
 	$CollisionShape2D.disabled = true
-	yield(get_tree().create_timer(invincible_time), "timeout")
+	invincible_timer.start()
+	yield(invincible_timer, "timeout")
 	is_invincible = false
 	$AnimationPlayer.play("Idle")
 	$CollisionShape2D.disabled = false
