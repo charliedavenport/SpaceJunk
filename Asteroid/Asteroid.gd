@@ -18,7 +18,6 @@ func _ready():
 func start(point: Vector2, rot: float) -> void:
 	self.position = point
 	self.rotate(rot)
-	print(speed)
 	vel = transform.y * speed * -1
 
 func _physics_process(delta):
