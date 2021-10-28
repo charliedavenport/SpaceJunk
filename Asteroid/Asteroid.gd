@@ -24,6 +24,6 @@ func _physics_process(delta):
 	self.rotate(rot_speed * delta)
 	var collision = move_and_collide(vel * delta)
 #	if collision:
-#		emit_signal("asteroid_hit", self, collision)
+#		emit_signal("asteroid_destroyed", self, collision)
 	position.x = wrapf(position.x, 0 - screen_padding, screen_width + screen_padding)
 	position.y = wrapf(position.y, 0 - screen_padding, screen_height + screen_padding)
