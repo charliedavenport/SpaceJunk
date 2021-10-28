@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main/GameManager.gd" type="Script" id=2]
 [ext_resource path="res://Main/AsteroidSpawner.gd" type="Script" id=3]
+[ext_resource path="res://Main/UFOSpawner.gd" type="Script" id=4]
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
@@ -11,6 +12,12 @@ script = ExtResource( 2 )
 
 [node name="AsteroidSpawner" type="Node2D" parent="."]
 script = ExtResource( 3 )
+
+[node name="UFOSpawner" type="Node2D" parent="."]
+position = Vector2( -1, 0 )
+script = ExtResource( 4 )
+
+[node name="UFOSpawnTimer" type="Timer" parent="UFOSpawner"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2

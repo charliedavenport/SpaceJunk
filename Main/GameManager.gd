@@ -6,6 +6,7 @@ const player_scene = preload("res://Player/Player.tscn")
 var player: Player
 onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
+onready var ufo_spawner = get_node("UFOSpawner")
 onready var game_over_timer = get_node("GameOverTimer")
 
 # PLAYER VARS
@@ -17,8 +18,8 @@ var game_over: bool
 export var big_asteroid_pts: int = 20
 export var medium_asteroid_pts: int = 50
 export var small_asteroid_pts: int = 100
-export var big_saucer_pts: int = 200
-export var small_saucer_pts: int = 1000
+export var ufo_large_pts: int = 200
+export var ufo_small_pts: int = 1000
 var score: int
 
 export var beg_asteroids_per_wave: int = 4
@@ -31,7 +32,6 @@ var is_game_over_timer: bool
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
-	asteroid_spawner.connect("no_asteroids_left", self, "on_no_asteroids_left")
 	is_game_over_timer = false
 	is_game_over_screen = false
 	start_screen()
@@ -62,27 +62,44 @@ func reset_game() -> void:
 	player_lives = max_lives
 	score = 0
 	wave = 1
-	asteroids_per_wave = beg_asteroids_per_wave
-	asteroid_spawner.clear_asteroids()
-	gui.call_deferred("start_game", max_lives, score, wave)
 	player = player_scene.instance()
 	get_tree().root.call_deferred("add_child", player)
 	player.connect("player_hit", self, "on_player_hit")
-	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
+	gui.call_deferred("start_game", max_lives, score, wave)
+	ufo_spawner.start(1)
+	do_waves()
+
+func do_waves() -> void:
+	asteroids_per_wave = beg_asteroids_per_wave
+	while true:
+		asteroid_spawner.clear_asteroids()
+		asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
+		#ufo_spawner.start(wave)
+		yield(asteroid_spawner, "no_asteroids_left")
+		if game_over:
+			return
+		wave += 1
+		gui.set_wave(wave)
+		asteroids_per_wave += 1
 
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
 
 func on_projectile_hit(node) -> void:
-	if node is Asteroid:
-		if node is Asteroid_Big:
-			score += big_asteroid_pts
-			gui.set_score(score)
-		elif node is Asteroid_Small:
-			score += small_asteroid_pts
-			gui.set_score(score)
-		node.destroy()
+	if node is Asteroid_Big:
+		score += big_asteroid_pts
+	elif node is Asteroid_Medium:
+		score += medium_asteroid_pts
+	elif node is Asteroid_Small:
+		score += small_asteroid_pts
+	elif node is UFO_Large:
+		score += ufo_large_pts
+	else:
+		print("unknown collision")
+		return
+	gui.set_score(score)
+	node.destroy() 
 
 func on_player_hit() -> void:
 	player_lives -= 1
@@ -92,8 +109,3 @@ func on_player_hit() -> void:
 	if game_over:
 		game_over()
 
-func on_no_asteroids_left() -> void:
-	wave += 1
-	gui.set_wave(wave)
-	asteroids_per_wave += 1
-	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)

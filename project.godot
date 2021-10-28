@@ -29,10 +29,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Asteroid/Asteroid_Small.gd"
 }, {
-"base": "Node2D",
+"base": "BaseSpawner",
 "class": "Asteroid_Spawner",
 "language": "GDScript",
 "path": "res://Main/AsteroidSpawner.gd"
+}, {
+"base": "Node2D",
+"class": "BaseSpawner",
+"language": "GDScript",
+"path": "res://Main/BaseSpawner.gd"
 }, {
 "base": "Control",
 "class": "GUI",
@@ -53,6 +58,16 @@ _global_script_classes=[ {
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://Projectile/Projectile.gd"
+}, {
+"base": "BaseSpawner",
+"class": "UFOSpawner",
+"language": "GDScript",
+"path": "res://Main/UFOSpawner.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "UFO_Large",
+"language": "GDScript",
+"path": "res://UFO/UFO_Large.gd"
 } ]
 _global_script_class_icons={
 "Asteroid": "",
@@ -60,10 +75,13 @@ _global_script_class_icons={
 "Asteroid_Medium": "",
 "Asteroid_Small": "",
 "Asteroid_Spawner": "",
+"BaseSpawner": "",
 "GUI": "",
 "GameManager": "",
 "Player": "",
-"Projectile": ""
+"Projectile": "",
+"UFOSpawner": "",
+"UFO_Large": ""
 }
 
 [application]
@@ -109,6 +127,7 @@ hyperspace={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Projectile"
 2d_physics/layer_3="Asteroid"
+2d_physics/layer_4="UFO"
 
 [physics]
 

@@ -4,6 +4,7 @@
 
 [node name="Asteroid_Medium" type="KinematicBody2D"]
 collision_layer = 4
+collision_mask = 3
 script = ExtResource( 1 )
 speed = 100.0
 
