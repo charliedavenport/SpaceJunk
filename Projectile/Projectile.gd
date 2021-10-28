@@ -12,15 +12,20 @@ var source: int
 
 signal projectile_hit(collision)
 
-func start(a_transf: Transform2D, a_src: int):
-	self.global_transform = a_transf
+func start(a_point: Vector2, a_rot: float, a_src: int):
+	self.global_transform.origin = a_point
+	self.rotate(a_rot)
 	source = a_src
+	if source == source_type.UFO:
+		collision_mask = 0b0101 # Asteroid AND Player
+	else:
+		collision_mask = 0b1100 # UFO AND Asteroid
 	kill_timer.start()
 	yield(kill_timer, "timeout")
 	queue_free()
 
 func _physics_process(delta):
-	var vel = self.transform.y * speed * -1 * delta
+	var vel = self.transform.x * speed * delta
 	var collision = move_and_collide(vel)
 	if collision:
 		emit_signal("projectile_hit", collision.collider)

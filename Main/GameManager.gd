@@ -52,7 +52,10 @@ func game_over() -> void:
 	gui.show_press_any_btn()
 
 func _input(event):
-	if (is_start_screen or is_game_over_screen) and event is InputEventKey and event.pressed and not is_game_over_timer:
+	var reset_game_condition = (is_start_screen or is_game_over_screen) \
+								and (event is InputEventKey or event is InputEventMouseButton) \
+								and event.pressed and not is_game_over_timer
+	if reset_game_condition:
 		is_start_screen = false
 		is_game_over_screen = false
 		reset_game()
@@ -95,6 +98,9 @@ func on_projectile_hit(node) -> void:
 		score += small_asteroid_pts
 	elif node is UFO_Large:
 		score += ufo_large_pts
+	elif node is Player:
+		node.emit_signal("player_hit")
+		return
 	else:
 		print("unknown collision")
 		return

@@ -20,3 +20,4 @@ texture = ExtResource( 1 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
+[node name="ShootTimer" type="Timer" parent="."]

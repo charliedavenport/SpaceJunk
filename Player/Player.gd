@@ -45,7 +45,7 @@ func _physics_process(delta):
 	# handle thrust
 	if Input.is_action_pressed("forward"):
 		thruster.visible = true
-		var delta_vec = -1.0 * transform.y * delta
+		var delta_vec = transform.x * delta
 		if delta_vec.dot(vel) > 0:
 			delta_vec *= thrust
 		else:
@@ -63,13 +63,13 @@ func _physics_process(delta):
 	position.y = wrapf(position.y, 0, screen_height)
 
 func _input(event):
-	if event.is_action_pressed("shoot"):
+	if event.is_action_pressed("shoot") and alive:
 		shoot()
 
 func shoot() -> void:
 	var projectile_inst = projectile.instance()
 	get_tree().root.add_child(projectile_inst)
-	projectile_inst.start(self.global_transform, projectile_inst.source_type.PLAYER)
+	projectile_inst.start(self.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
 
 func kill(a_game_over: bool) -> void:
 	alive = false

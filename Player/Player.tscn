@@ -527,6 +527,7 @@ slowdown = 0.01
 [node name="ShipSprite" type="Sprite" parent="."]
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
 material = SubResource( 2 )
+rotation = 1.5708
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 5 )
 
@@ -535,6 +536,7 @@ visible = false
 shape = SubResource( 3 )
 
 [node name="ThrusterPolygon" type="Polygon2D" parent="."]
+rotation = 1.5708
 polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
 
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
