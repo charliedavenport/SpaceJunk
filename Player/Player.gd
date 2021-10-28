@@ -25,6 +25,7 @@ signal player_hit
 func _ready():
 	rng.randomize()
 	position = Vector2(screen_width/2, screen_height/2)
+	rotation = -TAU/4
 	alive = true
 	is_hyperspace = false
 	vel = Vector2.ZERO
@@ -83,7 +84,7 @@ func kill(a_game_over: bool) -> void:
 
 func reset() -> void:
 	alive = true
-	rotation = 0.0
+	rotation = -TAU/4
 	position = Vector2(screen_width/2, screen_height/2)
 	vel = Vector2.ZERO
 	collision_shape.disabled = false
