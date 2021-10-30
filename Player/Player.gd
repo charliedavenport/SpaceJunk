@@ -23,6 +23,7 @@ const projectile = preload("res://Projectile/Projectile.tscn")
 signal player_hit
 
 func _ready():
+	self.visible = false
 	rng.randomize()
 	position = Vector2(screen_width/2, screen_height/2)
 	rotation = -TAU/4
@@ -79,16 +80,20 @@ func kill(a_game_over: bool) -> void:
 	thruster.visible = false
 	yield(anim, "animation_finished")
 	if a_game_over:
-		queue_free()
-	call_deferred("reset")
+		self.visible = false
+	else:
+		call_deferred("reset", true)
 
-func reset() -> void:
+func reset(a_invincibility: bool) -> void:
+	self.visible = true
 	alive = true
 	rotation = -TAU/4
 	position = Vector2(screen_width/2, screen_height/2)
 	vel = Vector2.ZERO
 	collision_shape.disabled = false
-	do_invincibility()
+	anim.play("Idle")
+	if a_invincibility:
+		do_invincibility()
 
 func do_invincibility() -> void:
 	is_invincible = true

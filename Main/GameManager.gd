@@ -32,6 +32,9 @@ var is_game_over_timer: bool
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
+	player = player_scene.instance()
+	get_tree().root.call_deferred("add_child", player)
+	player.connect("player_hit", self, "on_player_hit")
 	is_game_over_timer = false
 	is_game_over_screen = false
 	start_screen()
@@ -65,10 +68,9 @@ func reset_game() -> void:
 	player_lives = max_lives
 	score = 0
 	wave = 1
-	player = player_scene.instance()
-	get_tree().root.call_deferred("add_child", player)
-	player.connect("player_hit", self, "on_player_hit")
+	player.reset(false)
 	gui.call_deferred("start_game", max_lives, score, wave)
+	ufo_spawner.destroy_ufo()
 	ufo_spawner.start(1)
 	do_waves()
 
