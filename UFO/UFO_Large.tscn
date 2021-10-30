@@ -21,3 +21,6 @@ rotation = 1.5708
 shape = SubResource( 1 )
 
 [node name="ShootTimer" type="Timer" parent="."]
+
+[node name="ChangeDirectionTimer" type="Timer" parent="."]
+wait_time = 2.0
