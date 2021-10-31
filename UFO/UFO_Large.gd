@@ -9,9 +9,11 @@ onready var shoot_timer = get_node("ShootTimer")
 onready var change_dir_timer = get_node("ChangeDirectionTimer")
 onready var rng = RandomNumberGenerator.new()
 onready var player = get_tree().root.get_node("Player")
+onready var anim = get_node("AnimationPlayer")
 
 var speed: float = 100.0
 var vel: Vector2
+var alive: bool
 
 signal ufo_destroyed
 
@@ -21,6 +23,8 @@ func _ready():
 func start(a_point: Vector2, a_target: Vector2) -> void:
 	position = a_point
 	vel = (a_target - position).normalized()
+	anim.play("Idle")
+	alive = true
 	start_shooting()
 	start_changing_direction()
 
@@ -37,7 +41,7 @@ func change_direction() -> void:
 func start_shooting() -> void:
 	shoot_timer.start()
 	yield(shoot_timer, "timeout")
-	while true:
+	while alive:
 		shoot_timer.start()
 		yield(shoot_timer, "timeout")
 		shoot_at_player()
@@ -54,6 +58,8 @@ func shoot_at_player() -> void:
 	
 
 func _physics_process(delta):
+	if not alive:
+		return
 	var collision = move_and_collide(vel * speed * delta)
 	if collision:
 		if collision.collider is Asteroid:
@@ -64,7 +70,12 @@ func _physics_process(delta):
 	position.y = wrapf(position.y, 0, screen_height)
 
 func destroy() -> void:
+	alive = false
+	$CollisionShape2D.disabled = true
+	shoot_timer.stop()
 	emit_signal("ufo_destroyed")
+	anim.play("Destroyed")
+	yield(anim, "animation_finished")
 	queue_free()
 
 
