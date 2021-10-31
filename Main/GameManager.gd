@@ -90,8 +90,16 @@ func do_waves() -> void:
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
+	elif node is Asteroid:
+		node.connect("asteroid_collision", self, "on_asteroid_collision")
 
-func on_projectile_hit(node) -> void:
+func on_asteroid_collision(ast, coll) -> void:
+	if coll is Player:
+		on_player_hit()
+	elif coll is UFO_Large:
+		ufo_spawner.destroy_ufo()
+
+func on_projectile_hit(proj, node) -> void:
 	if node is Asteroid_Big:
 		score += big_asteroid_pts
 	elif node is Asteroid_Medium:
@@ -110,6 +118,8 @@ func on_projectile_hit(node) -> void:
 	node.destroy() 
 
 func on_player_hit() -> void:
+	if not player.alive:
+		return
 	player_lives -= 1
 	game_over = (player_lives == 0)
 	player.kill(game_over)

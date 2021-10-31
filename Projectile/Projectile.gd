@@ -10,7 +10,7 @@ onready var kill_timer = get_node("KillTimer")
 enum source_type {PLAYER, UFO}
 var source: int 
 
-signal projectile_hit(collision)
+signal projectile_hit(proj, collision)
 
 func start(a_point: Vector2, a_rot: float, a_src: int):
 	self.global_transform.origin = a_point
@@ -28,7 +28,7 @@ func _physics_process(delta):
 	var vel = self.transform.x * speed * delta
 	var collision = move_and_collide(vel)
 	if collision:
-		emit_signal("projectile_hit", collision.collider)
+		emit_signal("projectile_hit", self, collision.collider)
 		queue_free()
 	position.x = wrapf(position.x, 0, screen_width)
 	position.y = wrapf(position.y, 0, screen_height)
