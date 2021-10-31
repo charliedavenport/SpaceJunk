@@ -11,6 +11,7 @@ onready var screen_height = get_viewport_rect().size.y
 onready var rng = RandomNumberGenerator.new()
 
 signal asteroid_destroyed(node)
+signal asteroid_collision(ast, coll)
 
 func _ready():
 	rng.randomize()
@@ -23,7 +24,12 @@ func start(point: Vector2, rot: float) -> void:
 func _physics_process(delta):
 	self.rotate(rot_speed * delta)
 	var collision = move_and_collide(vel * delta)
-#	if collision:
-#		emit_signal("asteroid_destroyed", self, collision)
+	if collision:
+		emit_signal("asteroid_collision", self, collision.collider)
+		#self.destroy()
 	position.x = wrapf(position.x, 0 - screen_padding, screen_width + screen_padding)
 	position.y = wrapf(position.y, 0 - screen_padding, screen_height + screen_padding)
+
+func destroy() -> void:
+	# implemented in inheritted class
+	pass
