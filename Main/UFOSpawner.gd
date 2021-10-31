@@ -10,7 +10,7 @@ var ufo_inst
 
 func start(wave: int) -> void:
 	ufo_active = false
-	ufo_timer.wait_time = 5.0
+	ufo_timer.wait_time = 10.0
 	ufo_timer.start()
 	yield(ufo_timer, "timeout")
 	spawn_ufo()
