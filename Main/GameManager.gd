@@ -65,6 +65,8 @@ func _input(event):
 		reset_game()
 
 func reset_game() -> void:
+	asteroid_spawner.clear_asteroids()
+	ufo_spawner.clear_ufo()
 	# wait one frame to let everything queue free
 	yield(get_tree(), "idle_frame")
 	print('game reset')
@@ -74,7 +76,6 @@ func reset_game() -> void:
 	wave = 1
 	player.reset(false)
 	gui.call_deferred("start_game", max_lives, score, wave)
-	ufo_spawner.clear_ufo()
 	ufo_spawner.start(1)
 	do_waves()
 
