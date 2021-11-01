@@ -32,6 +32,10 @@ func destroy_ufo() -> void:
 	if ufo_active:
 		ufo_inst.destroy()
 
+func clear_ufo() -> void:
+	if ufo_active:
+		ufo_inst.queue_free()
+
 func on_ufo_destroyed() -> void:
 	ufo_active = false
 	ufo_timer.start()

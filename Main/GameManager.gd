@@ -65,6 +65,8 @@ func _input(event):
 		reset_game()
 
 func reset_game() -> void:
+	# wait one frame to let everything queue free
+	yield(get_tree(), "idle_frame")
 	print('game reset')
 	game_over = false
 	player_lives = max_lives
@@ -72,7 +74,7 @@ func reset_game() -> void:
 	wave = 1
 	player.reset(false)
 	gui.call_deferred("start_game", max_lives, score, wave)
-	ufo_spawner.destroy_ufo()
+	ufo_spawner.clear_ufo()
 	ufo_spawner.start(1)
 	do_waves()
 
@@ -119,7 +121,8 @@ func on_projectile_hit(proj, node) -> void:
 		print("unknown collision")
 		return
 	gui.set_score(score)
-	node.destroy() 
+	if node.has_method("destroy"):
+		node.destroy() 
 
 func on_player_hit() -> void:
 	if not player.alive:
