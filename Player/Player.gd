@@ -74,6 +74,7 @@ func shoot() -> void:
 	projectile_inst.start(self.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
 
 func kill(a_game_over: bool) -> void:
+	print("player killed")
 	alive = false
 	collision_shape.disabled = true
 	anim.play("Destroyed")
@@ -85,6 +86,7 @@ func kill(a_game_over: bool) -> void:
 		call_deferred("reset", true)
 
 func reset(a_invincibility: bool) -> void:
+	print('player reset')
 	self.visible = true
 	alive = true
 	rotation = -TAU/4

@@ -18,6 +18,7 @@ var alive: bool
 signal ufo_destroyed
 
 func _ready():
+	print('ufo spawned')
 	rng.randomize()
 
 func start(a_point: Vector2, a_target: Vector2) -> void:
@@ -63,13 +64,13 @@ func _physics_process(delta):
 	var collision = move_and_collide(vel * speed * delta)
 	if collision:
 		if collision.collider is Asteroid:
-			print('ufo hit asteroid')
 			collision.collider.destroy()
 			destroy()
 	position.x = wrapf(position.x, 0, screen_width)
 	position.y = wrapf(position.y, 0, screen_height)
 
 func destroy() -> void:
+	print('ufo destroyed')
 	alive = false
 	$CollisionShape2D.disabled = true
 	shoot_timer.stop()

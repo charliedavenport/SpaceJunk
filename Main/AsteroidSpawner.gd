@@ -34,6 +34,7 @@ func clear_asteroids() -> void:
 func on_asteroid_destroyed(node) -> void:
 	asteroid_count -= 1
 	if asteroid_count == 0:
+		print("all asteroids destroyed")
 		emit_signal("no_asteroids_left")
 
 func on_node_added(node) -> void:

@@ -45,6 +45,7 @@ func start_screen() -> void:
 	gui.start_screen()
 
 func game_over() -> void:
+	print('game over')
 	is_game_over_screen = true
 	gui.game_over_screen()
 	#game_over_timer.start()
@@ -64,6 +65,7 @@ func _input(event):
 		reset_game()
 
 func reset_game() -> void:
+	print('game reset')
 	game_over = false
 	player_lives = max_lives
 	score = 0
@@ -77,6 +79,7 @@ func reset_game() -> void:
 func do_waves() -> void:
 	asteroids_per_wave = beg_asteroids_per_wave
 	while true:
+		print('spawning %s asteroids' % asteroids_per_wave)
 		asteroid_spawner.clear_asteroids()
 		asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 		#ufo_spawner.start(wave)
@@ -84,6 +87,7 @@ func do_waves() -> void:
 		if game_over:
 			return
 		wave += 1
+		print('wave = %s' % wave)
 		gui.set_wave(wave)
 		asteroids_per_wave += 1
 
