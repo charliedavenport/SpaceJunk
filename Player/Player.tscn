@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/icon_shard_1.png" type="Texture" id=2]
 [ext_resource path="res://Player/icon_shard_2.png" type="Texture" id=3]
 [ext_resource path="res://Player/icon_shard_3.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Player/iddqd.png" type="Texture" id=6]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -530,6 +531,14 @@ material = SubResource( 2 )
 rotation = 1.5708
 scale = Vector2( 0.6, 0.6 )
 texture = ExtResource( 5 )
+
+[node name="GodmodeSprite" type="Sprite" parent="."]
+visible = false
+self_modulate = Color( 0.992157, 0.992157, 1, 1 )
+material = SubResource( 2 )
+rotation = 1.5708
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

@@ -10,6 +10,7 @@ var vel: Vector2
 var alive: bool
 var is_invincible: bool
 var is_hyperspace: bool
+var is_godmode: bool
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -18,6 +19,8 @@ onready var invincible_timer = get_node("InvincibleTimer")
 onready var anim = get_node("AnimationPlayer")
 onready var collision_shape = get_node("CollisionShape2D")
 onready var thruster = get_node("ThrusterPolygon")
+onready var ship_sprite = get_node("ShipSprite")
+onready var godmode_sprite = get_node("GodmodeSprite")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -29,6 +32,7 @@ func _ready():
 	rotation = -TAU/4
 	alive = true
 	is_hyperspace = false
+	is_godmode = false
 	vel = Vector2.ZERO
 	thruster.visible = false
 	anim.play("Idle")
@@ -39,6 +43,8 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("hyperspace"):
 		do_hyperspace()
 		return
+	if Input.is_action_just_pressed("cheat_godmode"):
+		toggle_godmode()
 	# handle rotation
 	if Input.is_action_pressed("turn_left"):
 		rotate(-1.0 * turnspeed * delta)
@@ -116,3 +122,17 @@ func do_hyperspace() -> void:
 	var random_point = Vector2(rng.randi_range(0, screen_width), rng.randi_range(0, screen_height))
 	position = random_point
 	is_hyperspace = false
+
+func toggle_godmode() -> void:
+	is_godmode = not is_godmode
+	if is_godmode:
+		print("God mode cheat is active")
+		collision_shape.disabled = true
+		ship_sprite.visible = false
+		godmode_sprite.visible = true
+	else:
+		print("God mode cheat is not active")
+		collision_shape.disabled = false
+		ship_sprite.visible = true
+		godmode_sprite.visible = false
+		
