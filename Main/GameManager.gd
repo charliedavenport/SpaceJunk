@@ -107,21 +107,19 @@ func on_asteroid_collision(ast, coll) -> void:
 		ufo_spawner.destroy_ufo()
 
 func on_projectile_hit(proj, node) -> void:
-	if node is Asteroid_Big:
-		score += big_asteroid_pts
-	elif node is Asteroid_Medium:
-		score += medium_asteroid_pts
-	elif node is Asteroid_Small:
-		score += small_asteroid_pts
-	elif node is UFO_Large:
-		score += ufo_large_pts
+	if proj.source == Projectile.source_type.PLAYER:
+		if node is Asteroid_Big:
+			score += big_asteroid_pts
+		elif node is Asteroid_Medium:
+			score += medium_asteroid_pts
+		elif node is Asteroid_Small:
+			score += small_asteroid_pts
+		elif node is UFO_Large:
+			score += ufo_large_pts
+		gui.set_score(score)
 	elif node is Player:
 		node.emit_signal("player_hit")
 		return
-	else:
-		print("unknown collision")
-		return
-	gui.set_score(score)
 	if node.has_method("destroy"):
 		node.destroy() 
 
