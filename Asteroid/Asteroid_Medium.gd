@@ -11,6 +11,6 @@ func destroy() -> void:
 		dir = dir + vel.normalized()
 		get_tree().root.add_child(asteroid_small_inst)
 		asteroid_small_inst.start(position, dir.angle())
-	print("medium asteroid destroyed")
+	#print("medium asteroid destroyed")
 	emit_signal("asteroid_destroyed", self)
 	queue_free()
