@@ -522,7 +522,7 @@ __meta__ = {
 }
 thrust = 2.0
 stopping_thrust = 3.0
-turnspeed = 3.5
+turnspeed = 4.0
 slowdown = 0.01
 
 [node name="ShipSprite" type="Sprite" parent="."]
