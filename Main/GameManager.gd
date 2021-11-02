@@ -22,10 +22,13 @@ export var ufo_large_pts: int = 200
 export var ufo_small_pts: int = 1000
 var score: int
 
+# WAVES
 export var beg_asteroids_per_wave: int = 4
 var wave: int
 var asteroids_per_wave: int
+var asteroid_speed_scale: float
 
+# GAME STATE
 var is_start_screen: bool
 var is_game_over_screen: bool
 var is_game_over_timer: bool
@@ -81,6 +84,7 @@ func reset_game() -> void:
 
 func do_waves() -> void:
 	asteroids_per_wave = beg_asteroids_per_wave
+	asteroid_speed_scale = 1.0
 	while true:
 		print('spawning %s asteroids' % asteroids_per_wave)
 		asteroid_spawner.clear_asteroids()
@@ -93,12 +97,14 @@ func do_waves() -> void:
 		print('wave = %s' % wave)
 		gui.set_wave(wave)
 		asteroids_per_wave += 1
+		asteroid_speed_scale += 0.1
 
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
 	elif node is Asteroid:
 		node.connect("asteroid_collision", self, "on_asteroid_collision")
+		node.speed *= asteroid_speed_scale
 
 func on_asteroid_collision(ast, coll) -> void:
 	if coll is Player:
