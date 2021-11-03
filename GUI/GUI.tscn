@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://GUI/GUI.gd" type="Script" id=2]
 [ext_resource path="res://GUI/roboto_outline.tres" type="DynamicFont" id=3]
+[ext_resource path="res://GUI/LifeRect.tscn" type="PackedScene" id=4]
 
 [node name="GUI" type="Control"]
 anchor_right = 1.0
@@ -22,39 +22,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="LivesContainer"]
-margin_right = 64.0
-margin_bottom = 64.0
-texture = ExtResource( 1 )
-stretch_mode = 1
+[node name="TextureRect" parent="LivesContainer" instance=ExtResource( 4 )]
 
-[node name="TextureRect2" type="TextureRect" parent="LivesContainer"]
+[node name="TextureRect2" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 68.0
 margin_right = 132.0
-margin_bottom = 64.0
-texture = ExtResource( 1 )
-stretch_mode = 1
 
-[node name="TextureRect3" type="TextureRect" parent="LivesContainer"]
+[node name="TextureRect3" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 136.0
 margin_right = 200.0
-margin_bottom = 64.0
-texture = ExtResource( 1 )
-stretch_mode = 1
 
-[node name="TextureRect4" type="TextureRect" parent="LivesContainer"]
+[node name="TextureRect4" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 204.0
 margin_right = 268.0
-margin_bottom = 64.0
-texture = ExtResource( 1 )
-stretch_mode = 1
 
-[node name="TextureRect5" type="TextureRect" parent="LivesContainer"]
+[node name="TextureRect5" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 272.0
 margin_right = 336.0
-margin_bottom = 64.0
-texture = ExtResource( 1 )
-stretch_mode = 1
 
 [node name="ScoreLabel" type="Label" parent="."]
 anchor_left = 1.0
@@ -102,6 +86,7 @@ __meta__ = {
 }
 
 [node name="GameOverScreen" type="Control" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

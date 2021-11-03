@@ -24,18 +24,14 @@ onready var godmode_sprite = get_node("GodmodeSprite")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
+signal player_cheated
 
 func _ready():
 	self.visible = false
 	rng.randomize()
-	position = Vector2(screen_width/2, screen_height/2)
-	rotation = -TAU/4
-	alive = true
-	is_hyperspace = false
 	is_godmode = false
-	vel = Vector2.ZERO
 	thruster.visible = false
-	anim.play("Idle")
+	reset(false)
 
 func _physics_process(delta):
 	if not alive or is_hyperspace:
@@ -95,6 +91,7 @@ func reset(a_invincibility: bool) -> void:
 	print('player reset')
 	self.visible = true
 	alive = true
+	is_hyperspace = false
 	rotation = -TAU/4
 	position = Vector2(screen_width/2, screen_height/2)
 	vel = Vector2.ZERO
@@ -124,6 +121,7 @@ func do_hyperspace() -> void:
 	is_hyperspace = false
 
 func toggle_godmode() -> void:
+	emit_signal("player_cheated")
 	is_godmode = not is_godmode
 	if is_godmode:
 		print("God mode cheat is active")

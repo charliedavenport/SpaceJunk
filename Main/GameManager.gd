@@ -1,34 +1,35 @@
 extends Node
 class_name GameManager
 
-const player_scene = preload("res://Player/Player.tscn")
-
-var player: Player
 onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
 onready var game_over_timer = get_node("GameOverTimer")
 
 # PLAYER VARS
-export var max_lives: int = 5
+const player_scene = preload("res://Player/Player.tscn")
+const max_lives: int = 5
+const new_life_score: int = 10000
+var player: Player
 var player_lives: int
-var game_over: bool
+var is_player_cheated: bool
 
 # SCORING
-export var big_asteroid_pts: int = 20
-export var medium_asteroid_pts: int = 50
-export var small_asteroid_pts: int = 100
-export var ufo_large_pts: int = 200
-export var ufo_small_pts: int = 1000
+const big_asteroid_pts: int = 20
+const medium_asteroid_pts: int = 50
+const small_asteroid_pts: int = 100
+const ufo_large_pts: int = 200
+const ufo_small_pts: int = 1000
 var score: int
 
 # WAVES
-export var beg_asteroids_per_wave: int = 4
+const beg_asteroids_per_wave: int = 4
 var wave: int
 var asteroids_per_wave: int
 var asteroid_speed_scale: float
 
 # GAME STATE
+var is_game_over: bool
 var is_start_screen: bool
 var is_game_over_screen: bool
 var is_game_over_timer: bool
@@ -38,6 +39,7 @@ func _ready():
 	player = player_scene.instance()
 	get_tree().root.call_deferred("add_child", player)
 	player.connect("player_hit", self, "on_player_hit")
+	player.connect("player_cheated", self, "on_player_cheated")
 	is_game_over_timer = false
 	is_game_over_screen = false
 	start_screen()
@@ -51,7 +53,6 @@ func game_over() -> void:
 	print('game over')
 	is_game_over_screen = true
 	gui.game_over_screen()
-	#game_over_timer.start()
 	is_game_over_timer = true
 	game_over_timer.start()
 	yield(game_over_timer, "timeout")
@@ -73,7 +74,8 @@ func reset_game() -> void:
 	# wait one frame to let everything queue free
 	yield(get_tree(), "idle_frame")
 	print('game reset')
-	game_over = false
+	is_game_over = false
+	is_player_cheated = false
 	player_lives = max_lives
 	score = 0
 	wave = 1
@@ -91,7 +93,7 @@ func do_waves() -> void:
 		asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 		#ufo_spawner.start(wave)
 		yield(asteroid_spawner, "no_asteroids_left")
-		if game_over:
+		if is_game_over:
 			return
 		wave += 1
 		print('wave = %s' % wave)
@@ -114,28 +116,45 @@ func on_asteroid_collision(ast, coll) -> void:
 
 func on_projectile_hit(proj, node) -> void:
 	if proj.source == Projectile.source_type.PLAYER:
-		if node is Asteroid_Big:
-			score += big_asteroid_pts
-		elif node is Asteroid_Medium:
-			score += medium_asteroid_pts
-		elif node is Asteroid_Small:
-			score += small_asteroid_pts
-		elif node is UFO_Large:
-			score += ufo_large_pts
-		gui.set_score(score)
+		update_player_score(node)
 	elif node is Player:
 		node.emit_signal("player_hit")
 		return
 	if node.has_method("destroy"):
 		node.destroy() 
 
+func update_player_score(node: Node) -> void:
+	var prev_score = score
+	if node is Asteroid_Big:
+		score += big_asteroid_pts
+	elif node is Asteroid_Medium:
+		score += medium_asteroid_pts
+	elif node is Asteroid_Small:
+		score += small_asteroid_pts
+	elif node is UFO_Large:
+		score += ufo_large_pts
+	# new life every next_life_score points
+	var next_life_threshold = score - (score % new_life_score)
+	if prev_score < next_life_threshold:
+		print("player earned a new life!")
+		player_lives += 1
+		gui.increment_lives()
+	gui.set_score(score)
+
 func on_player_hit() -> void:
 	if not player.alive:
 		return
 	player_lives -= 1
-	game_over = (player_lives == 0)
-	player.kill(game_over)
+	is_game_over = (player_lives == 0)
+	player.kill(is_game_over)
 	gui.decrement_lives()
-	if game_over:
+	print('lives = %s' % player_lives )
+	if is_game_over:
 		game_over()
+
+func on_player_cheated() -> void:
+	if is_player_cheated:
+		return
+	is_player_cheated = true
+	gui.disable_score()
 

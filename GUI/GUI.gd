@@ -9,9 +9,13 @@ onready var game_over_ctrl = get_node("GameOverScreen")
 onready var press_any_btn_label = get_node("GameOverScreen/PressAnyBtnLabel")
 onready var game_over_score = get_node("GameOverScreen/GameOverScoreLabel")
 
+const life_rect = preload("res://GUI/LifeRect.tscn")
+
 var lives: int
+var max_lives: int
 var score: int
 var wave: int
+var is_score_disabled: bool
 
 func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	lives_container.visible = true
@@ -19,10 +23,13 @@ func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	wave_label.visible = true
 	start_label.visible = false
 	game_over_ctrl.visible = false
+	is_score_disabled = false
 	set_score(a_score)
-	lives = a_lives
+	max_lives = a_lives
+	lives = max_lives
 	reset_lives()
 	set_wave(a_wave)
+	score_label.add_color_override("font_color", Color.white)
 
 func start_screen() -> void:
 	lives_container.visible = false
@@ -43,8 +50,17 @@ func show_press_any_btn() -> void:
 	press_any_btn_label.visible = true
 
 func set_score(a_score: int) -> void:
+	if is_score_disabled:
+		return
 	score = a_score
 	score_label.text = '%s' % score
+
+func increment_lives() -> void:
+	lives += 1
+	if lives <= max_lives:
+		lives_container.get_child(lives_container.get_child_count() - lives).visible = true
+	else:
+		lives_container.add_child(life_rect.instance())
 
 func decrement_lives() -> void:
 	if lives > 0:
@@ -53,9 +69,15 @@ func decrement_lives() -> void:
 
 func reset_lives() -> void:
 	for i in range(lives_container.get_child_count()):
-		lives_container.get_child(i).visible = true
+		lives_container.get_child(i).queue_free()
+	for i in range(max_lives):
+		lives_container.add_child(life_rect.instance())
 
 func set_wave(a_wave) -> void:
 	wave = a_wave
 	wave_label.text = 'wave %s' % wave
+
+func disable_score() -> void:
+	is_score_disabled = true
+	score_label.add_color_override("font_color", Color.red)
 	
