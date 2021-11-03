@@ -8,6 +8,7 @@ onready var start_label = get_node("StartLabel")
 onready var game_over_ctrl = get_node("GameOverScreen")
 onready var press_any_btn_label = get_node("GameOverScreen/PressAnyBtnLabel")
 onready var game_over_score = get_node("GameOverScreen/GameOverScoreLabel")
+onready var fps_label = get_node("FPSLabel")
 
 const life_rect = preload("res://GUI/LifeRect.tscn")
 
@@ -16,6 +17,7 @@ var max_lives: int
 var score: int
 var wave: int
 var is_score_disabled: bool
+var is_show_fps: bool
 
 func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	lives_container.visible = true
@@ -30,6 +32,11 @@ func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	reset_lives()
 	set_wave(a_wave)
 	score_label.add_color_override("font_color", Color.white)
+
+func _process(delta) -> void:
+	if is_show_fps:
+		var fps = Engine.get_frames_per_second()
+		fps_label.text = 'fps = %s' % fps
 
 func start_screen() -> void:
 	lives_container.visible = false
@@ -80,4 +87,7 @@ func set_wave(a_wave) -> void:
 func disable_score() -> void:
 	is_score_disabled = true
 	score_label.add_color_override("font_color", Color.red)
-	
+
+func show_fps(a_show_fps: bool) -> void:
+	is_show_fps = a_show_fps
+	fps_label.visible = is_show_fps

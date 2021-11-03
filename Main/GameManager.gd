@@ -9,7 +9,7 @@ onready var game_over_timer = get_node("GameOverTimer")
 # PLAYER VARS
 const player_scene = preload("res://Player/Player.tscn")
 const max_lives: int = 5
-const new_life_score: int = 10000
+const new_life_score: int = 800
 var player: Player
 var player_lives: int
 var is_player_cheated: bool
@@ -42,6 +42,7 @@ func _ready():
 	player.connect("player_cheated", self, "on_player_cheated")
 	is_game_over_timer = false
 	is_game_over_screen = false
+	gui.show_fps(true)
 	start_screen()
 
 func start_screen() -> void:
