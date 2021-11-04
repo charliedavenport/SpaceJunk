@@ -8,8 +8,8 @@ onready var game_over_timer = get_node("GameOverTimer")
 
 # PLAYER VARS
 const player_scene = preload("res://Player/Player.tscn")
-const max_lives: int = 5
-const new_life_score: int = 800
+const max_lives: int = 2
+const new_life_score: int = 10000
 var player: Player
 var player_lives: int
 var is_player_cheated: bool
@@ -21,6 +21,10 @@ const small_asteroid_pts: int = 100
 const ufo_large_pts: int = 200
 const ufo_small_pts: int = 1000
 var score: int
+const max_high_scores := 5
+const high_scores_filepath = "res://high_scores.json"
+var high_scores_file: File
+var high_scores: Array
 
 # WAVES
 const beg_asteroids_per_wave: int = 4
@@ -42,6 +46,7 @@ func _ready():
 	player.connect("player_cheated", self, "on_player_cheated")
 	is_game_over_timer = false
 	is_game_over_screen = false
+	high_scores = get_high_scores()
 	gui.show_fps(true)
 	start_screen()
 
@@ -54,6 +59,9 @@ func game_over() -> void:
 	print('game over')
 	is_game_over_screen = true
 	gui.game_over_screen()
+	if check_high_score():
+		print("New high score! Saving")
+		save_high_score()
 	is_game_over_timer = true
 	game_over_timer.start()
 	yield(game_over_timer, "timeout")
@@ -125,6 +133,8 @@ func on_projectile_hit(proj, node) -> void:
 		node.destroy() 
 
 func update_player_score(node: Node) -> void:
+	if is_player_cheated:
+		return
 	var prev_score = score
 	if node is Asteroid_Big:
 		score += big_asteroid_pts
@@ -156,6 +166,37 @@ func on_player_hit() -> void:
 func on_player_cheated() -> void:
 	if is_player_cheated:
 		return
+	print("player used a cheat code, so scoring is disabled")
 	is_player_cheated = true
 	gui.disable_score()
 
+func get_high_scores():
+	high_scores_file = File.new()
+	if not high_scores_file.file_exists(high_scores_filepath):
+		print('high scores file not found, creating new file')
+		high_scores_file.open(high_scores_filepath, File.WRITE)
+		high_scores_file.close()
+		return
+	high_scores_file.open(high_scores_filepath, File.READ)
+	var scores = parse_json(high_scores_file.get_line())
+	print('high scores = %s' % str(scores))
+	high_scores_file.close()
+	return scores
+
+func check_high_score() -> bool:
+	if len(high_scores) < max_high_scores:
+		return true
+	# return true if any of the saved high scores are lower than score
+	for i in range(len(high_scores)):
+		var saved_score = high_scores[i]["score"]
+		if score > saved_score:
+			return true
+	return false
+
+func save_high_score() -> void:
+	var score_entry = {"name":"aaa", "score":score}
+	if len(high_scores) < max_high_scores:
+		high_scores.append(score_entry)
+	high_scores_file.open(high_scores_filepath, File.WRITE)
+	high_scores_file.store_line(str(high_scores))
+	high_scores_file.close()
