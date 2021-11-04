@@ -31,7 +31,7 @@ func _ready():
 	rng.randomize()
 	is_godmode = false
 	thruster.visible = false
-	reset(false)
+
 
 func _physics_process(delta):
 	if not alive or is_hyperspace:
