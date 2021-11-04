@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GUI/roboto_outline.tres" type="DynamicFont" id=1]
+
+[node name="GameOverScreen" type="Control"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -214.0
+margin_top = -49.0
+margin_right = 214.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 1 )
+text = "Game Over
+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PressAnyBtnLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -214.0
+margin_top = -49.0
+margin_right = 214.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 1 )
+text = "
+Press Any Button To Continue"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverScoreLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -147.0
+margin_top = -165.0
+margin_right = 148.0
+margin_bottom = -108.0
+custom_fonts/font = ExtResource( 1 )
+text = "score"
+align = 1
+valign = 1

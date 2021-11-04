@@ -1,8 +1,24 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=9 format=2]
 
+[ext_resource path="res://GUI/GameOverScreen.tscn" type="PackedScene" id=1]
 [ext_resource path="res://GUI/GUI.gd" type="Script" id=2]
 [ext_resource path="res://GUI/roboto_outline.tres" type="DynamicFont" id=3]
 [ext_resource path="res://GUI/LifeRect.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/FPSLabel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://GUI/Roboto-Bold.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+resource_local_to_scene = true
+size = 12
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+resource_local_to_scene = true
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
 
 [node name="GUI" type="Control"]
 anchor_right = 1.0
@@ -54,19 +70,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FPSLabel" type="Label" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -171.0
-margin_top = 77.0
-margin_right = -20.0
-margin_bottom = 112.0
-custom_fonts/font = ExtResource( 3 )
-text = "fps"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="FPSLabel" parent="." instance=ExtResource( 5 )]
+margin_left = -121.0
+margin_top = 66.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 1 )
 
 [node name="WaveLabel" type="Label" parent="."]
 anchor_left = 0.5
@@ -99,66 +107,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameOverScreen" type="Control" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -20.0
-margin_right = 20.0
-margin_bottom = 20.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="GameOverScreen" parent="." instance=ExtResource( 1 )]
+visible = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 0.0
 
-[node name="GameOverLabel" type="Label" parent="GameOverScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -214.0
-margin_top = -49.0
-margin_right = 214.0
-margin_bottom = 49.0
-custom_fonts/font = ExtResource( 3 )
-text = "Game Over
-"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="GameOverLabel" parent="GameOverScreen" index="0"]
+custom_fonts/font = SubResource( 2 )
 
-[node name="PressAnyBtnLabel" type="Label" parent="GameOverScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -214.0
-margin_top = -49.0
-margin_right = 214.0
-margin_bottom = 49.0
-custom_fonts/font = ExtResource( 3 )
-text = "
-Press Any Button To Continue"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="PressAnyBtnLabel" parent="GameOverScreen" index="1"]
+custom_fonts/font = SubResource( 2 )
 
-[node name="GameOverScoreLabel" type="Label" parent="GameOverScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -147.0
-margin_top = -165.0
-margin_right = 148.0
-margin_bottom = -108.0
-custom_fonts/font = ExtResource( 3 )
-text = "score"
-align = 1
-valign = 1
+[node name="GameOverScoreLabel" parent="GameOverScreen" index="2"]
+custom_fonts/font = SubResource( 2 )
+
+[editable path="GameOverScreen"]
