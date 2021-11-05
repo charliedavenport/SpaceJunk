@@ -11,6 +11,7 @@ onready var game_over_score = get_node("GameOverScreen/GameOverScoreLabel")
 onready var fps_label = get_node("FPSLabel")
 
 const life_rect = preload("res://GUI/LifeRect.tscn")
+const high_score_row = preload("res://GUI/HighScoreRow.tscn")
 
 var lives: int
 var max_lives: int
@@ -91,3 +92,12 @@ func disable_score() -> void:
 func show_fps(a_show_fps: bool) -> void:
 	is_show_fps = a_show_fps
 	fps_label.visible = is_show_fps
+
+func show_high_scores(high_scores: Array) -> void:
+	for i in range($GameOverScreen/HighScores/VBoxContainer.get_child_count()):
+		$GameOverScreen/HighScores/VBoxContainer.get_child(i).queue_free()
+	for i in range(len(high_scores)):
+		var hs_row = high_score_row.instance()
+		hs_row.get_node("Name").text = high_scores[i]["name"]
+		hs_row.get_node("Score").text = str(high_scores[i]["score"])
+		$GameOverScreen/HighScores/VBoxContainer.add_child(hs_row)

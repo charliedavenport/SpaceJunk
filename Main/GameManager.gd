@@ -24,7 +24,7 @@ var score: int
 const max_high_scores := 5
 const high_scores_filepath = "res://high_scores.json"
 var high_scores_file: File
-var high_scores: Array
+var high_scores
 
 # WAVES
 const beg_asteroids_per_wave: int = 4
@@ -67,6 +67,7 @@ func game_over() -> void:
 	yield(game_over_timer, "timeout")
 	is_game_over_timer = false
 	gui.show_press_any_btn()
+	gui.show_high_scores(high_scores)
 
 func _input(event):
 	var reset_game_condition = (is_start_screen or is_game_over_screen) \
@@ -175,11 +176,12 @@ func get_high_scores():
 	if not high_scores_file.file_exists(high_scores_filepath):
 		print('high scores file not found, creating new file')
 		high_scores_file.open(high_scores_filepath, File.WRITE)
+		high_scores_file.store_line("[]")
 		high_scores_file.close()
 		return
 	high_scores_file.open(high_scores_filepath, File.READ)
-	var scores = parse_json(high_scores_file.get_line())
-	print('high scores = %s' % str(scores))
+	var scores = parse_json(high_scores_file.get_as_text())
+	#print('high scores = %s' % str(scores))
 	high_scores_file.close()
 	return scores
 
@@ -198,5 +200,6 @@ func save_high_score() -> void:
 	if len(high_scores) < max_high_scores:
 		high_scores.append(score_entry)
 	high_scores_file.open(high_scores_filepath, File.WRITE)
-	high_scores_file.store_line(str(high_scores))
+	high_scores_file.seek(0)
+	high_scores_file.store_line(JSON.print(high_scores))
 	high_scores_file.close()
