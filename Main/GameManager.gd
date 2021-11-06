@@ -21,7 +21,7 @@ const small_asteroid_pts: int = 100
 const ufo_large_pts: int = 200
 const ufo_small_pts: int = 1000
 var score: int
-const max_high_scores := 5
+const max_high_scores := 10
 const high_scores_filepath = "res://high_scores.json"
 var high_scores_file: File
 var high_scores
@@ -59,15 +59,17 @@ func game_over() -> void:
 	print('game over')
 	is_game_over_screen = true
 	gui.game_over_screen()
-	if check_high_score():
+	if not is_player_cheated and check_high_score():
 		print("New high score! Saving")
 		save_high_score()
+	gui.show_high_scores(high_scores)
 	is_game_over_timer = true
 	game_over_timer.start()
 	yield(game_over_timer, "timeout")
 	is_game_over_timer = false
 	gui.show_press_any_btn()
-	gui.show_high_scores(high_scores)
+	sort_high_scores()
+	
 
 func _input(event):
 	var reset_game_condition = (is_start_screen or is_game_over_screen) \
@@ -110,6 +112,7 @@ func do_waves() -> void:
 		gui.set_wave(wave)
 		asteroids_per_wave += 1
 		asteroid_speed_scale += 0.1
+		yield(get_tree(), "idle_frame")
 
 func on_node_added(node) -> void:
 	if node is Projectile:
@@ -168,17 +171,19 @@ func on_player_cheated() -> void:
 	if is_player_cheated:
 		return
 	print("player used a cheat code, so scoring is disabled")
+	score = 0
+	gui.set_score(0)
 	is_player_cheated = true
 	gui.disable_score()
 
-func get_high_scores():
+func get_high_scores() -> Array:
 	high_scores_file = File.new()
 	if not high_scores_file.file_exists(high_scores_filepath):
 		print('high scores file not found, creating new file')
 		high_scores_file.open(high_scores_filepath, File.WRITE)
 		high_scores_file.store_line("[]")
 		high_scores_file.close()
-		return
+		return []
 	high_scores_file.open(high_scores_filepath, File.READ)
 	var scores = parse_json(high_scores_file.get_as_text())
 	#print('high scores = %s' % str(scores))
@@ -195,10 +200,28 @@ func check_high_score() -> bool:
 			return true
 	return false
 
+static func compare_scores(a,b) -> bool:
+	return a["score"] > b["score"]
+
+func sort_high_scores() -> void:
+	high_scores.sort_custom(self, "compare_scores")
+
 func save_high_score() -> void:
 	var score_entry = {"name":"aaa", "score":score}
 	if len(high_scores) < max_high_scores:
 		high_scores.append(score_entry)
+		sort_high_scores()
+	else:
+		sort_high_scores()
+		high_scores.pop_back()
+		var is_inserted := false
+		for i in range(len(high_scores)):
+			if high_scores[i]["score"] < score:
+				high_scores.insert(i, score_entry)
+				is_inserted = true
+				break
+		if not is_inserted:
+			high_scores.push_back(score_entry)
 	high_scores_file.open(high_scores_filepath, File.WRITE)
 	high_scores_file.seek(0)
 	high_scores_file.store_line(JSON.print(high_scores))
