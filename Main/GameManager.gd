@@ -44,6 +44,7 @@ func _ready():
 	get_tree().root.call_deferred("add_child", player)
 	player.connect("player_hit", self, "on_player_hit")
 	player.connect("player_cheated", self, "on_player_cheated")
+	asteroid_spawner.connect("no_asteroids_left", self, "next_wave")
 	is_game_over_timer = false
 	is_game_over_screen = false
 	high_scores = get_high_scores()
@@ -90,29 +91,25 @@ func reset_game() -> void:
 	is_player_cheated = false
 	player_lives = max_lives
 	score = 0
-	wave = 1
 	player.reset(false)
 	gui.call_deferred("start_game", max_lives, score, wave)
 	ufo_spawner.start(1)
-	do_waves()
+	wave = 0
+	next_wave()
 
-func do_waves() -> void:
-	asteroids_per_wave = beg_asteroids_per_wave
-	asteroid_speed_scale = 1.0
-	while true:
-		print('spawning %s asteroids' % asteroids_per_wave)
-		asteroid_spawner.clear_asteroids()
-		asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
-		#ufo_spawner.start(wave)
-		yield(asteroid_spawner, "no_asteroids_left")
-		if is_game_over:
-			return
-		wave += 1
-		print('wave = %s' % wave)
-		gui.set_wave(wave)
+func next_wave() -> void:
+	wave += 1
+	print('wave = %s' % wave)
+	gui.set_wave(wave)
+	if wave == 1:
+		asteroids_per_wave = beg_asteroids_per_wave
+		asteroid_speed_scale = 1.0
+	else:
 		asteroids_per_wave += 1
 		asteroid_speed_scale += 0.1
-		yield(get_tree(), "idle_frame")
+	print('spawning %s asteroids' % asteroids_per_wave)
+	asteroid_spawner.clear_asteroids()
+	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
 
 func on_node_added(node) -> void:
 	if node is Projectile:
