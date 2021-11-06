@@ -46,6 +46,8 @@ func _physics_process(delta):
 		rotate(-1.0 * turnspeed * delta)
 	elif Input.is_action_pressed("turn_right"):
 		rotate(turnspeed * delta)
+	if is_godmode and Input.is_action_pressed("shoot"):
+		shoot()
 	# handle thrust
 	if Input.is_action_pressed("forward"):
 		thruster.visible = true
