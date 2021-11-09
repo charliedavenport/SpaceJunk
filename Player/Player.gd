@@ -93,6 +93,8 @@ func kill(a_game_over: bool) -> void:
 
 func reset(a_invincibility: bool) -> void:
 	print('player reset')
+	if is_godmode:
+		toggle_godmode()
 	self.visible = true
 	alive = true
 	is_hyperspace = false
@@ -125,9 +127,9 @@ func do_hyperspace() -> void:
 	is_hyperspace = false
 
 func toggle_godmode() -> void:
-	emit_signal("player_cheated")
 	is_godmode = not is_godmode
 	if is_godmode:
+		emit_signal("player_cheated")
 		print("God mode cheat is active")
 		collision_shape.disabled = true
 		ship_sprite.visible = false
