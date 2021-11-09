@@ -102,3 +102,5 @@ __meta__ = {
 }
 
 [node name="GameOverScreen" parent="." instance=ExtResource( 1 )]
+
+[node name="GameOverTimer" type="Timer" parent="."]

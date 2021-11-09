@@ -8,6 +8,8 @@ onready var start_label = get_node("StartLabel")
 onready var game_over_ctrl = get_node("GameOverScreen")
 onready var press_any_btn_label = get_node("GameOverScreen/PressAnyBtnLabel")
 onready var game_over_score = get_node("GameOverScreen/GameOverScoreLabel")
+onready var name_entry = get_node("GameOverScreen/NameEntry")
+onready var game_over_timer = get_node("GameOverTimer")
 onready var fps_label = get_node("FPSLabel")
 
 const life_rect = preload("res://GUI/LifeRect.tscn")
@@ -19,8 +21,16 @@ var score: int
 var wave: int
 var is_score_disabled: bool
 var is_show_fps: bool
+var is_wait_for_input: bool
+
+signal gui_reset
+
+func _ready():
+	is_wait_for_input = false
+	name_entry.connect("name_entered", self, "on_name_entered")
 
 func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
+	is_wait_for_input = false
 	lives_container.visible = true
 	score_label.visible = true
 	wave_label.visible = true
@@ -45,17 +55,37 @@ func start_screen() -> void:
 	wave_label.visible = false
 	start_label.visible = true
 	game_over_ctrl.visible = false
+	is_wait_for_input = true
 
-func game_over_screen() -> void:
+func game_over_screen(is_new_high_score: bool, high_scores: Array) -> void:
 	lives_container.visible = false
 	score_label.visible = false
 	wave_label.visible = false
 	game_over_score.text = str(score)
 	game_over_ctrl.visible = true
+	name_entry.visible = false
 	press_any_btn_label.visible = false
+	show_high_scores(high_scores)
+	if is_new_high_score:
+		name_entry.do_name_entry()
+	else:
+		game_over_timer.start()
+		yield(game_over_timer, "timeout")
+		press_any_btn_label.visible = true
+		is_wait_for_input = true
 
-func show_press_any_btn() -> void:
+func on_name_entered(name_entry: String) -> void:
+	game_over_timer.start()
+	yield(game_over_timer, "timeout")
 	press_any_btn_label.visible = true
+	is_wait_for_input = true
+
+func _input(event) -> void:
+	if not is_wait_for_input:
+		return
+	if (event is InputEventKey or event is InputEventMouseButton or event is InputEventJoypadButton) and event.pressed:
+		emit_signal("gui_reset")
+		is_wait_for_input = false
 
 func set_score(a_score: int) -> void:
 	if is_score_disabled:
@@ -98,6 +128,6 @@ func show_high_scores(high_scores: Array) -> void:
 		$GameOverScreen/HighScores/VBoxContainer.get_child(i).queue_free()
 	for i in range(len(high_scores)):
 		var hs_row = high_score_row.instance()
-		hs_row.get_node("Name").text = high_scores[i]["name"]
+		hs_row.get_node("Name").text = high_scores[i]["name"].to_upper()
 		hs_row.get_node("Score").text = str(high_scores[i]["score"])
 		$GameOverScreen/HighScores/VBoxContainer.add_child(hs_row)

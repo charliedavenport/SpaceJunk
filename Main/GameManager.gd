@@ -4,7 +4,7 @@ class_name GameManager
 onready var gui = get_node("CanvasLayer/GUI")
 onready var asteroid_spawner = get_node("AsteroidSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
-onready var game_over_timer = get_node("GameOverTimer")
+onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry")
 
 # PLAYER VARS
 const player_scene = preload("res://Player/Player.tscn")
@@ -34,9 +34,6 @@ var asteroid_speed_scale: float
 
 # GAME STATE
 var is_game_over: bool
-var is_start_screen: bool
-var is_game_over_screen: bool
-var is_game_over_timer: bool
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
@@ -45,41 +42,23 @@ func _ready():
 	player.connect("player_hit", self, "on_player_hit")
 	player.connect("player_cheated", self, "on_player_cheated")
 	asteroid_spawner.connect("no_asteroids_left", self, "next_wave")
-	is_game_over_timer = false
-	is_game_over_screen = false
+	gui.connect("gui_reset", self, "reset_game")
+	gui_name_entry.connect("name_entered", self, "save_high_score")
 	high_scores = get_high_scores()
 	gui.show_fps(true)
 	start_screen()
 
 func start_screen() -> void:
-	is_start_screen = true
 	asteroid_spawner.spawn_asteroid_wave(3)
 	gui.start_screen()
 
 func game_over() -> void:
 	print('game over')
-	is_game_over_screen = true
-	gui.game_over_screen()
-	if not is_player_cheated and check_high_score():
+	var is_new_high_score := not is_player_cheated and check_high_score()
+	if is_new_high_score:
 		print("New high score! Saving")
-		save_high_score()
-	gui.show_high_scores(high_scores)
-	is_game_over_timer = true
-	game_over_timer.start()
-	yield(game_over_timer, "timeout")
-	is_game_over_timer = false
-	gui.show_press_any_btn()
-	sort_high_scores()
-	
+	gui.game_over_screen(is_new_high_score, high_scores)
 
-func _input(event):
-	var reset_game_condition = (is_start_screen or is_game_over_screen) \
-								and (event is InputEventKey or event is InputEventMouseButton) \
-								and event.pressed and not is_game_over_timer
-	if reset_game_condition:
-		is_start_screen = false
-		is_game_over_screen = false
-		reset_game()
 
 func reset_game() -> void:
 	asteroid_spawner.clear_asteroids()
@@ -92,7 +71,7 @@ func reset_game() -> void:
 	player_lives = max_lives
 	score = 0
 	player.reset(false)
-	gui.call_deferred("start_game", max_lives, score, wave)
+	gui.start_game(max_lives, score, wave)
 	ufo_spawner.start(1)
 	wave = 0
 	next_wave()
@@ -178,6 +157,7 @@ func get_high_scores() -> Array:
 	if not high_scores_file.file_exists(high_scores_filepath):
 		print('high scores file not found, creating new file')
 		high_scores_file.open(high_scores_filepath, File.WRITE)
+		high_scores_file.seek(0)
 		high_scores_file.store_line("[]")
 		high_scores_file.close()
 		return []
@@ -203,8 +183,8 @@ static func compare_scores(a,b) -> bool:
 func sort_high_scores() -> void:
 	high_scores.sort_custom(self, "compare_scores")
 
-func save_high_score() -> void:
-	var score_entry = {"name":"aaa", "score":score}
+func save_high_score(name_entry: String) -> void:
+	var score_entry = {"name": name_entry, "score":score}
 	if len(high_scores) < max_high_scores:
 		high_scores.append(score_entry)
 		sort_high_scores()
@@ -219,6 +199,7 @@ func save_high_score() -> void:
 				break
 		if not is_inserted:
 			high_scores.push_back(score_entry)
+	gui.show_high_scores(high_scores)
 	high_scores_file.open(high_scores_filepath, File.WRITE)
 	high_scores_file.seek(0)
 	high_scores_file.store_line(JSON.print(high_scores))
