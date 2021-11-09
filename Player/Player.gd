@@ -31,7 +31,7 @@ func _ready():
 	rng.randomize()
 	is_godmode = false
 	thruster.visible = false
-
+	collision_shape.disabled = true
 
 func _physics_process(delta):
 	if not alive or is_hyperspace:
@@ -71,6 +71,8 @@ func _physics_process(delta):
 func _input(event):
 	if event.is_action_pressed("shoot") and alive:
 		shoot()
+	if event.is_action_pressed("kill") and alive:
+		emit_signal("player_hit")
 
 func shoot() -> void:
 	var projectile_inst = projectile.instance()
