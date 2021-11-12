@@ -1,5 +1,5 @@
 extends KinematicBody2D
-class_name UFO_Large
+class_name UFO
 
 const projectile = preload("res://Projectile/Projectile.tscn")
 
@@ -11,14 +11,21 @@ onready var rng = RandomNumberGenerator.new()
 onready var player = get_tree().root.get_node("Player")
 onready var anim = get_node("AnimationPlayer")
 
-var speed: float = 100.0
+enum ufo_type_enum {LARGE, SMALL}
+export (ufo_type_enum) var ufo_type: int
+export var shoot_delay: float
+export var speed: float
+
 var vel: Vector2
 var alive: bool
 
 signal ufo_destroyed
 
 func _ready():
-	print('ufo spawned')
+	if ufo_type == ufo_type_enum.LARGE:
+		print('large ufo spawned')
+	else:
+		print('small ufo spawned')
 	rng.randomize()
 
 func start(a_point: Vector2, a_target: Vector2) -> void:

@@ -8,7 +8,7 @@ onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry"
 
 # PLAYER VARS
 const player_scene = preload("res://Player/Player.tscn")
-const max_lives: int = 2
+const max_lives: int = 5
 const new_life_score: int = 10000
 var player: Player
 var player_lives: int
@@ -100,7 +100,7 @@ func on_node_added(node) -> void:
 func on_asteroid_collision(ast, coll) -> void:
 	if coll is Player:
 		on_player_hit()
-	elif coll is UFO_Large:
+	elif coll is UFO:
 		ufo_spawner.destroy_ufo()
 
 func on_projectile_hit(proj, node) -> void:
@@ -122,7 +122,7 @@ func update_player_score(node: Node) -> void:
 		score += medium_asteroid_pts
 	elif node is Asteroid_Small:
 		score += small_asteroid_pts
-	elif node is UFO_Large:
+	elif node is UFO:
 		score += ufo_large_pts
 	# new life every next_life_score points
 	var next_life_threshold = score - (score % new_life_score)

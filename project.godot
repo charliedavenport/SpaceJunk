@@ -59,15 +59,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Projectile/Projectile.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "UFO",
+"language": "GDScript",
+"path": "res://UFO/UFO.gd"
+}, {
 "base": "BaseSpawner",
 "class": "UFOSpawner",
 "language": "GDScript",
 "path": "res://Main/UFOSpawner.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "UFO_Large",
-"language": "GDScript",
-"path": "res://UFO/UFO_Large.gd"
 } ]
 _global_script_class_icons={
 "Asteroid": "",
@@ -80,8 +80,8 @@ _global_script_class_icons={
 "GameManager": "",
 "Player": "",
 "Projectile": "",
-"UFOSpawner": "",
-"UFO_Large": ""
+"UFO": "",
+"UFOSpawner": ""
 }
 
 [application]
