@@ -101,10 +101,18 @@ func reset(a_invincibility: bool) -> void:
 	rotation = -TAU/4
 	position = Vector2(screen_width/2, screen_height/2)
 	vel = Vector2.ZERO
-	collision_shape.disabled = false
 	anim.play("Idle")
 	if a_invincibility:
 		do_invincibility()
+	else:
+		do_i_frame()
+
+func do_i_frame() -> void:
+	is_invincible = true
+	collision_shape.disabled = true
+	yield(get_tree(), "idle_frame")
+	is_invincible = false
+	collision_shape.disabled = false
 
 func do_invincibility() -> void:
 	is_invincible = true
