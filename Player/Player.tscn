@@ -520,10 +520,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-thrust = 2.0
-stopping_thrust = 3.0
-turnspeed = 4.0
-slowdown = 0.01
 
 [node name="ShipSprite" type="Sprite" parent="."]
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
@@ -572,3 +568,12 @@ anims/RESET = SubResource( 8 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 1.5
+
+[node name="LaserLine" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 50, 0 )
+width = 1.0
+default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )
+
+[node name="LaserLineContinued" type="Line2D" parent="."]
+width = 1.0
+default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )

@@ -1,10 +1,11 @@
 extends KinematicBody2D
 class_name Player
 
-export var thrust: float = 1.0
-export var stopping_thrust: float = 2.0
-export var turnspeed: float = 1.0
-export var slowdown: float = 0.005
+const THRUST: float = 2.0
+const STOPPING_THRUST: float = 3.0
+const TURNSPEED: float = 4.0
+const SLOWDOWN: float = 0.01
+const LASER_DIST: float = 500.0
 
 var vel: Vector2
 var alive: bool
@@ -21,6 +22,8 @@ onready var collision_shape = get_node("CollisionShape2D")
 onready var thruster = get_node("ThrusterPolygon")
 onready var ship_sprite = get_node("ShipSprite")
 onready var godmode_sprite = get_node("GodmodeSprite")
+onready var laser_line = get_node("LaserLine")
+onready var laser_line_cont = get_node("LaserLineContinued")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -32,6 +35,8 @@ func _ready():
 	is_godmode = false
 	thruster.visible = false
 	collision_shape.disabled = true
+	laser_line.points[0] = Vector2.ZERO
+	laser_line.points[1] = Vector2(LASER_DIST, 0.0)
 
 func _physics_process(delta):
 	if not alive or is_hyperspace:
@@ -43,9 +48,9 @@ func _physics_process(delta):
 		toggle_godmode()
 	# handle rotation
 	if Input.is_action_pressed("turn_left"):
-		rotate(-1.0 * turnspeed * delta)
+		rotate(-1.0 * TURNSPEED * delta)
 	elif Input.is_action_pressed("turn_right"):
-		rotate(turnspeed * delta)
+		rotate(TURNSPEED * delta)
 	if is_godmode and Input.is_action_pressed("shoot"):
 		shoot()
 	# handle thrust
@@ -53,20 +58,25 @@ func _physics_process(delta):
 		thruster.visible = true
 		var delta_vec = transform.x * delta
 		if delta_vec.dot(vel) > 0:
-			delta_vec *= thrust
+			delta_vec *= THRUST
 		else:
-			delta_vec *= stopping_thrust
+			delta_vec *= STOPPING_THRUST
 		vel += delta_vec
 	else:
 		thruster.visible = false
 		# gently slow down
-		vel *= (1.0 - slowdown)
+		vel *= (1.0 - SLOWDOWN)
 	var collision = move_and_collide(vel)
 	if collision:
 		emit_signal("player_hit")
 	# wrap player to other side of screen
-	position.x = wrapf(position.x, 0, screen_width)
-	position.y = wrapf(position.y, 0, screen_height)
+	position = wrap_point(position)
+
+func wrap_point(a_point: Vector2) -> Vector2:
+	return Vector2(wrapf(a_point.x, 0, screen_width), wrapf(a_point.y, 0, screen_height))
+
+func _process(delta):
+	handle_laser_cont()
 
 func _input(event):
 	if event.is_action_pressed("shoot") and alive:
@@ -147,4 +157,22 @@ func toggle_godmode() -> void:
 		collision_shape.disabled = false
 		ship_sprite.visible = true
 		godmode_sprite.visible = false
-		
+
+func handle_laser_cont() -> void:
+	laser_line_cont.clear_points()
+	var laser_end = to_global(laser_line.points[1])
+	if laser_end.x <= screen_width and laser_end.y <= screen_height and laser_end.x >= 0 and laser_end.y >= 0:
+		return
+	var wrap_laser_end = wrap_point(laser_end)
+	var laser_cont_start := Vector2.ZERO
+	# TODO: handle corners
+	if laser_end.x < 0:
+		laser_cont_start = self.global_position + Vector2(screen_width, 0)
+	elif laser_end.x > screen_width:
+		laser_cont_start = self.global_position - Vector2(screen_width, 0)
+	elif laser_end.y < 0:
+		laser_cont_start = self.global_position + Vector2(0, screen_height)
+	elif laser_end.y > screen_height:
+		laser_cont_start = self.global_position - Vector2(0, screen_height)
+	laser_line_cont.add_point(to_local(laser_cont_start))
+	laser_line_cont.add_point(to_local(wrap_laser_end))
