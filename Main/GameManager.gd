@@ -46,9 +46,6 @@ func _ready():
 	gui_name_entry.connect("name_entered", self, "save_high_score")
 	high_scores = get_high_scores()
 	gui.show_fps(true)
-	start_screen()
-
-func start_screen() -> void:
 	asteroid_spawner.spawn_asteroid_wave(3)
 	gui.start_screen()
 
@@ -123,7 +120,10 @@ func update_player_score(node: Node) -> void:
 	elif node is Asteroid_Small:
 		score += small_asteroid_pts
 	elif node is UFO:
-		score += ufo_large_pts
+		if node.ufo_type == UFO.ufo_type_enum.LARGE:
+			score += ufo_large_pts
+		else:
+			score += ufo_small_pts
 	# new life every next_life_score points
 	var next_life_threshold = score - (score % new_life_score)
 	if prev_score < next_life_threshold:
