@@ -164,15 +164,15 @@ func handle_laser_cont() -> void:
 	if laser_end.x <= screen_width and laser_end.y <= screen_height and laser_end.x >= 0 and laser_end.y >= 0:
 		return
 	var wrap_laser_end = wrap_point(laser_end)
-	var laser_cont_start := Vector2.ZERO
+	var laser_cont_start := self.global_position
 	# TODO: handle corners
 	if laser_end.x < 0:
-		laser_cont_start = self.global_position + Vector2(screen_width, 0)
-	elif laser_end.x > screen_width:
-		laser_cont_start = self.global_position - Vector2(screen_width, 0)
-	elif laser_end.y < 0:
-		laser_cont_start = self.global_position + Vector2(0, screen_height)
-	elif laser_end.y > screen_height:
-		laser_cont_start = self.global_position - Vector2(0, screen_height)
+		laser_cont_start += Vector2(screen_width, 0)
+	if laser_end.x > screen_width:
+		laser_cont_start -= Vector2(screen_width, 0)
+	if laser_end.y < 0:
+		laser_cont_start += Vector2(0, screen_height)
+	if laser_end.y > screen_height:
+		laser_cont_start -= Vector2(0, screen_height)
 	laser_line_cont.add_point(to_local(laser_cont_start))
 	laser_line_cont.add_point(to_local(wrap_laser_end))
