@@ -8,8 +8,6 @@
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
 
-[node name="GameOverTimer" type="Timer" parent="."]
-
 [node name="AsteroidSpawner" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
