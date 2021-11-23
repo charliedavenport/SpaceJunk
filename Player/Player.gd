@@ -22,7 +22,8 @@ onready var collision_shape = get_node("CollisionShape2D")
 onready var thruster = get_node("ThrusterPolygon")
 onready var ship_sprite = get_node("ShipSprite")
 onready var godmode_sprite = get_node("GodmodeSprite")
-onready var laser_line = get_node("LaserLine")
+onready var laser_spawn_pt = get_node("LaserSpawnPoint")
+onready var laser_line = get_node("LaserSpawnPoint/LaserLine")
 onready var laser_line_cont = get_node("LaserLineContinued")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
@@ -87,7 +88,7 @@ func _input(event):
 func shoot() -> void:
 	var projectile_inst = projectile.instance()
 	get_tree().root.add_child(projectile_inst)
-	projectile_inst.start(self.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
+	projectile_inst.start(laser_spawn_pt.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
 
 func kill(a_game_over: bool) -> void:
 	print("player killed")

@@ -4,7 +4,7 @@
 [ext_resource path="res://Player/icon_shard_1.png" type="Texture" id=2]
 [ext_resource path="res://Player/icon_shard_2.png" type="Texture" id=3]
 [ext_resource path="res://Player/icon_shard_3.png" type="Texture" id=4]
-[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Player/TinySpaceShip.png" type="Texture" id=5]
 [ext_resource path="res://Player/iddqd.png" type="Texture" id=6]
 
 [sub_resource type="Shader" id=1]
@@ -27,7 +27,7 @@ shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_amount = 0.0
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 20.4771
+radius = 23.388
 
 [sub_resource type="Animation" id=4]
 tracks/0/type = "value"
@@ -225,7 +225,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.6, 0.6 ) ]
+"values": [ Vector2( 0.05, 0.05 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -241,7 +241,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0.6, 0.6 ), Vector2( 1e-05, 1e-05 ) ]
+"values": [ Vector2( 0.05, 0.05 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -388,7 +388,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.6, 0.6 ) ]
+"values": [ Vector2( 0.05, 0.05 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -524,8 +524,9 @@ __meta__ = {
 [node name="ShipSprite" type="Sprite" parent="."]
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
 material = SubResource( 2 )
+position = Vector2( 12, 0 )
 rotation = 1.5708
-scale = Vector2( 0.6, 0.6 )
+scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 5 )
 
 [node name="GodmodeSprite" type="Sprite" parent="."]
@@ -537,10 +538,10 @@ scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 3 )
 
 [node name="ThrusterPolygon" type="Polygon2D" parent="."]
+position = Vector2( 9.032, 0 )
 rotation = 1.5708
 polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
 
@@ -569,7 +570,10 @@ anims/RESET = SubResource( 8 )
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 1.5
 
-[node name="LaserLine" type="Line2D" parent="."]
+[node name="LaserSpawnPoint" type="Node2D" parent="."]
+position = Vector2( 30, 0 )
+
+[node name="LaserLine" type="Line2D" parent="LaserSpawnPoint"]
 points = PoolVector2Array( 0, 0, 50, 0 )
 width = 1.0
 default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )

@@ -27,7 +27,7 @@ margin_left = 18.0
 margin_top = 20.0
 margin_right = 354.0
 margin_bottom = 84.0
-rect_scale = Vector2( 0.5, 0.5 )
+rect_scale = Vector2( 0.04, 0.04 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -35,20 +35,12 @@ __meta__ = {
 [node name="TextureRect" parent="LivesContainer" instance=ExtResource( 4 )]
 
 [node name="TextureRect2" parent="LivesContainer" instance=ExtResource( 4 )]
-margin_left = 68.0
-margin_right = 132.0
+margin_left = 1028.0
+margin_right = 2052.0
 
 [node name="TextureRect3" parent="LivesContainer" instance=ExtResource( 4 )]
-margin_left = 136.0
-margin_right = 200.0
-
-[node name="TextureRect4" parent="LivesContainer" instance=ExtResource( 4 )]
-margin_left = 204.0
-margin_right = 268.0
-
-[node name="TextureRect5" parent="LivesContainer" instance=ExtResource( 4 )]
-margin_left = 272.0
-margin_right = 336.0
+margin_left = 2056.0
+margin_right = 3080.0
 
 [node name="ScoreLabel" type="Label" parent="."]
 anchor_left = 1.0
