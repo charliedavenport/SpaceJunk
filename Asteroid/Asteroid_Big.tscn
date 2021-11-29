@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Asteroid/Asteroid_Big.gd" type="Script" id=1]
+[ext_resource path="res://Asteroid/satellite.png" type="Texture" id=2]
 
 [node name="Asteroid_Big" type="KinematicBody2D"]
 scale = Vector2( 0.75, 0.75 )
@@ -11,9 +12,14 @@ script = ExtResource( 1 )
 speed = 50.0
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
 position = Vector2( -10.5677, 0.61924 )
 scale = Vector2( 0.929412, 0.985075 )
 polygon = PoolVector2Array( -22.8235, -33.359, 45.5183, -38.1878, 69.3025, -6.07925, 25.3018, 41.489, -27.0233, 16.5157 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 11.6652, 40.9977, 53.0452, -4.38681, 31.0203, -37.0904, -32.3846, -32.4184, -35.7216, 16.9706 )
+polygon = PoolVector2Array( 3.19639, 31.2851, 68.5299, -6.85552, 71.7083, -31.2232, -2.80723, -24.1601, -66.0218, -2.26452, -70.2597, 19.2779 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.20061, 0.20061 )
+texture = ExtResource( 2 )

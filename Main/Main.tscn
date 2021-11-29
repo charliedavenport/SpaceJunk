@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main/GameManager.gd" type="Script" id=2]
 [ext_resource path="res://Main/AsteroidSpawner.gd" type="Script" id=3]
 [ext_resource path="res://Main/UFOSpawner.gd" type="Script" id=4]
+[ext_resource path="res://Main/background_2.png" type="Texture" id=5]
 
 [node name="Root" type="Node"]
 script = ExtResource( 2 )
@@ -22,3 +23,21 @@ layer = 2
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource( 1 )]
 pause_mode = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="Background" type="Control" parent="CanvasLayer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2/Background"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
