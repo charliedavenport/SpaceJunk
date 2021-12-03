@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Satellite/R Panel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Satellite/L Panel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Satellite/Body.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Satellite/Satellite.gd" type="Script" id=4]
+
+[node name="Satellite" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Body" parent="." instance=ExtResource( 3 )]
+
+[node name="L Panel" parent="." instance=ExtResource( 2 )]
+
+[node name="R Panel" parent="." instance=ExtResource( 1 )]
