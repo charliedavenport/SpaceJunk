@@ -17,5 +17,5 @@ texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.44545, 3.56359 )
-z_index = 3
 shape = SubResource( 1 )
+disabled = true

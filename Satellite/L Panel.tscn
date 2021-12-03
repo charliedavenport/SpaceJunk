@@ -11,9 +11,11 @@ scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-z_index = 3
+z_index = -1
 polygon = PoolVector2Array( -21.597, 1.4432, -9.09068, -14.0127, -55.4585, -29.8226, -63.5994, -15.9005, -61.3577, -10.4732 )
+disabled = true
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
-z_index = 3
+z_index = -1
 polygon = PoolVector2Array( -16.6417, -5.16393, -2.36558, -0.798508, -1.18574, -2.80424, -15.2259, -7.05167 )
+disabled = true
