@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Projectile/Projectile.gd" type="Script" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://Projectile/projectile.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.72121
@@ -16,7 +16,7 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 0.559158, 0.559158 )
 texture = ExtResource( 2 )
 
 [node name="KillTimer" type="Timer" parent="."]
