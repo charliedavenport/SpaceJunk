@@ -1,7 +1,10 @@
 extends KinematicBody2D
 class_name Projectile
 
-const speed: float = 750.0
+const speed: float = 1000.0
+
+const red_texture = preload("res://Projectile/projectile_red.png")
+const green_texture = preload("res://Projectile/projectile.png")
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -18,8 +21,10 @@ func start(a_point: Vector2, a_rot: float, a_src: int):
 	source = a_src
 	if source == source_type.UFO:
 		collision_mask = 0b0101 # Asteroid AND Player
+		$Sprite.texture = red_texture
 	else:
 		collision_mask = 0b1100 # UFO AND Asteroid
+		$Sprite.texture = green_texture
 	kill_timer.start()
 	yield(kill_timer, "timeout")
 	queue_free()
