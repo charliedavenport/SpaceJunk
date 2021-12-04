@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
-[ext_resource path="res://Player/icon_shard_1.png" type="Texture" id=2]
-[ext_resource path="res://Player/icon_shard_2.png" type="Texture" id=3]
-[ext_resource path="res://Player/icon_shard_3.png" type="Texture" id=4]
+[ext_resource path="res://Player/TinySpaceShip_shard3.png" type="Texture" id=2]
+[ext_resource path="res://Player/TinySpaceShip_shard2.png" type="Texture" id=3]
+[ext_resource path="res://Player/TinySpaceShip_shard1.png" type="Texture" id=4]
 [ext_resource path="res://Player/TinySpaceShip.png" type="Texture" id=5]
 [ext_resource path="res://Player/iddqd.png" type="Texture" id=6]
 
@@ -88,7 +88,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 51.9139, -24.4135 ) ]
+"values": [ Vector2( 12, 0 ), Vector2( 38.0429, 43.0486 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("BrokenShipSprite1:rotation_degrees")
@@ -100,7 +100,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, 73.2558 ]
+"values": [ 90.0, 124.243 ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("BrokenShipSprite2:position")
@@ -112,7 +112,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -55.8425, -28.6228 ) ]
+"values": [ Vector2( 12, 0 ), Vector2( 66.0746, -37.7092 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("BrokenShipSprite2:rotation_degrees")
@@ -124,7 +124,7 @@ tracks/7/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, -68.2068 ]
+"values": [ 90.0, 18.4429 ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("BrokenShipSprite3:position")
@@ -136,7 +136,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 19.9192, 48.7575 ) ]
+"values": [ Vector2( 12, 0 ), Vector2( -45.3846, -36.0407 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("BrokenShipSprite3:rotation_degrees")
@@ -148,7 +148,7 @@ tracks/9/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.0, -63.6975 ]
+"values": [ 90.0, 34.8482 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -522,6 +522,7 @@ __meta__ = {
 }
 
 [node name="ShipSprite" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
 material = SubResource( 2 )
 position = Vector2( 12, 0 )
@@ -546,19 +547,22 @@ rotation = 1.5708
 polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
 
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 2 )
+position = Vector2( 12, 0 )
+rotation = 1.5708
+scale = Vector2( 0.04, 0.04 )
+texture = ExtResource( 4 )
 
 [node name="BrokenShipSprite2" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.6, 0.6 )
+position = Vector2( 12, 0 )
+rotation = 1.5708
+scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 3 )
 
 [node name="BrokenShipSprite3" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.6, 0.6 )
-texture = ExtResource( 4 )
+position = Vector2( 12, 0 )
+rotation = 1.5708
+scale = Vector2( 0.04, 0.04 )
+texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Destroyed = SubResource( 4 )
