@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Asteroid/Asteroid_Small.gd"
 }, {
-"base": "BaseSpawner",
-"class": "Asteroid_Spawner",
-"language": "GDScript",
-"path": "res://Main/AsteroidSpawner.gd"
-}, {
 "base": "Node2D",
 "class": "BaseSpawner",
 "language": "GDScript",
@@ -60,6 +55,16 @@ _global_script_classes=[ {
 "path": "res://Projectile/Projectile.gd"
 }, {
 "base": "KinematicBody2D",
+"class": "Satellite",
+"language": "GDScript",
+"path": "res://Satellite/Satellite.gd"
+}, {
+"base": "BaseSpawner",
+"class": "Satellite_Spawner",
+"language": "GDScript",
+"path": "res://Main/SatelliteSpawner.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "UFO",
 "language": "GDScript",
 "path": "res://UFO/UFO.gd"
@@ -74,12 +79,13 @@ _global_script_class_icons={
 "Asteroid_Big": "",
 "Asteroid_Medium": "",
 "Asteroid_Small": "",
-"Asteroid_Spawner": "",
 "BaseSpawner": "",
 "GUI": "",
 "GameManager": "",
 "Player": "",
 "Projectile": "",
+"Satellite": "",
+"Satellite_Spawner": "",
 "UFO": "",
 "UFOSpawner": ""
 }

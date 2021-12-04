@@ -2,7 +2,7 @@ extends Node
 class_name GameManager
 
 onready var gui = get_node("CanvasLayer/GUI")
-onready var asteroid_spawner = get_node("AsteroidSpawner")
+onready var satellite_spawner = get_node("SatelliteSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
 onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry")
 
@@ -41,12 +41,12 @@ func _ready():
 	get_tree().root.call_deferred("add_child", player)
 	player.connect("player_hit", self, "on_player_hit")
 	player.connect("player_cheated", self, "on_player_cheated")
-	asteroid_spawner.connect("no_asteroids_left", self, "next_wave")
+	satellite_spawner.connect("no_satellites_left", self, "next_wave")
 	gui.connect("gui_reset", self, "reset_game")
 	gui_name_entry.connect("name_entered", self, "save_high_score")
 	high_scores = get_high_scores()
 	gui.show_fps(true)
-	asteroid_spawner.spawn_asteroid_wave(3)
+	satellite_spawner.spawn_satellite_wave(3)
 	gui.start_screen()
 
 func game_over() -> void:
@@ -58,7 +58,7 @@ func game_over() -> void:
 
 
 func reset_game() -> void:
-	asteroid_spawner.clear_asteroids()
+	satellite_spawner.clear_satellites()
 	ufo_spawner.clear_ufo()
 	# wait one frame to let everything queue free
 	yield(get_tree(), "idle_frame")
@@ -84,17 +84,17 @@ func next_wave() -> void:
 		asteroids_per_wave += 1
 		asteroid_speed_scale += 0.1
 	print('spawning %s asteroids' % asteroids_per_wave)
-	asteroid_spawner.clear_asteroids()
-	asteroid_spawner.spawn_asteroid_wave(asteroids_per_wave)
+	satellite_spawner.clear_satellites()
+	satellite_spawner.spawn_satellite_wave(asteroids_per_wave)
 
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
-	elif node is Asteroid:
-		node.connect("asteroid_collision", self, "on_asteroid_collision")
+	elif node is Satellite:
+		node.connect("satellite_collision", self, "on_satellite_collision")
 		node.speed *= asteroid_speed_scale
 
-func on_asteroid_collision(ast, coll) -> void:
+func on_satellite_collision(sat, coll) -> void:
 	if coll is Player:
 		on_player_hit()
 	elif coll is UFO:
@@ -113,12 +113,8 @@ func update_player_score(node: Node) -> void:
 	if is_player_cheated:
 		return
 	var prev_score = score
-	if node is Asteroid_Big:
+	if node is Satellite:
 		score += big_asteroid_pts
-	elif node is Asteroid_Medium:
-		score += medium_asteroid_pts
-	elif node is Asteroid_Small:
-		score += small_asteroid_pts
 	elif node is UFO:
 		if node.ufo_type == UFO.ufo_type_enum.LARGE:
 			score += ufo_large_pts
