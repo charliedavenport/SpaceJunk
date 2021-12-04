@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Satellite/satellite_body.png" type="Texture" id=1]
+[ext_resource path="res://Satellite/SatelliteBody.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 14.6228
@@ -9,6 +10,8 @@ height = 22.6266
 [node name="Body" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 9
+script = ExtResource( 2 )
+speed = 75.0
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.2, 0.2 )

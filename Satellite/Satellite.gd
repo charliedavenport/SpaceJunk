@@ -1,36 +1,23 @@
-extends KinematicBody2D
+extends BaseSatellite
 class_name Satellite
 
-export var speed: float
-var rot_speed: float = 1.0
-var vel: Vector2
-var screen_padding: float = 30.0
-
-onready var screen_width = get_viewport_rect().size.x
-onready var screen_height = get_viewport_rect().size.y
-onready var rng = RandomNumberGenerator.new()
-
-signal satellite_destroyed(node)
-signal satellite_collision(ast, coll)
-
-func _ready():
-	rng.randomize()
-
-func start(point: Vector2, rot: float) -> void:
-	self.position = point
-	self.rotate(rot)
-	vel = transform.x * speed
-
-func _physics_process(delta):
-	self.rotate(rot_speed * delta)
-	var collision = move_and_collide(vel * delta)
-	if collision:
-		emit_signal("satellite_collision", self, collision.collider)
-		#self.destroy()
-	position.x = wrapf(position.x, 0 - screen_padding, screen_width + screen_padding)
-	position.y = wrapf(position.y, 0 - screen_padding, screen_height + screen_padding)
+onready var body = get_node("Body")
+onready var l_panel = get_node("L Panel")
+onready var r_panel = get_node("R Panel")
 
 func destroy() -> void:
-	# TODO: break up satellite
 	emit_signal("satellite_destroyed")
-	queue_free()
+	var body_dir = vel.normalized()
+	var l_panel_dir = vel.normalized().rotated(-TAU/4) + vel.normalized()
+	var r_panel_dir = vel.normalized().rotated(TAU/4) + vel.normalized()
+	body.start(self.global_position, body_dir.angle())
+	l_panel.start(self.global_position, l_panel_dir.angle())
+	r_panel.start(self.global_position, r_panel_dir.angle())
+	self.remove_child(body)
+	self.remove_child(l_panel)
+	self.remove_child(r_panel)
+	var root = get_tree().root
+	root.add_child(body)
+	root.add_child(l_panel)
+	root.add_child(r_panel)
+	call_deferred("queue_free")

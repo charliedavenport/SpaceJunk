@@ -115,6 +115,8 @@ func update_player_score(node: Node) -> void:
 	var prev_score = score
 	if node is Satellite:
 		score += big_asteroid_pts
+	elif node is SatelliteBody or node is SatellitePanel:
+		score += medium_asteroid_pts
 	elif node is UFO:
 		if node.ufo_type == UFO.ufo_type_enum.LARGE:
 			score += ufo_large_pts

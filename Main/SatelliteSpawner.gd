@@ -22,12 +22,13 @@ func satellite_spawn() -> void:
 	var satellite_inst = satellite.instance()
 	get_tree().root.call_deferred("add_child", satellite_inst) # triggers on_node_added()
 	satellite_inst.start(rand_point, rand_rot)
+	satellite_count += 4
 
 func clear_satellites() -> void:
 	var root = get_tree().root
 	for i in range(root.get_child_count()):
 		var node = root.get_child(i)
-		if node is Satellite:
+		if node is BaseSatellite:
 			node.queue_free()
 	satellite_count = 0
 
@@ -38,6 +39,5 @@ func on_satellite_destroyed() -> void:
 		emit_signal("no_satellites_left")
 
 func on_node_added(node) -> void:
-	if node is Satellite:
-		node.connect("satellite_destroyed", self, "on_satellite_destroyed")
-		satellite_count += 1
+	if node is BaseSatellite and not node.is_connected("satellite_destroyed", self, "on_satellite_destroyed"):
+		var rtn = node.connect("satellite_destroyed", self, "on_satellite_destroyed")

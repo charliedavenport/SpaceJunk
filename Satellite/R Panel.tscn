@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Satellite/satellite_r_panel.png" type="Texture" id=1]
+[ext_resource path="res://Satellite/SatellitePanel.gd" type="Script" id=2]
 
 [node name="R Panel" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 9
+script = ExtResource( 2 )
+speed = 75.0
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.2, 0.2 )
