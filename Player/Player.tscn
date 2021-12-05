@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/TinySpaceShip_shard3.png" type="Texture" id=2]
@@ -25,9 +25,6 @@ void fragment() {
 shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_amount = 0.0
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 23.388
 
 [sub_resource type="Animation" id=4]
 tracks/0/type = "value"
@@ -521,8 +518,10 @@ __meta__ = {
 "_edit_group_": true
 }
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -2.97172, 18.3122, 30.6662, -0.228424, -3.76631, -18.5042, -9.59336, 0.566177 )
+
 [node name="ShipSprite" type="Sprite" parent="."]
-visible = false
 self_modulate = Color( 0.992157, 0.992157, 1, 1 )
 material = SubResource( 2 )
 position = Vector2( 12, 0 )
@@ -538,27 +537,27 @@ rotation = 1.5708
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
-
 [node name="ThrusterPolygon" type="Polygon2D" parent="."]
 position = Vector2( 9.032, 0 )
 rotation = 1.5708
 polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
 
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
+visible = false
 position = Vector2( 12, 0 )
 rotation = 1.5708
 scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 4 )
 
 [node name="BrokenShipSprite2" type="Sprite" parent="."]
+visible = false
 position = Vector2( 12, 0 )
 rotation = 1.5708
 scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 3 )
 
 [node name="BrokenShipSprite3" type="Sprite" parent="."]
+visible = false
 position = Vector2( 12, 0 )
 rotation = 1.5708
 scale = Vector2( 0.04, 0.04 )
