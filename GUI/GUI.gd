@@ -11,6 +11,7 @@ onready var game_over_score = get_node("GameOverScreen/GameOverScoreLabel")
 onready var name_entry = get_node("GameOverScreen/NameEntry")
 onready var game_over_timer = get_node("GameOverTimer")
 onready var fps_label = get_node("FPSLabel")
+onready var pause_screen = get_node("PauseScreen")
 
 const life_rect = preload("res://GUI/LifeRect.tscn")
 const high_score_row = preload("res://GUI/HighScoreRow.tscn")
@@ -30,12 +31,8 @@ func _ready():
 	name_entry.connect("name_entered", self, "on_name_entered")
 
 func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
+	reset_visibility()
 	is_wait_for_input = false
-	lives_container.visible = true
-	score_label.visible = true
-	wave_label.visible = true
-	start_label.visible = false
-	game_over_ctrl.visible = false
 	is_score_disabled = false
 	set_score(a_score)
 	max_lives = a_lives
@@ -43,6 +40,15 @@ func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	reset_lives()
 	set_wave(a_wave)
 	score_label.add_color_override("font_color", Color.white)
+
+func reset_visibility() -> void:
+	# this function needs a better name
+	lives_container.visible = true
+	score_label.visible = true
+	wave_label.visible = true
+	start_label.visible = false
+	game_over_ctrl.visible = false
+	pause_screen.visible = false
 
 func _process(delta) -> void:
 	if is_show_fps:
@@ -55,6 +61,7 @@ func start_screen() -> void:
 	wave_label.visible = false
 	start_label.visible = true
 	game_over_ctrl.visible = false
+	pause_screen.visible = false
 	is_wait_for_input = true
 
 func game_over_screen(is_new_high_score: bool, high_scores: Array) -> void:
@@ -131,3 +138,14 @@ func show_high_scores(high_scores: Array) -> void:
 		hs_row.get_node("Name").text = high_scores[i]["name"].to_upper()
 		hs_row.get_node("Score").text = str(high_scores[i]["score"])
 		$GameOverScreen/HighScores/VBoxContainer.add_child(hs_row)
+
+func show_pause_screen(a_show: bool) -> void:
+	if a_show:
+		for i in range(get_child_count()):
+			var child = get_child(i)
+			if child is CanvasItem:
+				child.visible = false
+		pause_screen.visible = true
+	else:
+		reset_visibility()
+	

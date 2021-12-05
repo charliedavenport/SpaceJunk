@@ -7,6 +7,7 @@
 [ext_resource path="res://Main/background_2.png" type="Texture" id=5]
 
 [node name="Root" type="Node"]
+pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="SatelliteSpawner" type="Node2D" parent="."]

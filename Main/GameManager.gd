@@ -49,6 +49,16 @@ func _ready():
 	satellite_spawner.spawn_satellite_wave(3)
 	gui.start_screen()
 
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		if get_tree().paused:
+			get_tree().paused = false
+			gui.show_pause_screen(false)
+		else:
+			get_tree().paused = true
+			gui.show_pause_screen(true)
+		
+
 func game_over() -> void:
 	print('game over')
 	var is_new_high_score := not is_player_cheated and check_high_score()
