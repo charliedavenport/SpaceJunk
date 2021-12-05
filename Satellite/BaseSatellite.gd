@@ -4,7 +4,7 @@ class_name BaseSatellite
 export var speed: float
 var rot_speed: float = 1.0
 var vel: Vector2
-var screen_padding: float = 30.0
+var screen_padding: float = 20.0
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
