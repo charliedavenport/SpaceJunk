@@ -16,6 +16,9 @@ onready var pause_screen = get_node("PauseScreen")
 const life_rect = preload("res://GUI/LifeRect.tscn")
 const high_score_row = preload("res://GUI/HighScoreRow.tscn")
 
+enum screen_mode {START, PLAY, PAUSE, GAME_OVER}
+var curr_screen_mode: int
+
 var lives: int
 var max_lives: int
 var score: int
@@ -31,7 +34,7 @@ func _ready():
 	name_entry.connect("name_entered", self, "on_name_entered")
 
 func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
-	reset_visibility()
+	set_screen_mode(screen_mode.PLAY)
 	is_wait_for_input = false
 	is_score_disabled = false
 	set_score(a_score)
@@ -41,14 +44,29 @@ func start_game(a_lives: int, a_score: int, a_wave: int) -> void:
 	set_wave(a_wave)
 	score_label.add_color_override("font_color", Color.white)
 
-func reset_visibility() -> void:
-	# this function needs a better name
-	lives_container.visible = true
-	score_label.visible = true
-	wave_label.visible = true
-	start_label.visible = false
-	game_over_ctrl.visible = false
-	pause_screen.visible = false
+func hide_all() -> void:
+	for i in range(get_child_count()):
+		var child = get_child(i)
+		if child is CanvasItem:
+			child.visible = false
+
+func set_screen_mode(a_mode: int) -> void:
+	curr_screen_mode = a_mode
+	hide_all()
+	if a_mode == screen_mode.START:
+		start_label.visible = true
+	elif a_mode == screen_mode.PLAY:
+		lives_container.visible = true
+		score_label.visible = true
+		wave_label.visible = true
+	elif a_mode == screen_mode.PAUSE:
+		pause_screen.visible = true
+	elif a_mode == screen_mode.GAME_OVER:
+		game_over_ctrl.visible = true
+		name_entry.visible = false
+		press_any_btn_label.visible = false
+	else:
+		print('GUI error: invalid screen mode: %s' % a_mode)
 
 func _process(delta) -> void:
 	if is_show_fps:
@@ -56,22 +74,12 @@ func _process(delta) -> void:
 		fps_label.text = 'fps = %s' % fps
 
 func start_screen() -> void:
-	lives_container.visible = false
-	score_label.visible = false
-	wave_label.visible = false
-	start_label.visible = true
-	game_over_ctrl.visible = false
-	pause_screen.visible = false
+	set_screen_mode(screen_mode.START)
 	is_wait_for_input = true
 
 func game_over_screen(is_new_high_score: bool, high_scores: Array) -> void:
-	lives_container.visible = false
-	score_label.visible = false
-	wave_label.visible = false
 	game_over_score.text = str(score)
-	game_over_ctrl.visible = true
-	name_entry.visible = false
-	press_any_btn_label.visible = false
+	set_screen_mode(screen_mode.GAME_OVER)
 	show_high_scores(high_scores)
 	if is_new_high_score:
 		name_entry.do_name_entry()
@@ -141,11 +149,7 @@ func show_high_scores(high_scores: Array) -> void:
 
 func show_pause_screen(a_show: bool) -> void:
 	if a_show:
-		for i in range(get_child_count()):
-			var child = get_child(i)
-			if child is CanvasItem:
-				child.visible = false
-		pause_screen.visible = true
+		set_screen_mode(screen_mode.PAUSE)
 	else:
-		reset_visibility()
+		set_screen_mode(screen_mode.PLAY)
 	

@@ -33,7 +33,8 @@ var asteroids_per_wave: int
 var asteroid_speed_scale: float
 
 # GAME STATE
-var is_game_over: bool
+enum game_state {START, PLAY, GAME_OVER}
+var curr_game_state: int
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
@@ -47,17 +48,20 @@ func _ready():
 	high_scores = get_high_scores()
 	gui.show_fps(true)
 	satellite_spawner.spawn_satellite_wave(3)
+	set_game_state(game_state.START)
 	gui.start_screen()
 
 func _process(delta):
-	if Input.is_action_just_pressed("pause"):
+	if curr_game_state == game_state.PLAY and Input.is_action_just_pressed("pause"):
 		if get_tree().paused:
 			get_tree().paused = false
 			gui.show_pause_screen(false)
 		else:
 			get_tree().paused = true
 			gui.show_pause_screen(true)
-		
+
+func set_game_state(a_state: int) -> void:
+	curr_game_state = a_state
 
 func game_over() -> void:
 	print('game over')
@@ -68,12 +72,12 @@ func game_over() -> void:
 
 
 func reset_game() -> void:
+	set_game_state(game_state.PLAY)
 	satellite_spawner.clear_satellites()
 	ufo_spawner.clear_ufo()
 	# wait one frame to let everything queue free
 	yield(get_tree(), "idle_frame")
 	print('game reset')
-	is_game_over = false
 	is_player_cheated = false
 	player_lives = max_lives
 	score = 0
@@ -144,12 +148,14 @@ func on_player_hit() -> void:
 	if not player.alive:
 		return
 	player_lives -= 1
-	is_game_over = (player_lives == 0)
-	player.kill(is_game_over)
 	gui.decrement_lives()
 	print('lives = %s' % player_lives )
-	if is_game_over:
+	if player_lives == 0:
+		set_game_state(game_state.GAME_OVER)
+		player.kill(true)
 		game_over()
+	else:
+		player.kill(false)
 
 func on_player_cheated() -> void:
 	if is_player_cheated:
