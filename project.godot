@@ -110,7 +110,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="AsteroidsClone"
+config/name="SpaceJunk"
 run/main_scene="res://Main/Main.tscn"
 config/icon="res://icon.png"
 
