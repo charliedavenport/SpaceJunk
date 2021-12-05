@@ -70,7 +70,7 @@ func _physics_process(delta):
 		return
 	var collision = move_and_collide(vel * speed * delta)
 	if collision:
-		if collision.collider is Asteroid:
+		if collision.collider is BaseSatellite:
 			collision.collider.destroy()
 			destroy()
 	position.x = wrapf(position.x, 0, screen_width)
