@@ -51,7 +51,6 @@ func _input(event):
 			if len(player_name) < 3:
 				var new_char = char(key).to_upper()
 				player_name += new_char
-				print(player_name)
 				next_char(new_char)
 		elif key == KEY_BACKSPACE:
 			pass
