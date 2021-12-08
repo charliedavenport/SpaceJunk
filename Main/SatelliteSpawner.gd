@@ -18,11 +18,12 @@ func spawn_satellite_wave(a_satellites: int) -> void:
 func satellite_spawn() -> void:
 	# implemented in base spawner class
 	var rand_point = pick_random_point()
-	var rand_rot = rng.randf_range(0, TAU)
+	var rand_rot1 = rng.randf_range(0, TAU)
+	var rand_rot2 = rng.randf_range(0, TAU)
 	var satellite_inst = satellite.instance()
 	get_tree().root.call_deferred("add_child", satellite_inst) # triggers on_node_added()
-	satellite_inst.start(rand_point, rand_rot)
-	satellite_count += 4
+	satellite_inst.start(rand_point, rand_rot1, rand_rot2)
+	satellite_count += 10
 
 func clear_satellites() -> void:
 	var root = get_tree().root

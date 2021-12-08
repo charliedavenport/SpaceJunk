@@ -17,5 +17,7 @@ polygon = PoolVector2Array( -54.8993, -29.9619, -15.5687, -17.7881, -0.960243, -
 [node name="Body" parent="." instance=ExtResource( 3 )]
 
 [node name="L Panel" parent="." instance=ExtResource( 2 )]
+position = Vector2( -32.7728, -11.2553 )
 
 [node name="R Panel" parent="." instance=ExtResource( 1 )]
+position = Vector2( 39.3935, 9.76561 )

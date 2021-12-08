@@ -4,7 +4,7 @@ class_name BaseSatellite
 export var speed: float
 var rot_speed: float = 1.0
 var vel: Vector2
-var screen_padding: float = 20.0
+var screen_padding: float = 0.0
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -16,11 +16,11 @@ signal satellite_collision(ast, coll)
 func _ready():
 	rng.randomize()
 
-func start(point: Vector2, rot: float) -> void:
+func start(point: Vector2, vel_rot: float, rot: float) -> void:
 	self.position = point
-	#self.rotate(rot)
 	vel = transform.x * speed
-	vel = vel.rotated(rot)
+	vel = vel.rotated(vel_rot)
+	self.rotate(rot)
 
 func _physics_process(delta):
 	self.rotate(rot_speed * delta)
