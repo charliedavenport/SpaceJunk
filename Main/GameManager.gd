@@ -27,7 +27,7 @@ var high_scores_file: File
 var high_scores
 
 # WAVES
-const beg_asteroids_per_wave: int = 4
+const beg_asteroids_per_wave: int = 2
 var wave: int
 var asteroids_per_wave: int
 var asteroid_speed_scale: float
@@ -47,7 +47,7 @@ func _ready():
 	gui_name_entry.connect("name_entered", self, "save_high_score")
 	high_scores = get_high_scores()
 	gui.show_fps(true)
-	satellite_spawner.spawn_satellite_wave(3)
+	satellite_spawner.spawn_satellite_wave(4)
 	set_game_state(game_state.START)
 	gui.start_screen()
 
@@ -69,7 +69,6 @@ func game_over() -> void:
 	if is_new_high_score:
 		print("New high score! Saving")
 	gui.game_over_screen(is_new_high_score, high_scores)
-
 
 func reset_game() -> void:
 	set_game_state(game_state.PLAY)
@@ -96,7 +95,7 @@ func next_wave() -> void:
 		asteroid_speed_scale = 1.0
 	else:
 		asteroids_per_wave += 1
-		asteroid_speed_scale += 0.1
+		asteroid_speed_scale += 0.05
 	print('spawning %s asteroids' % asteroids_per_wave)
 	satellite_spawner.clear_satellites()
 	satellite_spawner.spawn_satellite_wave(asteroids_per_wave)
@@ -104,7 +103,7 @@ func next_wave() -> void:
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
-	elif node is Satellite:
+	elif node is BaseSatellite:
 		node.connect("satellite_collision", self, "on_satellite_collision")
 		node.speed *= asteroid_speed_scale
 
@@ -131,6 +130,8 @@ func update_player_score(node: Node) -> void:
 		score += big_asteroid_pts
 	elif node is SatelliteComponent:
 		score += medium_asteroid_pts
+	elif node is SatelliteShard:
+		score += small_asteroid_pts
 	elif node is UFO:
 		if node.ufo_type == UFO.ufo_type_enum.LARGE:
 			score += ufo_large_pts
