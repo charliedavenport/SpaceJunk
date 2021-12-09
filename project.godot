@@ -111,7 +111,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SpaceJunk"
-run/main_scene="res://Main/Main.tscn"
+run/main_scene="res://Main/GameManager.tscn"
 config/icon="res://icon.png"
 
 [display]
