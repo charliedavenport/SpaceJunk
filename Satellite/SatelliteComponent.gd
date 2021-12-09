@@ -17,8 +17,8 @@ func start(pos: Vector2, vel_rot: float, rot: float):
 
 func destroy() -> void:
 	emit_signal("satellite_destroyed")
-	var dir1 = vel.normalized().rotated(TAU/4) + vel.normalized()
-	var dir2 = vel.normalized().rotated(-TAU/4) + vel.normalized()
+	var dir1 = (shard1.global_position - global_position).normalized() + vel.normalized()
+	var dir2 = (shard2.global_position - global_position).normalized() + vel.normalized()
 	shard1.start(shard1.global_position, dir1.angle(), self.rotation)
 	shard2.start(shard2.global_position, dir2.angle(), self.rotation)
 	self.remove_child(shard1)
