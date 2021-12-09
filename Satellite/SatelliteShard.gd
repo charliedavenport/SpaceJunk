@@ -7,7 +7,7 @@ func _ready():
 	set_physics_process(false)
 	coll_poly.disabled = true
 	self.visible = false
-	speed = 75.0
+	#speed = 75.0
 
 func start(pos: Vector2, vel_rot: float, rot: float):
 	coll_poly.disabled = false

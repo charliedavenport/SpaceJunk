@@ -1,7 +1,8 @@
 extends BaseSpawner
 class_name Satellite_Spawner
 
-const satellite = preload("res://Satellite/Satellite.tscn")
+const satellite_1 = preload("res://Satellite/Satellite_1.tscn")
+const satellite_2 = preload("res://Satellite/Satellite_2.tscn")
 
 var satellite_count: int
 
@@ -20,7 +21,8 @@ func satellite_spawn() -> void:
 	var rand_point = pick_random_point()
 	var rand_rot1 = rng.randf_range(0, TAU)
 	var rand_rot2 = rng.randf_range(0, TAU)
-	var satellite_inst = satellite.instance()
+	var rand_int = rng.randi_range(0,1)
+	var satellite_inst = satellite_1.instance() if rand_int == 0 else satellite_2.instance()
 	get_tree().root.call_deferred("add_child", satellite_inst) # triggers on_node_added()
 	satellite_inst.start(rand_point, rand_rot1, rand_rot2)
 	satellite_count += 10

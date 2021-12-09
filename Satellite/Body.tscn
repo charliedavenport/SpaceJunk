@@ -25,6 +25,7 @@ position = Vector2( 0.275627, -7.8553 )
 collision_layer = 4
 collision_mask = 9
 script = ExtResource( 3 )
+speed = 75.0
 
 [node name="Sprite" type="Sprite" parent="Shard1"]
 position = Vector2( -0.275627, 7.83997 )
@@ -42,6 +43,7 @@ position = Vector2( 0.111366, 16.2589 )
 collision_layer = 4
 collision_mask = 9
 script = ExtResource( 3 )
+speed = 75.0
 
 [node name="Sprite" type="Sprite" parent="Shard2"]
 position = Vector2( -0.111366, -16.3703 )
