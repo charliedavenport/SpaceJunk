@@ -26,7 +26,7 @@ shader = SubResource( 1 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_amount = 0.0
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
 tracks/0/interp = 1
@@ -148,7 +148,7 @@ tracks/9/keys = {
 "values": [ 90.0, 34.8482 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "Flashing"
 length = 0.6
 loop = true
@@ -225,7 +225,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0.05, 0.05 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 resource_name = "HyperSpace"
 length = 0.3
 tracks/0/type = "value"
@@ -241,7 +241,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.05, 0.05 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -388,7 +388,7 @@ tracks/11/keys = {
 "values": [ Vector2( 0.05, 0.05 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -564,11 +564,11 @@ scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Destroyed = SubResource( 4 )
-anims/Flashing = SubResource( 5 )
-anims/HyperSpace = SubResource( 6 )
-anims/Idle = SubResource( 7 )
-anims/RESET = SubResource( 8 )
+anims/Destroyed = SubResource( 3 )
+anims/Flashing = SubResource( 4 )
+anims/HyperSpace = SubResource( 5 )
+anims/Idle = SubResource( 6 )
+anims/RESET = SubResource( 7 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 1.5
