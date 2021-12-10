@@ -5,7 +5,7 @@ var is_check_input: bool
 var char_ind: int
 onready var timer = get_node("Timer")
 onready var new_hs_label = get_node("NewHighScoreLabel")
-onready var char_entry_container = get_node("CharacterEntryContainer")
+onready var char_entry_container = get_node("CenterContainer/CharacterEntryContainer")
 
 signal name_entered(name)
 
