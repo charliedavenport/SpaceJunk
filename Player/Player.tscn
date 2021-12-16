@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/TinySpaceShip_shard3.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Player/TinySpaceShip_shard1.png" type="Texture" id=4]
 [ext_resource path="res://Player/TinySpaceShip.png" type="Texture" id=5]
 [ext_resource path="res://Player/iddqd.png" type="Texture" id=6]
+[ext_resource path="res://Player/CrossOverIndicator.gd" type="Script" id=7]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -526,7 +527,7 @@ self_modulate = Color( 0.992157, 0.992157, 1, 1 )
 material = SubResource( 2 )
 position = Vector2( 12, 0 )
 rotation = 1.5708
-scale = Vector2( 0.04, 0.04 )
+scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 5 )
 
 [node name="GodmodeSprite" type="Sprite" parent="."]
@@ -584,3 +585,10 @@ default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )
 [node name="LaserLineContinued" type="Line2D" parent="."]
 width = 1.0
 default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )
+
+[node name="CrossOverIndicator" type="Sprite" parent="."]
+position = Vector2( 100, 0 )
+rotation = 1.5708
+scale = Vector2( 0.05, 0.05 )
+texture = ExtResource( 5 )
+script = ExtResource( 7 )

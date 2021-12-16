@@ -25,6 +25,7 @@ onready var godmode_sprite = get_node("GodmodeSprite")
 onready var laser_spawn_pt = get_node("LaserSpawnPoint")
 onready var laser_line = get_node("LaserSpawnPoint/LaserLine")
 onready var laser_line_cont = get_node("LaserLineContinued")
+onready var cross_over_ind = get_node("CrossOverIndicator")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -77,7 +78,10 @@ func wrap_point(a_point: Vector2) -> Vector2:
 	return Vector2(wrapf(a_point.x, 0, screen_width), wrapf(a_point.y, 0, screen_height))
 
 func _process(delta):
+	if not alive:
+		return
 	handle_laser_cont()
+	handle_crossover_ind()
 
 func _input(event):
 	if event.is_action_pressed("shoot") and alive:
@@ -177,3 +181,6 @@ func handle_laser_cont() -> void:
 		laser_cont_start -= Vector2(0, screen_height)
 	laser_line_cont.add_point(to_local(laser_cont_start))
 	laser_line_cont.add_point(to_local(wrap_laser_end))
+
+func handle_crossover_ind() -> void:
+	cross_over_ind.update_indicator(self.global_position, vel)
