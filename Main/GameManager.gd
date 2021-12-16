@@ -60,6 +60,10 @@ func _process(delta):
 			get_tree().paused = true
 			gui.show_pause_screen(true)
 
+func _input(event):
+	if event.is_action_pressed("reset"):
+		reset_game()
+
 func set_game_state(a_state: int) -> void:
 	curr_game_state = a_state
 
