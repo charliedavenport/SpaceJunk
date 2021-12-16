@@ -107,7 +107,7 @@ func next_wave() -> void:
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
-	elif node is BaseSatellite:
+	elif node is BaseSatellite and not node.is_connected("satellite_collision", self, "on_satellite_collision"):
 		node.connect("satellite_collision", self, "on_satellite_collision")
 		node.speed *= asteroid_speed_scale
 
