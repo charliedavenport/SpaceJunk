@@ -8,7 +8,7 @@ onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry"
 
 # PLAYER VARS
 const player_scene = preload("res://Player/Player.tscn")
-const max_lives: int = 5
+const max_lives: int = 3
 const new_life_score: int = 10000
 var player: Player
 var player_lives: int
