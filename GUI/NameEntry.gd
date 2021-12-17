@@ -13,7 +13,6 @@ func _ready():
 	is_check_input = false
 
 func do_name_entry():
-	print("doing name entry")
 	self.visible = true
 	char_entry_container.visible = false
 	timer.start()
