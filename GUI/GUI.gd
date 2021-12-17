@@ -67,6 +67,7 @@ func set_screen_mode(a_mode: int) -> void:
 		press_any_btn_label.visible = false
 	else:
 		print('GUI error: invalid screen mode: %s' % a_mode)
+	show_fps(is_show_fps)
 
 func _process(delta) -> void:
 	if is_show_fps:
