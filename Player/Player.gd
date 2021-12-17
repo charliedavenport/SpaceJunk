@@ -81,7 +81,7 @@ func _process(delta):
 	if not alive:
 		return
 	handle_laser_cont()
-	handle_crossover_ind()
+	cross_over_ind.update_indicator(self.global_position, vel)
 
 func _input(event):
 	if event.is_action_pressed("shoot") and alive:
@@ -182,5 +182,3 @@ func handle_laser_cont() -> void:
 	laser_line_cont.add_point(to_local(laser_cont_start))
 	laser_line_cont.add_point(to_local(wrap_laser_end))
 
-func handle_crossover_ind() -> void:
-	cross_over_ind.update_indicator(self.global_position, vel)
