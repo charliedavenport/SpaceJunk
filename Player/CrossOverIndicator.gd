@@ -3,11 +3,15 @@ class_name CrossOverIndicator
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
+onready var anim = get_node("AnimationPlayer")
 
 const vel_check_multiplier := 100.0
 const vel_check_max_dist := 400.0
 const default_scale := 0.05
 const padding := 30
+
+func _ready():
+	anim.play("flashing")
 
 func update_indicator(player_pos: Vector2, player_vel: Vector2) -> void:
 	# detect if player is heading towards edge of the screen

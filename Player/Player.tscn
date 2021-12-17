@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Player/TinySpaceShip_shard3.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Player/iddqd.png" type="Texture" id=6]
 [ext_resource path="res://Player/CrossOverIndicator.gd" type="Script" id=7]
 [ext_resource path="res://Player/flash.shader" type="Shader" id=8]
+[ext_resource path="res://Player/alpha_flash.shader" type="Shader" id=9]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 8 )
@@ -500,9 +501,42 @@ tracks/9/keys = {
 }
 
 [sub_resource type="ShaderMaterial" id=7]
-shader = ExtResource( 8 )
-shader_param/flash_color = Color( 1, 1, 1, 0 )
-shader_param/flash_amount = 0.0
+shader = ExtResource( 9 )
+shader_param/flash_color = Color( 0.486275, 0.486275, 0.486275, 0 )
+shader_param/flash_amount = 1.0
+
+[sub_resource type="Animation" id=8]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/flash_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "flashing"
+length = 0.5
+loop = true
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material:shader_param/flash_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 4
@@ -585,3 +619,7 @@ rotation = 1.5708
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 5 )
 script = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CrossOverIndicator"]
+anims/Idle = SubResource( 8 )
+anims/flashing = SubResource( 9 )
