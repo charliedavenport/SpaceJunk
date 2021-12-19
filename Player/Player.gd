@@ -7,6 +7,9 @@ const TURNSPEED: float = 4.0
 const SLOWDOWN: float = 0.01
 const LASER_DIST: float = 500.0
 
+const shoot_sound = preload("res://Player/sfx_wpn_laser5.wav")
+const explosion_sound = preload("res://Player/explodify3.wav")
+
 var vel: Vector2
 var alive: bool
 var is_invincible: bool
@@ -26,6 +29,7 @@ onready var laser_spawn_pt = get_node("LaserSpawnPoint")
 onready var laser_line = get_node("LaserSpawnPoint/LaserLine")
 onready var laser_line_cont = get_node("LaserLineContinued")
 onready var cross_over_ind = get_node("CrossOverIndicator")
+onready var audio_stream = get_node("AudioStreamPlayer")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -90,11 +94,15 @@ func _input(event):
 		emit_signal("player_hit")
 
 func shoot() -> void:
+	audio_stream.stream = shoot_sound
+	audio_stream.play()
 	var projectile_inst = projectile.instance()
 	get_tree().root.add_child(projectile_inst)
 	projectile_inst.start(laser_spawn_pt.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
 
 func kill(a_game_over: bool) -> void:
+	audio_stream.stream = explosion_sound
+	audio_stream.play()
 	print("player killed")
 	alive = false
 	collision_shape.disabled = true

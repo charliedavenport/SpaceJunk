@@ -565,9 +565,9 @@ scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 6 )
 
 [node name="ThrusterPolygon" type="Polygon2D" parent="."]
-position = Vector2( 9.032, 0 )
+position = Vector2( 4.78, 0 )
 rotation = 1.5708
-polygon = PoolVector2Array( -15, 22, 15, 22, 0, 50 )
+polygon = PoolVector2Array( -10, 22, 10, 22, 0, 40 )
 
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
 visible = false
@@ -623,3 +623,6 @@ script = ExtResource( 7 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CrossOverIndicator"]
 anims/Idle = SubResource( 8 )
 anims/flashing = SubResource( 9 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0
