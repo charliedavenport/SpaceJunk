@@ -118,7 +118,7 @@ _global_script_class_icons={
 
 config/name="SpaceJunk"
 run/main_scene="res://Main/GameManager.tscn"
-config/icon="res://icon.png"
+config/icon="res://Player/TinySpaceShip.png"
 
 [display]
 
