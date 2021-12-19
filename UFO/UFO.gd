@@ -2,6 +2,8 @@ extends KinematicBody2D
 class_name UFO
 
 const projectile = preload("res://Projectile/Projectile.tscn")
+const shoot_sound = preload("res://UFO/fail.wav")
+const explosion_sound = preload("res://UFO/explodify.wav")
 
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
@@ -10,6 +12,7 @@ onready var change_dir_timer = get_node("ChangeDirectionTimer")
 onready var rng = RandomNumberGenerator.new()
 onready var player = get_tree().root.get_node("Player")
 onready var anim = get_node("AnimationPlayer")
+onready var audio_stream = get_node("AudioStreamPlayer")
 
 enum ufo_type_enum {LARGE, SMALL}
 export (ufo_type_enum) var ufo_type: int
@@ -57,6 +60,8 @@ func start_shooting() -> void:
 func shoot_at_player() -> void:
 	if not player:
 		return
+	audio_stream.stream = shoot_sound
+	audio_stream.play()
 	var dir_to_player = (player.position - position).normalized()
 	var projectile_inst = projectile.instance()
 	get_tree().root.add_child(projectile_inst)
@@ -78,6 +83,8 @@ func _physics_process(delta):
 
 func destroy() -> void:
 	print('ufo destroyed')
+	audio_stream.stream = explosion_sound
+	audio_stream.play()
 	alive = false
 	$CollisionShape2D.disabled = true
 	shoot_timer.stop()

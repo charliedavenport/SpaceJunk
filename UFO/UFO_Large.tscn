@@ -192,3 +192,6 @@ position = Vector2( -11.1118, 53.9717 )
 rotation = 0.980131
 scale = Vector2( 1, 0.5 )
 texture = ExtResource( 5 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0
