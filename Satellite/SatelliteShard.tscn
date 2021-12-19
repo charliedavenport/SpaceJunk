@@ -15,3 +15,6 @@ texture = ExtResource( 2 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( 2.54081, 0.416542, 4.26244, -2.23212, 18.5652, 1.476, 23.7301, -4.48347, 47.0383, 2.53547, 37.5031, 19.7517, 11.9435, 11.9382, 16.4463, 4.91926 )
 disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0

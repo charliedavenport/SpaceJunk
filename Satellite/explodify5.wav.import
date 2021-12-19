@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/explodify5.wav-04aa0cbc15bfc045ffec904bdf4ec123.sample"
+
+[deps]
+
+source_file="res://Satellite/explodify5.wav"
+dest_files=[ "res://.import/explodify5.wav-04aa0cbc15bfc045ffec904bdf4ec123.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

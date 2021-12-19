@@ -3,10 +3,13 @@ class_name SatelliteShard
 
 onready var coll_poly = get_node("CollisionPolygon2D")
 
+const destroy_sound = preload("res://Satellite/explodify5.wav")
+
 func _ready():
 	set_physics_process(false)
 	coll_poly.disabled = true
 	self.visible = false
+	audio_stream.connect("finished", self, "on_audio_finished")
 	#speed = 75.0
 
 func start(pos: Vector2, vel_rot: float, rot: float):
@@ -17,4 +20,12 @@ func start(pos: Vector2, vel_rot: float, rot: float):
 
 func destroy() -> void:
 	emit_signal("satellite_destroyed")
+	audio_stream.stream = destroy_sound
+	audio_stream.play()
+	self.visible = false
+	collision_poly.disabled = true
+	#queue_free()
+
+func on_audio_finished() -> void:
 	queue_free()
+

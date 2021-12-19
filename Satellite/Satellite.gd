@@ -5,7 +5,14 @@ onready var body = get_node("Body")
 onready var l_panel = get_node("L Panel")
 onready var r_panel = get_node("R Panel")
 
+const destroy_sound = preload("res://Satellite/explodify2.wav")
+
+func _ready():
+	audio_stream.connect("finished", self, "on_audio_finished")
+
 func destroy() -> void:
+	audio_stream.stream = destroy_sound
+	audio_stream.play()
 	emit_signal("satellite_destroyed")
 	var body_dir = vel.normalized()
 	var l_panel_dir = (l_panel.global_position - global_position).normalized() + vel.normalized()
@@ -20,4 +27,9 @@ func destroy() -> void:
 	root.add_child(body)
 	root.add_child(l_panel)
 	root.add_child(r_panel)
-	call_deferred("queue_free")
+	self.visible = false
+	collision_poly.disabled = true
+	#call_deferred("queue_free")
+
+func on_audio_finished() -> void:
+	queue_free()

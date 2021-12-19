@@ -21,3 +21,6 @@ position = Vector2( -32.7728, -11.2553 )
 
 [node name="R Panel" parent="." instance=ExtResource( 1 )]
 position = Vector2( 39.3935, 9.76561 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0

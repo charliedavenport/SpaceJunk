@@ -42,6 +42,9 @@ position = Vector2( -23.6773, -5.38804 )
 polygon = PoolVector2Array( 23.2004, -4.48347, 18.8301, 1.60844, 4.79224, -1.83481, 3.60034, 0.681416, 16.7112, 4.6544, 12.6058, 11.9382, 37.9005, 19.4869, 47.833, 12.0706, 42.8005, 1.60844 )
 disabled = true
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Shard1"]
+volume_db = -30.0
+
 [node name="Shard2" type="KinematicBody2D" parent="."]
 visible = false
 position = Vector2( 12.1113, 4.43414 )
@@ -60,3 +63,9 @@ texture = ExtResource( 4 )
 position = Vector2( -51.6684, -13.7889 )
 polygon = PoolVector2Array( 43.4626, 1.34357, 39.2247, 20.5463, 61.4734, 27.8301, 65.7113, 22.4004, 65.4464, 7.83278 )
 disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Shard2"]
+volume_db = -30.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0

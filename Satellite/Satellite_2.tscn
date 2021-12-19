@@ -35,7 +35,6 @@ polygon = PoolVector2Array( -15.636, 17.9949, -8.03457, -17.714, 13.709, -25.138
 
 [node name="Shard1" parent="Body" index="2"]
 position = Vector2( -0.84684, 0.00193501 )
-speed = 75.0
 
 [node name="Sprite" parent="Body/Shard1" index="0"]
 scale = Vector2( 0.16, 0.16 )
@@ -46,7 +45,6 @@ polygon = PoolVector2Array( -10.8012, -7.1711, -6.9121, -26.0862, 14.8314, -33.8
 
 [node name="Shard2" parent="Body" index="3"]
 visible = false
-speed = 75.0
 
 [node name="Sprite" parent="Body/Shard2" index="0"]
 position = Vector2( -1.23383, -8.51306 )
@@ -68,9 +66,6 @@ texture = ExtResource( 7 )
 position = Vector2( 30.5779, 12.7853 )
 polygon = PoolVector2Array( -11.4064, -9.64077, -17.4351, -8.4574, -16.032, -3.26601, -17.4169, 1.49617, -57.7219, -4.51424, -60.9039, -25.1971, -20.2453, -18.6564, -18.9785, -13.2279 )
 
-[node name="Shard1" parent="L Panel" index="2"]
-speed = 75.0
-
 [node name="Sprite" parent="L Panel/Shard1" index="0"]
 position = Vector2( 24.2905, -13.0953 )
 scale = Vector2( 0.16, 0.16 )
@@ -79,9 +74,6 @@ texture = ExtResource( 8 )
 [node name="CollisionPolygon2D" parent="L Panel/Shard1" index="1"]
 position = Vector2( 23.7435, 10.6643 )
 polygon = PoolVector2Array( -46.4082, -10.8192, -38.2764, -1.62685, -16.1793, 1.0248, -17.691, -8.63513, -13.2813, -10.21, -19.1084, -13.3598, -20.7755, -19.8349, -34.0338, -22.3097 )
-
-[node name="Shard2" parent="L Panel" index="3"]
-speed = 75.0
 
 [node name="Sprite" parent="L Panel/Shard2" index="0"]
 position = Vector2( 48.5646, -3.52812 )
@@ -107,7 +99,6 @@ polygon = PoolVector2Array( 21.0572, 4.21371, 25.9786, -0.156754, 60.0965, 2.494
 
 [node name="Shard1" parent="R Panel" index="2"]
 position = Vector2( -5.54424, -2.26305 )
-speed = 75.0
 
 [node name="Sprite" parent="R Panel/Shard1" index="0"]
 position = Vector2( -18.3226, -16.8848 )
@@ -120,7 +111,6 @@ polygon = PoolVector2Array( 10.6742, 2.79357, 14.9216, 1.84969, 13.7418, -0.0380
 
 [node name="Shard2" parent="R Panel" index="3"]
 position = Vector2( 12.2293, 0.304688 )
-speed = 75.0
 
 [node name="Sprite" parent="R Panel/Shard2" index="0"]
 position = Vector2( -36.0945, -19.4521 )
@@ -130,6 +120,9 @@ texture = ExtResource( 13 )
 [node name="CollisionPolygon2D" parent="R Panel/Shard2" index="1"]
 position = Vector2( -47.249, -11.6676 )
 polygon = PoolVector2Array( 40.6036, 22.4638, 45.6685, 5.91305, 56.5135, 6.90747, 65.3524, 17.3373, 65.3524, 27.2368 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0
 
 [editable path="Body"]
 [editable path="L Panel"]

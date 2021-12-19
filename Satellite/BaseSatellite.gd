@@ -9,6 +9,8 @@ var screen_padding: float = 0.0
 onready var screen_width = get_viewport_rect().size.x
 onready var screen_height = get_viewport_rect().size.y
 onready var rng = RandomNumberGenerator.new()
+onready var audio_stream = get_node("AudioStreamPlayer")
+onready var collision_poly = get_node("CollisionPolygon2D")
 
 signal satellite_destroyed(node)
 signal satellite_collision(ast, coll)
