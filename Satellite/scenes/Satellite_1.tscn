@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Satellite/scenes/R Panel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Satellite/scenes/Body.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Satellite/scenes/L Panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Satellite/scripts/Satellite.gd" type="Script" id=4]
+
+[node name="Satellite_1" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource( 4 )
+speed = 50.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -54.8993, -29.9619, -15.5687, -17.7881, -0.960243, -22.8449, 12.3372, -19.2864, 13.0864, -7.11268, 64.9653, 8.05768, 65.3398, 22.4789, 61.4068, 27.723, 12.1499, 11.9907, 11.2135, 24.7263, 0.16349, 28.8467, -11.0738, 24.3518, -13.3255, 3.84838, -61.6417, -10.1093, -63.8891, -16.1025 )
+
+[node name="Body" parent="." instance=ExtResource( 2 )]
+
+[node name="L Panel" parent="." instance=ExtResource( 3 )]
+position = Vector2( -32.7728, -11.2553 )
+
+[node name="R Panel" parent="." instance=ExtResource( 1 )]
+position = Vector2( 39.3935, 9.76561 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0

@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Satellite/assets/satellite_r_panel_shard1.png" type="Texture" id=1]
+[ext_resource path="res://Satellite/assets/satellite_r_panel_shard2.png" type="Texture" id=2]
+[ext_resource path="res://Satellite/assets/satellite_r_panel.png" type="Texture" id=3]
+[ext_resource path="res://Satellite/scripts/SatelliteComponent.gd" type="Script" id=4]
+[ext_resource path="res://Satellite/scripts/SatelliteShard.gd" type="Script" id=5]
+
+[node name="R Panel" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 9
+script = ExtResource( 4 )
+speed = 60.0
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -39.4866, -9.42519 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 2
+texture = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( -39.4866, -9.42519 )
+polygon = PoolVector2Array( 12.5545, 11.674, 15.9165, 4.65439, 3.07054, 0.151676, 4.52731, -2.09969, 18.1679, 1.21114, 23.1702, -4.79527, 65.3356, 7.70551, 65.4348, 22.4882, 61.4663, 27.8457 )
+disabled = true
+
+[node name="Shard1" type="KinematicBody2D" parent="."]
+visible = false
+position = Vector2( -15.7811, -3.99544 )
+collision_layer = 4
+collision_mask = 9
+script = ExtResource( 5 )
+speed = 75.0
+
+[node name="Sprite" type="Sprite" parent="Shard1"]
+position = Vector2( -23.6773, -5.38805 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 2
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Shard1"]
+position = Vector2( -23.6773, -5.38804 )
+polygon = PoolVector2Array( 23.2004, -4.48347, 18.8301, 1.60844, 4.79224, -1.83481, 3.60034, 0.681416, 16.7112, 4.6544, 12.6058, 11.9382, 37.9005, 19.4869, 47.833, 12.0706, 42.8005, 1.60844 )
+disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Shard1"]
+volume_db = -30.0
+
+[node name="Shard2" type="KinematicBody2D" parent="."]
+visible = false
+position = Vector2( 12.1113, 4.43414 )
+collision_layer = 4
+collision_mask = 9
+script = ExtResource( 5 )
+speed = 75.0
+
+[node name="Sprite" type="Sprite" parent="Shard2"]
+position = Vector2( -51.6684, -13.7889 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 2
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Shard2"]
+position = Vector2( -51.6684, -13.7889 )
+polygon = PoolVector2Array( 43.4626, 1.34357, 39.2247, 20.5463, 61.4734, 27.8301, 65.7113, 22.4004, 65.4464, 7.83278 )
+disabled = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Shard2"]
+volume_db = -30.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0

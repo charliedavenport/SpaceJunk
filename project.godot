@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "BaseSatellite",
 "language": "GDScript",
-"path": "res://Satellite/BaseSatellite.gd"
+"path": "res://Satellite/scripts/BaseSatellite.gd"
 }, {
 "base": "Node2D",
 "class": "BaseSpawner",
@@ -42,12 +42,12 @@ _global_script_classes=[ {
 "base": "Sprite",
 "class": "CrossOverIndicator",
 "language": "GDScript",
-"path": "res://Player/CrossOverIndicator.gd"
+"path": "res://Player/scripts/CrossOverIndicator.gd"
 }, {
 "base": "Control",
 "class": "GUI",
 "language": "GDScript",
-"path": "res://GUI/GUI.gd"
+"path": "res://GUI/scripts/GUI.gd"
 }, {
 "base": "Node",
 "class": "GameManager",
@@ -57,7 +57,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player/Player.gd"
+"path": "res://Player/scripts/Player.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Projectile",
@@ -67,17 +67,17 @@ _global_script_classes=[ {
 "base": "BaseSatellite",
 "class": "Satellite",
 "language": "GDScript",
-"path": "res://Satellite/Satellite.gd"
+"path": "res://Satellite/scripts/Satellite.gd"
 }, {
 "base": "BaseSatellite",
 "class": "SatelliteComponent",
 "language": "GDScript",
-"path": "res://Satellite/SatelliteComponent.gd"
+"path": "res://Satellite/scripts/SatelliteComponent.gd"
 }, {
 "base": "BaseSatellite",
 "class": "SatelliteShard",
 "language": "GDScript",
-"path": "res://Satellite/SatelliteShard.gd"
+"path": "res://Satellite/scripts/SatelliteShard.gd"
 }, {
 "base": "BaseSpawner",
 "class": "Satellite_Spawner",
@@ -118,7 +118,7 @@ _global_script_class_icons={
 
 config/name="SpaceJunk"
 run/main_scene="res://Main/GameManager.tscn"
-config/icon="res://Player/TinySpaceShip.png"
+config/icon="res://Player/assets/TinySpaceShip.png"
 
 [display]
 
