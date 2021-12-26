@@ -2,12 +2,13 @@ extends Node
 class_name GameManager
 
 onready var gui = get_node("CanvasLayer/GUI")
+onready var score_manager = get_node("ScoreManager")
 onready var satellite_spawner = get_node("SatelliteSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
 onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry")
 
 # PLAYER VARS
-const player_scene = preload("res://Player/Player.tscn")
+const player_scene = preload("res://Player/scenes/Player.tscn")
 const max_lives: int = 3
 const new_life_score: int = 10000
 var player: Player
@@ -15,16 +16,7 @@ var player_lives: int
 var is_player_cheated: bool
 
 # SCORING
-const big_asteroid_pts: int = 20
-const medium_asteroid_pts: int = 50
-const small_asteroid_pts: int = 100
-const ufo_large_pts: int = 200
-const ufo_small_pts: int = 1000
-var score: int
-const max_high_scores := 10
-const high_scores_filepath = "res://high_scores.json"
-var high_scores_file: File
-var high_scores
+
 
 # WAVES
 const beg_asteroids_per_wave: int = 2
@@ -36,6 +28,9 @@ var asteroid_speed_scale: float
 enum game_state {START, PLAY, GAME_OVER}
 var curr_game_state: int
 
+# DEBUG
+const debug_no_enemies := false
+
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
 	player = player_scene.instance()
@@ -43,12 +38,11 @@ func _ready():
 	player.connect("player_hit", self, "on_player_hit")
 	player.connect("player_cheated", self, "on_player_cheated")
 	satellite_spawner.connect("no_satellites_left", self, "next_wave")
-	gui.connect("gui_reset", self, "reset_game")
 	gui_name_entry.connect("name_entered", self, "save_high_score")
-	high_scores = get_high_scores()
 	gui.show_fps(true)
 	satellite_spawner.spawn_satellite_wave(4)
 	set_game_state(game_state.START)
+	gui.connect("gui_reset", self, "reset_game")
 	gui.start_screen()
 
 func _process(delta):
@@ -69,10 +63,10 @@ func set_game_state(a_state: int) -> void:
 
 func game_over() -> void:
 	print('game over')
-	var is_new_high_score := not is_player_cheated and check_high_score()
+	var is_new_high_score = not is_player_cheated and score_manager.check_high_score()
 	if is_new_high_score:
 		print("New high score! Saving")
-	gui.game_over_screen(is_new_high_score, high_scores)
+	gui.game_over_screen(is_new_high_score, score_manager.high_scores)
 
 func reset_game() -> void:
 	set_game_state(game_state.PLAY)
@@ -83,9 +77,9 @@ func reset_game() -> void:
 	print('game reset')
 	is_player_cheated = false
 	player_lives = max_lives
-	score = 0
+	score_manager.reset()
 	player.reset(false)
-	gui.start_game(max_lives, score, wave)
+	gui.start_game(max_lives, score_manager.score, wave)
 	ufo_spawner.start(1)
 	wave = 0
 	next_wave()
@@ -129,25 +123,15 @@ func on_projectile_hit(proj, node) -> void:
 func update_player_score(node: Node) -> void:
 	if is_player_cheated:
 		return
-	var prev_score = score
-	if node is Satellite:
-		score += big_asteroid_pts
-	elif node is SatelliteComponent:
-		score += medium_asteroid_pts
-	elif node is SatelliteShard:
-		score += small_asteroid_pts
-	elif node is UFO:
-		if node.ufo_type == UFO.ufo_type_enum.LARGE:
-			score += ufo_large_pts
-		else:
-			score += ufo_small_pts
+	var prev_score = score_manager.score
+	score_manager.update_score(node)
 	# new life every next_life_score points
-	var next_life_threshold = score - (score % new_life_score)
+	var next_life_threshold = score_manager.score - (score_manager.score % new_life_score)
 	if prev_score < next_life_threshold:
 		print("player earned a new life!")
 		player_lives += 1
 		gui.increment_lives()
-	gui.set_score(score)
+	gui.set_score(score_manager.score)
 
 func on_player_hit() -> void:
 	if not player.alive:
@@ -166,60 +150,11 @@ func on_player_cheated() -> void:
 	if is_player_cheated:
 		return
 	print("player used a cheat code, so scoring is disabled")
-	score = 0
+	score_manager.reset()
 	gui.set_score(0)
 	is_player_cheated = true
 	gui.disable_score()
 
-func get_high_scores() -> Array:
-	high_scores_file = File.new()
-	if not high_scores_file.file_exists(high_scores_filepath):
-		print('high scores file not found, creating new file')
-		high_scores_file.open(high_scores_filepath, File.WRITE)
-		high_scores_file.seek(0)
-		high_scores_file.store_line("[]")
-		high_scores_file.close()
-		return []
-	high_scores_file.open(high_scores_filepath, File.READ)
-	var scores = parse_json(high_scores_file.get_as_text())
-	#print('high scores = %s' % str(scores))
-	high_scores_file.close()
-	return scores
-
-func check_high_score() -> bool:
-	if len(high_scores) < max_high_scores:
-		return true
-	# return true if any of the saved high scores are lower than score
-	for i in range(len(high_scores)):
-		var saved_score = high_scores[i]["score"]
-		if score > saved_score:
-			return true
-	return false
-
-static func compare_scores(a,b) -> bool:
-	return a["score"] > b["score"]
-
-func sort_high_scores() -> void:
-	high_scores.sort_custom(self, "compare_scores")
-
 func save_high_score(name_entry: String) -> void:
-	var score_entry = {"name": name_entry, "score":score}
-	if len(high_scores) < max_high_scores:
-		high_scores.append(score_entry)
-		sort_high_scores()
-	else:
-		sort_high_scores()
-		high_scores.pop_back()
-		var is_inserted := false
-		for i in range(len(high_scores)):
-			if high_scores[i]["score"] < score:
-				high_scores.insert(i, score_entry)
-				is_inserted = true
-				break
-		if not is_inserted:
-			high_scores.push_back(score_entry)
-	gui.show_high_scores(high_scores)
-	high_scores_file.open(high_scores_filepath, File.WRITE)
-	high_scores_file.seek(0)
-	high_scores_file.store_line(JSON.print(high_scores))
-	high_scores_file.close()
+	score_manager.save_high_score(name_entry)
+	gui.show_high_scores(score_manager.high_scores)

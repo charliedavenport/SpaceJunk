@@ -1,8 +1,8 @@
 extends BaseSpawner
 class_name Satellite_Spawner
 
-const satellite_1 = preload("res://Satellite/Satellite_1.tscn")
-const satellite_2 = preload("res://Satellite/Satellite_2.tscn")
+const satellite_1 = preload("res://Satellite/scenes/Satellite_1.tscn")
+const satellite_2 = preload("res://Satellite/scenes/Satellite_2.tscn")
 
 var satellite_count: int
 

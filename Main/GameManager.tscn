@@ -1,14 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main/background_2.png" type="Texture" id=1]
-[ext_resource path="res://GUI/GUI.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GUI/scenes/GUI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Main/SatelliteSpawner.gd" type="Script" id=3]
 [ext_resource path="res://Main/GameManager.gd" type="Script" id=4]
 [ext_resource path="res://Main/UFOSpawner.gd" type="Script" id=5]
+[ext_resource path="res://Main/ScoreManager.gd" type="Script" id=6]
 
 [node name="GameManager" type="Node"]
 pause_mode = 2
 script = ExtResource( 4 )
+
+[node name="ScoreManager" type="Node" parent="."]
+script = ExtResource( 6 )
 
 [node name="SatelliteSpawner" type="Node2D" parent="."]
 script = ExtResource( 3 )

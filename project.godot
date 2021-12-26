@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Main/SatelliteSpawner.gd"
 }, {
+"base": "Node",
+"class": "ScoreManager",
+"language": "GDScript",
+"path": "res://Main/ScoreManager.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "UFO",
 "language": "GDScript",
@@ -110,6 +115,7 @@ _global_script_class_icons={
 "SatelliteComponent": "",
 "SatelliteShard": "",
 "Satellite_Spawner": "",
+"ScoreManager": "",
 "UFO": "",
 "UFOSpawner": ""
 }
