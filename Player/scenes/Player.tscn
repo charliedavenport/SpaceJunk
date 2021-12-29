@@ -624,6 +624,9 @@ autoplay = "off"
 anims/off = SubResource( 10 )
 anims/on = SubResource( 11 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ThrusterSprite"]
+volume_db = -35.0
+
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
 visible = false
 position = Vector2( 12, 0 )

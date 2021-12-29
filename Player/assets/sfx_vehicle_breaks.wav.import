@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sfx_vehicle_breaks.wav-465ce1826de1ec60b86d909f10a52175.sample"
+
+[deps]
+
+source_file="res://Player/assets/sfx_vehicle_breaks.wav"
+dest_files=[ "res://.import/sfx_vehicle_breaks.wav-465ce1826de1ec60b86d909f10a52175.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

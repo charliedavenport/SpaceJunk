@@ -9,6 +9,7 @@ const LASER_DIST: float = 500.0
 
 const shoot_sound = preload("res://Player/assets/sfx_wpn_laser5.wav")
 const explosion_sound = preload("res://Player/assets/explodify3.wav")
+const thruster_sound = preload("res://Player/assets/sfx_vehicle_breaks.wav")
 
 var vel: Vector2
 var alive: bool
@@ -30,6 +31,7 @@ onready var laser_line = get_node("LaserSpawnPoint/LaserLine")
 onready var laser_line_cont = get_node("LaserLineContinued")
 onready var cross_over_ind = get_node("CrossOverIndicator")
 onready var audio_stream = get_node("AudioStreamPlayer")
+onready var thruster_audio = get_node("ThrusterSprite/AudioStreamPlayer")
 const projectile = preload("res://Projectile/Projectile.tscn")
 
 signal player_hit
@@ -62,6 +64,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("forward"):
 		if not thruster.current_animation == "on":
 			thruster.play("on")
+			thruster_audio.stream = thruster_sound
+			thruster_audio.play()
 		var delta_vec = transform.x * delta
 		if delta_vec.dot(vel) > 0:
 			delta_vec *= THRUST
@@ -70,6 +74,7 @@ func _physics_process(delta):
 		vel += delta_vec
 	else:
 		thruster.play("off")
+		thruster_audio.stop()
 		# gently slow down
 		vel *= (1.0 - SLOWDOWN)
 	var collision = move_and_collide(vel)

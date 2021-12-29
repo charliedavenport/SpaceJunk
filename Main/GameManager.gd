@@ -67,8 +67,10 @@ func game_over() -> void:
 
 func reset_game() -> void:
 	set_game_state(game_state.PLAY)
+	get_tree().paused = false
 	satellite_spawner.clear_satellites()
 	ufo_spawner.clear_ufo()
+	clear_projectiles()
 	# wait one frame to let everything queue free
 	yield(get_tree(), "idle_frame")
 	print('game reset')
@@ -155,3 +157,10 @@ func on_player_cheated() -> void:
 func save_high_score(name_entry: String) -> void:
 	score_manager.save_high_score(name_entry)
 	gui.show_high_scores(score_manager.high_scores)
+
+func clear_projectiles() -> void:
+	var root = get_tree().root
+	for i in range(root.get_child_count()):
+		var node = root.get_child(i)
+		if node is Projectile:
+			node.queue_free()
