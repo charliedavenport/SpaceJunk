@@ -15,9 +15,6 @@ var player: Player
 var player_lives: int
 var is_player_cheated: bool
 
-# SCORING
-
-
 # WAVES
 const beg_asteroids_per_wave: int = 2
 var wave: int
