@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Player/assets/TinySpaceShip_shard1.png" type="Texture" id=1]
 [ext_resource path="res://Player/assets/TinySpaceShip.png" type="Texture" id=2]
@@ -9,11 +9,57 @@
 [ext_resource path="res://Player/scripts/alpha_flash.shader" type="Shader" id=7]
 [ext_resource path="res://Player/scripts/CrossOverIndicator.gd" type="Script" id=8]
 [ext_resource path="res://Player/scripts/Player.gd" type="Script" id=9]
+[ext_resource path="res://Player/assets/thrust_spritesheet.png" type="Texture" id=10]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 6 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
 shader_param/flash_amount = 0.0
+
+[sub_resource type="Animation" id=10]
+resource_name = "off"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "on"
+length = 0.333333
+loop = true
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.0833333, 0.166667, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
 
 [sub_resource type="Animation" id=2]
 tracks/0/type = "value"
@@ -564,10 +610,19 @@ rotation = 1.5708
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 3 )
 
-[node name="ThrusterPolygon" type="Polygon2D" parent="."]
-position = Vector2( 4.78, 0 )
+[node name="ThrusterSprite" type="Sprite" parent="."]
+position = Vector2( -33.522, -1.205 )
 rotation = 1.5708
-polygon = PoolVector2Array( -10, 22, 10, 22, 0, 40 )
+scale = Vector2( 0.0717794, 0.0717794 )
+z_index = -2
+texture = ExtResource( 10 )
+hframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ThrusterSprite"]
+autoplay = "off"
+anims/off = SubResource( 10 )
+anims/on = SubResource( 11 )
 
 [node name="BrokenShipSprite1" type="Sprite" parent="."]
 visible = false

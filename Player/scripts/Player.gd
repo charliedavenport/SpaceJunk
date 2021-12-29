@@ -22,7 +22,7 @@ onready var rng = RandomNumberGenerator.new()
 onready var invincible_timer = get_node("InvincibleTimer")
 onready var anim = get_node("AnimationPlayer")
 onready var collision_shape = get_node("CollisionPolygon2D")
-onready var thruster = get_node("ThrusterPolygon")
+onready var thruster = get_node("ThrusterSprite/AnimationPlayer")
 onready var ship_sprite = get_node("ShipSprite")
 onready var godmode_sprite = get_node("GodmodeSprite")
 onready var laser_spawn_pt = get_node("LaserSpawnPoint")
@@ -39,7 +39,6 @@ func _ready():
 	self.visible = false
 	rng.randomize()
 	is_godmode = false
-	thruster.visible = false
 	collision_shape.disabled = true
 	laser_line.points[0] = Vector2.ZERO
 	laser_line.points[1] = Vector2(LASER_DIST, 0.0)
@@ -61,7 +60,8 @@ func _physics_process(delta):
 		shoot()
 	# handle thrust
 	if Input.is_action_pressed("forward"):
-		thruster.visible = true
+		if not thruster.current_animation == "on":
+			thruster.play("on")
 		var delta_vec = transform.x * delta
 		if delta_vec.dot(vel) > 0:
 			delta_vec *= THRUST
@@ -69,7 +69,7 @@ func _physics_process(delta):
 			delta_vec *= STOPPING_THRUST
 		vel += delta_vec
 	else:
-		thruster.visible = false
+		thruster.play("off")
 		# gently slow down
 		vel *= (1.0 - SLOWDOWN)
 	var collision = move_and_collide(vel)
@@ -107,7 +107,7 @@ func kill(a_game_over: bool) -> void:
 	alive = false
 	collision_shape.disabled = true
 	anim.play("Destroyed")
-	thruster.visible = false
+	thruster.play("off")
 	yield(anim, "animation_finished")
 	if a_game_over:
 		self.visible = false
