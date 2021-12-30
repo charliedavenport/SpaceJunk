@@ -10,26 +10,6 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
-"class": "Asteroid",
-"language": "GDScript",
-"path": "res://Asteroid/Asteroid.gd"
-}, {
-"base": "Asteroid",
-"class": "Asteroid_Big",
-"language": "GDScript",
-"path": "res://Asteroid/Asteroid_Big.gd"
-}, {
-"base": "Asteroid",
-"class": "Asteroid_Medium",
-"language": "GDScript",
-"path": "res://Asteroid/Asteroid_Medium.gd"
-}, {
-"base": "Asteroid",
-"class": "Asteroid_Small",
-"language": "GDScript",
-"path": "res://Asteroid/Asteroid_Small.gd"
-}, {
-"base": "KinematicBody2D",
 "class": "BaseSatellite",
 "language": "GDScript",
 "path": "res://Satellite/scripts/BaseSatellite.gd"
@@ -100,10 +80,6 @@ _global_script_classes=[ {
 "path": "res://Main/UFOSpawner.gd"
 } ]
 _global_script_class_icons={
-"Asteroid": "",
-"Asteroid_Big": "",
-"Asteroid_Medium": "",
-"Asteroid_Small": "",
 "BaseSatellite": "",
 "BaseSpawner": "",
 "CrossOverIndicator": "",
