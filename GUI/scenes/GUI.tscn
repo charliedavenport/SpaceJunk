@@ -34,14 +34,17 @@ __meta__ = {
 }
 
 [node name="TextureRect" parent="LivesContainer" instance=ExtResource( 4 )]
+margin_bottom = 1162.0
 
 [node name="TextureRect2" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 1028.0
 margin_right = 2052.0
+margin_bottom = 1162.0
 
 [node name="TextureRect3" parent="LivesContainer" instance=ExtResource( 4 )]
 margin_left = 2056.0
 margin_right = 3080.0
+margin_bottom = 1162.0
 
 [node name="ScoreLabel" type="Label" parent="."]
 anchor_left = 1.0

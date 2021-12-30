@@ -44,3 +44,7 @@ func on_satellite_destroyed() -> void:
 func on_node_added(node) -> void:
 	if node is BaseSatellite and not node.is_connected("satellite_destroyed", self, "on_satellite_destroyed"):
 		var rtn = node.connect("satellite_destroyed", self, "on_satellite_destroyed")
+
+func on_ufo_destroyed() -> void:
+	# ufo split into 3 pieces. Count them as 'satellites'
+	satellite_count += 3

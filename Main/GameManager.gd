@@ -26,7 +26,8 @@ enum game_state {START, PLAY, GAME_OVER}
 var curr_game_state: int
 
 # DEBUG
-const debug_no_enemies := false
+const debug_no_sat := false
+const debug_no_ufo := false
 
 func _ready():
 	get_tree().connect("node_added", self, "on_node_added")
@@ -34,7 +35,7 @@ func _ready():
 	get_tree().root.call_deferred("add_child", player)
 	player.connect("player_hit", self, "on_player_hit")
 	player.connect("player_cheated", self, "on_player_cheated")
-	satellite_spawner.connect("no_satellites_left", self, "next_wave")
+	satellite_spawner.connect("no_satellites_left", self, "on_no_satellites_left")
 	gui_name_entry.connect("name_entered", self, "save_high_score")
 	gui.show_fps(true)
 	satellite_spawner.spawn_satellite_wave(4)
@@ -79,9 +80,11 @@ func reset_game() -> void:
 	score_manager.reset()
 	player.reset(false)
 	gui.start_game(max_lives, score_manager.score, wave)
-	ufo_spawner.start(1)
+	if not debug_no_ufo:
+		ufo_spawner.start(1)
 	wave = 0
-	next_wave()
+	if not debug_no_sat:
+		next_wave()
 
 func next_wave() -> void:
 	wave += 1
@@ -97,12 +100,20 @@ func next_wave() -> void:
 	satellite_spawner.clear_satellites()
 	satellite_spawner.spawn_satellite_wave(asteroids_per_wave)
 
+func on_no_satellites_left() -> void:
+	if ufo_spawner.ufo_active:
+		return # wait for player to destroy ufo before spawning next wave
+	else:
+		next_wave()
+
 func on_node_added(node) -> void:
 	if node is Projectile:
 		node.connect("projectile_hit", self, "on_projectile_hit")
 	elif node is BaseSatellite and not node.is_connected("satellite_collision", self, "on_satellite_collision"):
 		node.connect("satellite_collision", self, "on_satellite_collision")
 		node.speed *= asteroid_speed_scale
+	elif node is UFO:
+		node.connect("ufo_destroyed", satellite_spawner, "on_ufo_destroyed")
 
 func on_satellite_collision(sat, coll) -> void:
 	if coll is Player:

@@ -18,6 +18,7 @@ script = ExtResource( 6 )
 script = ExtResource( 3 )
 
 [node name="UFOSpawner" type="Node2D" parent="."]
+pause_mode = 1
 position = Vector2( -1, 0 )
 script = ExtResource( 5 )
 
