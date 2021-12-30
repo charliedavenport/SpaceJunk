@@ -17,6 +17,7 @@ signal satellite_collision(ast, coll)
 
 func _ready():
 	rng.randomize()
+	rot_speed = rng.randf_range(-1.0, 1.0)
 
 func start(point: Vector2, vel_rot: float, rot: float) -> void:
 	self.position = point
