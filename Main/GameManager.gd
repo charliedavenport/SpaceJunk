@@ -96,7 +96,7 @@ func next_wave() -> void:
 	else:
 		gui.next_wave()
 		asteroids_per_wave += 1
-		asteroid_speed_scale += 0.05
+		asteroid_speed_scale += 0.075
 	print('spawning %s asteroids' % asteroids_per_wave)
 	satellite_spawner.clear_satellites()
 	satellite_spawner.spawn_satellite_wave(asteroids_per_wave)

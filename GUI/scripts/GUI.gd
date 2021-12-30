@@ -3,7 +3,8 @@ class_name GUI
 
 onready var score_label = get_node("ScoreLabel")
 onready var lives_container = get_node("LivesContainer")
-onready var wave_label = get_node("WaveLabel")
+onready var wave_label = get_node("WaveContainer/WaveLabel")
+onready var wave_container = get_node("WaveContainer")
 onready var start_label = get_node("StartLabel")
 onready var game_over_ctrl = get_node("GameOverScreen")
 onready var press_any_btn_label = get_node("GameOverScreen/PressAnyBtnLabel")
@@ -61,7 +62,7 @@ func set_screen_mode(a_mode: int) -> void:
 	elif a_mode == screen_mode.PLAY:
 		lives_container.visible = true
 		score_label.visible = true
-		wave_label.visible = true
+		wave_container.visible = true
 	elif a_mode == screen_mode.PAUSE:
 		pause_screen.visible = true
 	elif a_mode == screen_mode.GAME_OVER:
@@ -119,7 +120,9 @@ func increment_lives() -> void:
 	if lives <= max_lives:
 		lives_container.get_child(lives_container.get_child_count() - lives).visible = true
 	else:
-		lives_container.add_child(life_rect.instance())
+		var new_life = life_rect.instance()
+		new_life.do_flashing(3) 
+		lives_container.add_child(new_life)
 
 func decrement_lives() -> void:
 	if lives > 0:
@@ -138,6 +141,8 @@ func set_wave(a_wave) -> void:
 
 func next_wave() -> void:
 	set_wave(wave + 1)
+	var wave_anim = wave_label.get_node("AnimationPlayer")
+	wave_anim.play("new wave")
 	audio_stream.stream = next_wave_sound
 	audio_stream.play()
 

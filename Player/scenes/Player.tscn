@@ -14,9 +14,9 @@
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 6 )
 shader_param/flash_color = Color( 1, 1, 1, 1 )
-shader_param/flash_amount = 0.0
+shader_param/flash_amount = 1.0
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=2]
 resource_name = "off"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -31,7 +31,7 @@ tracks/0/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=3]
 resource_name = "on"
 length = 0.333333
 loop = true
@@ -61,7 +61,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
 tracks/0/interp = 1
@@ -183,8 +183,7 @@ tracks/9/keys = {
 "values": [ 90.0, 34.8482 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "Flashing"
+[sub_resource type="Animation" id=5]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -260,8 +259,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0.05, 0.05 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "HyperSpace"
+[sub_resource type="Animation" id=6]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:scale")
@@ -276,7 +274,7 @@ tracks/0/keys = {
 "values": [ Vector2( 0.05, 0.05 ), Vector2( 1e-05, 1e-05 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=7]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -423,7 +421,7 @@ tracks/11/keys = {
 "values": [ Vector2( 0.05, 0.05 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("ShipSprite:visible")
@@ -546,13 +544,12 @@ tracks/9/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=9]
 shader = ExtResource( 7 )
 shader_param/flash_color = Color( 0.486275, 0.486275, 0.486275, 0 )
 shader_param/flash_amount = 1.0
 
-[sub_resource type="Animation" id=8]
-resource_name = "Idle"
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:material:shader_param/flash_amount")
 tracks/0/interp = 1
@@ -566,8 +563,7 @@ tracks/0/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "flashing"
+[sub_resource type="Animation" id=11]
 length = 0.5
 loop = true
 step = 0.0833333
@@ -621,8 +617,8 @@ frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ThrusterSprite"]
 autoplay = "off"
-anims/off = SubResource( 10 )
-anims/on = SubResource( 11 )
+anims/off = SubResource( 2 )
+anims/on = SubResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ThrusterSprite"]
 volume_db = -35.0
@@ -649,11 +645,11 @@ scale = Vector2( 0.04, 0.04 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Destroyed = SubResource( 2 )
-anims/Flashing = SubResource( 3 )
-anims/HyperSpace = SubResource( 4 )
-anims/Idle = SubResource( 5 )
-anims/RESET = SubResource( 6 )
+anims/Destroyed = SubResource( 4 )
+anims/Flashing = SubResource( 5 )
+anims/HyperSpace = SubResource( 6 )
+anims/Idle = SubResource( 7 )
+anims/RESET = SubResource( 8 )
 
 [node name="InvincibleTimer" type="Timer" parent="."]
 wait_time = 1.5
@@ -671,7 +667,7 @@ width = 1.0
 default_color = Color( 0.941176, 0.0862745, 0.286275, 0.560784 )
 
 [node name="CrossOverIndicator" type="Sprite" parent="."]
-material = SubResource( 7 )
+material = SubResource( 9 )
 position = Vector2( 100, 0 )
 rotation = 1.5708
 scale = Vector2( 0.05, 0.05 )
@@ -679,8 +675,8 @@ texture = ExtResource( 2 )
 script = ExtResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CrossOverIndicator"]
-anims/Idle = SubResource( 8 )
-anims/flashing = SubResource( 9 )
+anims/Idle = SubResource( 10 )
+anims/flashing = SubResource( 11 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -30.0

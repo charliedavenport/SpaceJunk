@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Main/GameManager.gd"
 }, {
+"base": "TextureRect",
+"class": "LifeRect",
+"language": "GDScript",
+"path": "res://GUI/scripts/LifeRect.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -85,6 +90,7 @@ _global_script_class_icons={
 "CrossOverIndicator": "",
 "GUI": "",
 "GameManager": "",
+"LifeRect": "",
 "Player": "",
 "Projectile": "",
 "Satellite": "",
