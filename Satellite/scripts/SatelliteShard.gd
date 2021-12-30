@@ -10,7 +10,6 @@ func _ready():
 	coll_poly.disabled = true
 	self.visible = false
 	audio_stream.connect("finished", self, "on_audio_finished")
-	#speed = 75.0
 
 func start(pos: Vector2, vel_rot: float, rot: float):
 	coll_poly.disabled = false
