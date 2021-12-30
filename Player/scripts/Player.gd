@@ -8,7 +8,7 @@ const SLOWDOWN: float = 0.01
 const LASER_DIST: float = 500.0
 
 const shoot_sound = preload("res://Player/assets/sfx_wpn_laser5.wav")
-const explosion_sound = preload("res://Player/assets/explodify3.wav")
+const explosion_sound = preload("res://Player/assets/sfx_sound_shutdown1.wav")
 const thruster_sound = preload("res://Player/assets/sfx_vehicle_breaks.wav")
 
 var vel: Vector2
@@ -106,6 +106,7 @@ func shoot() -> void:
 	projectile_inst.start(laser_spawn_pt.global_transform.origin, self.transform.x.angle(), projectile_inst.source_type.PLAYER)
 
 func kill(a_game_over: bool) -> void:
+	thruster_audio.stop()
 	audio_stream.stream = explosion_sound
 	audio_stream.play()
 	print("player killed")
