@@ -37,7 +37,7 @@ func _ready():
 	player.connect("player_cheated", self, "on_player_cheated")
 	satellite_spawner.connect("no_satellites_left", self, "on_no_satellites_left")
 	gui_name_entry.connect("name_entered", self, "save_high_score")
-	gui.show_fps(true)
+	gui.show_fps(false)
 	satellite_spawner.spawn_satellite_wave(4)
 	set_game_state(game_state.START)
 	gui.connect("gui_reset", self, "reset_game")
@@ -89,11 +89,12 @@ func reset_game() -> void:
 func next_wave() -> void:
 	wave += 1
 	print('wave = %s' % wave)
-	gui.set_wave(wave)
 	if wave == 1:
+		gui.set_wave(1)
 		asteroids_per_wave = beg_asteroids_per_wave
 		asteroid_speed_scale = 1.0
 	else:
+		gui.next_wave()
 		asteroids_per_wave += 1
 		asteroid_speed_scale += 0.05
 	print('spawning %s asteroids' % asteroids_per_wave)

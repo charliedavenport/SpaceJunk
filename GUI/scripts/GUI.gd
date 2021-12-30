@@ -12,9 +12,12 @@ onready var name_entry = get_node("GameOverScreen/NameEntry")
 onready var game_over_timer = get_node("GameOverTimer")
 onready var fps_label = get_node("FPSLabel")
 onready var pause_screen = get_node("PauseScreen")
+onready var audio_stream = get_node("AudioStreamPlayer")
 
 const life_rect = preload("res://GUI/scenes/LifeRect.tscn")
 const high_score_row = preload("res://GUI/scenes/HighScoreRow.tscn")
+const next_wave_sound = preload("res://GUI/assets/sfx_coin_cluster4.wav")
+const new_life_sound = preload("res://GUI/assets/sfx_sounds_powerup2.wav")
 
 enum screen_mode {START, PLAY, PAUSE, GAME_OVER}
 var curr_screen_mode: int
@@ -110,6 +113,8 @@ func set_score(a_score: int) -> void:
 	score_label.text = '%s' % score
 
 func increment_lives() -> void:
+	audio_stream.stream = new_life_sound
+	audio_stream.play()
 	lives += 1
 	if lives <= max_lives:
 		lives_container.get_child(lives_container.get_child_count() - lives).visible = true
@@ -130,6 +135,11 @@ func reset_lives() -> void:
 func set_wave(a_wave) -> void:
 	wave = a_wave
 	wave_label.text = 'wave %s' % wave
+
+func next_wave() -> void:
+	set_wave(wave + 1)
+	audio_stream.stream = next_wave_sound
+	audio_stream.play()
 
 func disable_score() -> void:
 	is_score_disabled = true

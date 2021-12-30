@@ -102,3 +102,6 @@ __meta__ = {
 [node name="GameOverTimer" type="Timer" parent="."]
 
 [node name="PauseScreen" parent="." instance=ExtResource( 7 )]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -30.0
