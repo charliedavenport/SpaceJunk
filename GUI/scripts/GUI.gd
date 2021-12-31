@@ -121,7 +121,7 @@ func increment_lives() -> void:
 		lives_container.get_child(lives_container.get_child_count() - lives).visible = true
 	else:
 		var new_life = life_rect.instance()
-		new_life.do_flashing(3) 
+		new_life.do_flashing(6) 
 		lives_container.add_child(new_life)
 
 func decrement_lives() -> void:
