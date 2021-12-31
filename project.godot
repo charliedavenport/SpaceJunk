@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Player/scripts/CrossOverIndicator.gd"
 }, {
+"base": "Node2D",
+"class": "ExplosionManager",
+"language": "GDScript",
+"path": "res://Main/ExplosionManager.gd"
+}, {
 "base": "Control",
 "class": "GUI",
 "language": "GDScript",
@@ -88,6 +93,7 @@ _global_script_class_icons={
 "BaseSatellite": "",
 "BaseSpawner": "",
 "CrossOverIndicator": "",
+"ExplosionManager": "",
 "GUI": "",
 "GameManager": "",
 "LifeRect": "",

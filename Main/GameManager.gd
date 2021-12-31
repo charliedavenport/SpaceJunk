@@ -6,6 +6,7 @@ onready var score_manager = get_node("ScoreManager")
 onready var satellite_spawner = get_node("SatelliteSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
 onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry")
+onready var explosion_manager = get_node("ExplosionManager")
 onready var audio_stream = get_node("AudioStreamPlayer")
 
 # MUSIC
@@ -136,12 +137,14 @@ func on_node_added(node) -> void:
 		node.connect("ufo_destroyed", satellite_spawner, "on_ufo_destroyed")
 
 func on_satellite_collision(sat, coll) -> void:
+	explosion_manager.spawn_explosion(sat.global_position)
 	if coll is Player:
 		on_player_hit()
 	elif coll is UFO:
 		ufo_spawner.destroy_ufo()
 
 func on_projectile_hit(proj, node) -> void:
+	explosion_manager.spawn_explosion(node.global_position)
 	if proj.source == Projectile.source_type.PLAYER:
 		update_player_score(node)
 	elif node is Player:
@@ -166,6 +169,7 @@ func update_player_score(node: Node) -> void:
 func on_player_hit() -> void:
 	if not player.alive:
 		return
+	explosion_manager.spawn_explosion(player.global_position)
 	player_lives -= 1
 	gui.decrement_lives()
 	print('lives = %s' % player_lives )
