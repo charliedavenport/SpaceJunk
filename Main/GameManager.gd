@@ -6,6 +6,12 @@ onready var score_manager = get_node("ScoreManager")
 onready var satellite_spawner = get_node("SatelliteSpawner")
 onready var ufo_spawner = get_node("UFOSpawner")
 onready var gui_name_entry = get_node("CanvasLayer/GUI/GameOverScreen/NameEntry")
+onready var audio_stream = get_node("AudioStreamPlayer")
+
+# MUSIC
+const menu_music = preload("res://Main/Map.wav")
+const play_music = preload("res://Main/Venus.wav")
+var music_playback_pos: float
 
 # PLAYER VARS
 const player_scene = preload("res://Player/scenes/Player.tscn")
@@ -42,15 +48,24 @@ func _ready():
 	set_game_state(game_state.START)
 	gui.connect("gui_reset", self, "reset_game")
 	gui.start_screen()
+	audio_stream.stream = menu_music
+	audio_stream.play()
 
 func _process(delta):
 	if curr_game_state == game_state.PLAY and Input.is_action_just_pressed("pause"):
-		if get_tree().paused:
-			get_tree().paused = false
-			gui.show_pause_screen(false)
-		else:
-			get_tree().paused = true
-			gui.show_pause_screen(true)
+		toggle_pause()
+
+func toggle_pause() -> void:
+	if get_tree().paused:
+		get_tree().paused = false
+		gui.show_pause_screen(false)
+		audio_stream.play()
+		audio_stream.seek(music_playback_pos)
+	else:
+		get_tree().paused = true
+		gui.show_pause_screen(true)
+		music_playback_pos = audio_stream.get_playback_position()
+		audio_stream.stop()
 
 func _input(event):
 	if event.is_action_pressed("reset"):
@@ -65,6 +80,8 @@ func game_over() -> void:
 	if is_new_high_score:
 		print("New high score! Saving")
 	gui.game_over_screen(is_new_high_score, score_manager.high_scores)
+	audio_stream.stream = menu_music
+	audio_stream.play()
 
 func reset_game() -> void:
 	set_game_state(game_state.PLAY)
@@ -85,6 +102,8 @@ func reset_game() -> void:
 	wave = 0
 	if not debug_no_sat:
 		next_wave()
+	audio_stream.stream = play_music
+	audio_stream.play()
 
 func next_wave() -> void:
 	wave += 1

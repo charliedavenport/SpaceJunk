@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Venus.wav-0835b214845444f47a3a87cc25f64993.sample"
+
+[deps]
+
+source_file="res://Main/Venus.wav"
+dest_files=[ "res://.import/Venus.wav-0835b214845444f47a3a87cc25f64993.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
