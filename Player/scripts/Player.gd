@@ -5,7 +5,7 @@ const THRUST: float = 2.0
 const STOPPING_THRUST: float = 3.0
 const TURNSPEED: float = 4.0
 const SLOWDOWN: float = 0.01
-const LASER_DIST: float = 500.0
+const LASER_DIST: float = 750.0
 
 const shoot_sound = preload("res://Player/assets/sfx_wpn_laser5.wav")
 const explosion_sound = preload("res://Player/assets/sfx_sound_shutdown1.wav")
@@ -111,12 +111,13 @@ func kill(a_game_over: bool) -> void:
 	audio_stream.play()
 	print("player killed")
 	alive = false
-	collision_shape.disabled = true
+	collision_shape.set_deferred("disabled", true)
 	anim.play("Destroyed")
 	thruster.play("off")
 	yield(anim, "animation_finished")
 	if a_game_over:
 		self.visible = false
+		#self.queue_free()
 	else:
 		call_deferred("reset", true)
 
