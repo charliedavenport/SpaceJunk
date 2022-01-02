@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "BaseSpawner",
 "language": "GDScript",
-"path": "res://Main/BaseSpawner.gd"
+"path": "res://Main/scripts/BaseSpawner.gd"
 }, {
 "base": "Sprite",
 "class": "CrossOverIndicator",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "ExplosionManager",
 "language": "GDScript",
-"path": "res://Main/ExplosionManager.gd"
+"path": "res://Main/scripts/ExplosionManager.gd"
 }, {
 "base": "Control",
 "class": "GUI",
@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "GameManager",
 "language": "GDScript",
-"path": "res://Main/GameManager.gd"
+"path": "res://Main/scripts/GameManager.gd"
 }, {
 "base": "TextureRect",
 "class": "LifeRect",
@@ -72,12 +72,12 @@ _global_script_classes=[ {
 "base": "BaseSpawner",
 "class": "Satellite_Spawner",
 "language": "GDScript",
-"path": "res://Main/SatelliteSpawner.gd"
+"path": "res://Main/scripts/SatelliteSpawner.gd"
 }, {
 "base": "Node",
 "class": "ScoreManager",
 "language": "GDScript",
-"path": "res://Main/ScoreManager.gd"
+"path": "res://Main/scripts/ScoreManager.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "UFO",
@@ -87,7 +87,7 @@ _global_script_classes=[ {
 "base": "BaseSpawner",
 "class": "UFOSpawner",
 "language": "GDScript",
-"path": "res://Main/UFOSpawner.gd"
+"path": "res://Main/scripts/UFOSpawner.gd"
 } ]
 _global_script_class_icons={
 "BaseSatellite": "",
@@ -111,7 +111,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SpaceJunk"
-run/main_scene="res://Main/GameManager.tscn"
+run/main_scene="res://Main/scenes/GameManager.tscn"
 config/icon="res://Player/assets/TinySpaceShip.png"
 
 [display]

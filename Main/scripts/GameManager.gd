@@ -10,8 +10,8 @@ onready var explosion_manager = get_node("ExplosionManager")
 onready var audio_stream = get_node("AudioStreamPlayer")
 
 # MUSIC
-const menu_music = preload("res://Main/Map.wav")
-const play_music = preload("res://Main/Venus.wav")
+const menu_music = preload("res://Main/assets/Map.wav")
+const play_music = preload("res://Main/assets/Venus.wav")
 var music_playback_pos: float
 
 # PLAYER VARS
@@ -87,6 +87,8 @@ func game_over() -> void:
 func reset_game() -> void:
 	set_game_state(game_state.PLAY)
 	get_tree().paused = false
+#	if not player:
+#		player = player_scene.instance()
 	satellite_spawner.clear_satellites()
 	ufo_spawner.clear_ufo()
 	clear_projectiles()
@@ -137,7 +139,7 @@ func on_node_added(node) -> void:
 		node.connect("ufo_destroyed", satellite_spawner, "on_ufo_destroyed")
 
 func on_satellite_collision(sat, coll) -> void:
-	explosion_manager.spawn_explosion(sat.global_position)
+	#explosion_manager.spawn_explosion(sat.global_position)
 	if coll is Player:
 		on_player_hit()
 	elif coll is UFO:

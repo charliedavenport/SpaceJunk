@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/Venus.wav-0835b214845444f47a3a87cc25f64993.sample"
+path="res://.import/Map.wav-1fabdd4e7c8e46124f1a07c04998069a.sample"
 
 [deps]
 
-source_file="res://Main/Venus.wav"
-dest_files=[ "res://.import/Venus.wav-0835b214845444f47a3a87cc25f64993.sample" ]
+source_file="res://Main/assets/Map.wav"
+dest_files=[ "res://.import/Map.wav-1fabdd4e7c8e46124f1a07c04998069a.sample" ]
 
 [params]
 
